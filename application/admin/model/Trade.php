@@ -15,7 +15,7 @@ class Trade extends Model
 
     protected $autoWriteTimestamp = true;
 
-    //取值交易状态显示
+    /*//取值交易状态显示
     protected function getTradeStateAttr($value){
         $state=array();
         $str = [0 => '未交易',1 => '交易中',2 => '待确认',3 => '已完成',4 => '已失效'];
@@ -33,7 +33,7 @@ class Trade extends Model
         $remitState[0] = $str[$value];
         $remitState[1] = $value;
         return $remitState;
-    }
+    }*/
 
     //取值时间显示
     protected function getCreateTimeAttr($value){
@@ -52,10 +52,10 @@ class Trade extends Model
     public function getTradeForList($key='id',$des='DESC'){
         return $this -> alias('l')
             -> field('r.number as buy_number,t.number as sell_number,l.id,l.trade_id,l.number,l.ltc_price,l.count_price,l.service_price,l.remit_state,l.trade_state,l.trade_time')
-            ->join('think_user r','l.buy_id = r.id','left')
-            ->join('think_user t','l.sell_id = t.id','right')
+            -> join('think_user r','r.id = l.buy_id','left')
+            -> join('think_user t','t.id = l.sell_id','right')
             -> order('l.'.$key.' '.$des.'')
-            ->group('l.id')
+            -> group('l.id')
             -> paginate(10,false,['path' => '/admin/main#/trade/tradeList' ]);
     }
 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>资料管理</title>
+    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+    <link rel="stylesheet" href="/static/index/css/cssreset.css">
+    <link rel="stylesheet" href="/static/index/css/data.css">
+</head>
+<body>
+    <header>
+        <a href="javascript:;">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>资料管理</h1>
+    </header>
+    <div class="list-title">
+        <a href="javascript:;">
+            资料管理
+        </a>
+        <a href="javascript:;">
+            登录密码
+        </a>
+        <a href="javascript:;">
+            交易密码
+        </a>
+    </div>
+    <!-- 锁仓列表开始 -->
+    <div class="list-content">
+       <div class="head-image">
+           <a href="javascript:;">
+                <img src="/static/index/images/head.gif" alt="">
+                <img src="" alt="">
+           </a>
+       </div>
+       <form class="sub-box" id="userinfo">
+           <div class="">
+               <p>会员编号</p>
+               <p>LTC180012345</p>
+           </div>
+           <div class="">
+                <p>手机号码</p>
+                <p>15715608013</p>
+            </div>
+            <div class="">
+                    <p>分享码</p>
+                    <p>LTC180012</p>
+                </div>
+                <div class="">
+                        <p>注册时间</p>
+                        <p>2016-03-02</p>
+                    </div>
+            <div>
+                <p>
+                    开户行
+                </p>
+                <select>
+                        <option value ="1">工商银行</option>
+                        <option value ="2">农业银行</option>
+                        <option value="3">建设银行</option>
+                        <option value="4">交通银行</option>
+                        <option value="5">花旗银行</option>
+                        <option value="6">徽商银行</option>
+                </select>
+            </div>
+            <div>
+                <p>开户姓名</p>
+                <input type="text" placeholder="请输入开户姓名">
+            </div>
+            <div>
+                    <p>开户账户</p>
+                    <input type="text" placeholder="请输入开户账户">
+                </div>
+                <div>
+                        <p>开户支行</p>
+                        <input type="text" placeholder="请输入开户支行">
+                    </div>
+                    <div>
+                            <p>支付宝（选填）</p>
+                            <input type="text" placeholder="请输入支付宝账号">
+                        </div>
+                <div>
+                    <p>验证码</p>
+                    <div>
+                            <input type="text" placeholder="输入验证码">
+                            <a href="javascript:;" class="huoqu">
+                                获取验证码
+                            </a>
+                    </div>
+                </div>
+       </form>
+       <div class="sub">
+            <button class="btn" form= "userinfo" type="submit">确认修改资料</button>
+    </div>
+    </div>
+    <!-- 锁仓列表结束 -->
+
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

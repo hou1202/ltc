@@ -25,6 +25,7 @@ class Trade extends CommController
         $trade = new TradeModel();
         $tradeCount = $trade -> getCountTrade();
         $tradeList = $trade -> getTradeForList();
+        //var_dump($tradeList);die;
         return $tradeList -> items() ? view('trade_list',['List' => $tradeList , 'Count' => $tradeCount]) : ReturnJson::ReturnA('未查询到相关数据信息...');
     }
 
