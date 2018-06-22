@@ -1,0 +1,118 @@
+<script src="/static/admin/js/vendor/kindeditor/kindeditor-all-min.js"></script>
+
+<div class="content_wrapper">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <aside>
+                    <header>
+                        <i class="fa fa-fw fa-file"></i>创建信息内容
+                        <a href="#/message/messageList"><i class="fa fa-fw fa-arrow-left" style="float:right;margin:10px 30px 0 0"></i></a>
+                    </header>
+                    <section>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form class="form-horizontal" role="form" method="post" action="/admin/message/messageAdd" data-sendingText="正在为您积极努力的去提交信息。。。" data-validate="validate">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">信息标题</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="信息标题" name="title">
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">类型代码</label>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" placeholder="大于0的正整数，且代码不得重复" name="type">
+                                            </div>
+                                            <p class="col-sm-4 help-block">必填</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">信息内容</label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" id="editor" name="content"></textarea>
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填</p>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group">
+                                            <div class=" col-sm-12">
+                                                <button type="button" class="btn btn-primary J_ajaxSubmitBtn">提交</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    //富文本编辑器
+    var $textarea = $('#editor');
+    var editor = KindEditor.create($textarea[0], {
+        themeType: 'default',
+        langType: 'zh-CN',
+        basePath: '/static/admin/js/vendor/kindeditor/',
+        themesPath: '/static/admin/js/vendor/kindeditor/themes/',
+        pluginsPath: '/static/admin/js/vendor/kindeditor/plugins/',
+        langPath: '/static/admin/js/vendor/kindeditor/lang/',
+        filePostName: 'imgFile',    //imgFile是编辑器中图片上传的默认表单域名称
+        width: '100%',
+        minHeight: 200,    //最小高度，不用写px单位
+        resizeType: 1,     //2时可以拖动改变宽度和高度，1时只能改变高度，0时不能拖动。
+        allowPreviewEmoticons: true,  //允许预览表情图片
+        allowImageUpload: true,       //允许本地上传图片
+        allowFileManager: false,      //true时显示浏览远程服务器按钮
+        //上传图片、Flash、视音频、文件时，支持添加别的参数一并传到服务器
+        extraFileUploadParams: '{"uid":250}',
+        afterBlur: function () {
+            //编辑器失去焦点时，同步编辑器中的内容到textarea，在异步提交内容的时候，必须写！否则textarea中的值是不会改变的
+            this.sync();
+        },
+        uploadJson: '/static/admin/server/upload.php',
+        items: [
+            'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+            'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+            'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+    });
+</script>
+
+<script>
+    /*数据验证JS脚本*/
+    function callback1(returnData, $from) {
+        console.log($from);
+    }
+    function validate($from) {
+        var title = $from.find('input[name="title"]');
+        var type = $from.find('input[name="type"]');
+        var content = $from.find('textarea[name="content"]');
+        if ($.trim(title.val()) == '') {
+            return '信息标题不能为空';
+        }
+
+        if ($.trim(type.val()) == '') {
+            return '信息类型不能为空';
+        }
+
+        if ($.trim(content.val()) == '') {
+            return '内容不能为空';
+        }
+
+
+        return true;
+    }
+</script>
+

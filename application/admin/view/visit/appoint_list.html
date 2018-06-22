@@ -1,0 +1,62 @@
+<div class="content_wrapper">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <aside>
+                    <header>
+                        <i class="fa fa-fw fa-file"></i>访问用户列表
+                        <a href="#/visit/analyseList"><i class="fa fa-fw fa-arrow-left" style="float:right;margin:10px 30px 0 0"></i></a>
+                    </header>
+
+                    <section>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="btn-group" style="margin-bottom:20px;">
+                                        <div>
+                                            <a class="btn btn-primary">该IP访问总计统计</a>
+                                            <a class="btn btn-default ">{$Count}</a>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>IP</th>
+                                                <th>IP归属地</th>
+                                                <th>访问时间</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {foreach name='List' item='l'}
+                                            <tr>
+                                                <td>{$l.id}</td>
+                                                <td>{$l.ip}</td>
+                                                <td>{$l.address}</td>
+                                                <td>{$l.create_time}</td>
+
+                                            </tr>
+                                            {/foreach}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <nav>
+                                        <nav>
+                                            {$List->render()}
+                                        </nav>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+</div>

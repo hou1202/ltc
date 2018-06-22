@@ -1,0 +1,280 @@
+<!--上传文件引入文件-->
+<link rel="stylesheet" type="text/css" href="/static/plugin/aoupload/css/globle.css" />
+<script src="/static/plugin/aoupload/js/webuploader.min.js"></script>
+<script src="/static/plugin/aoupload/js/diyUpload.js"></script>
+
+<div class="content_wrapper">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <aside>
+                    <header>
+                        <i class="fa fa-fw fa-file"></i>新建用户
+                        <a href="#/user/userList"><i class="fa fa-fw fa-arrow-left" style="float:right;margin:10px 30px 0 0"></i></a>
+                    </header>
+                    <section>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form class="form-horizontal" role="form" method="post" action="/admin/user/userAdd" data-sendingText="正在为您积极努力的去提交信息。。。" data-validate="validate">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">手机号码</label>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" placeholder="手机号码"  name="phone">
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">登录密码</label>
+                                            <div class="col-sm-6">
+                                                <input type="password" class="form-control" placeholder="会员帐户登录密码 "   name="pwd_login">
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">交易密码</label>
+                                            <div class="col-sm-6">
+                                                <input type="password" class="form-control" placeholder="会员交易密码 "  name="pwd_trade">
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">用户头像</label>
+                                            <div class="col-sm-6">
+                                                <div style="text-align:center;">
+                                                    <ul class="upload-ul clearfix">
+                                                        <li class="upload-pick">
+                                                            <div class="webuploader-container clearfix" id="imgUpload"></div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <p class="col-sm-4 help-block">建议尺寸：400*400</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">邀请人分享码</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="邀请人分享码ID"  name="p_id">
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">可用资产</label>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" placeholder="可用资产" name="asset_avali" >
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">真实姓名</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="真实姓名"  name="name">
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">开户银行</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="开户银行"  name="bank">
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">银行帐户</label>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" placeholder="银行帐户"  name="bank_num">
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">开户支行</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="开户支行"  name="bank_address">
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">支付宝号</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="支付宝号"  name="alipay">
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">帐户状态</label>
+                                            <div class="col-sm-6">
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="state" value="1" checked /> 正常
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="state" value="0"  /> 禁用
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <div class=" col-sm-12">
+                                                <button type="button" class="btn btn-primary J_ajaxSubmitBtn">提交</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--图片上传JS脚本-->
+<script>
+    //上传图片
+    var $tgaUpload = $('#imgUpload').diyUpload({
+        //url:'/admin/file_upload/uploader',
+        buttonText : '',
+        //类型限制;
+        accept: {
+            title: "Images",
+            extensions: 'jpg,jpeg,png'
+        },
+        //配置生成缩略图的选项
+        thumb:{
+            width:50,
+            height:50,
+            quality:100,
+            allowMagnify:true,
+            crop:true,
+            type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+        },
+        swf:"/static/plugin/aoupload/Uploader.swf",
+        //是否支持多文件上传
+        multiple:false,
+        //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+        auto:true,
+        //文件上传方式,POST或者GET
+        method:"POST",
+        //服务器地址;
+        server:'/admin/file_upload/uploader',
+        //最大上传的文件数量
+        fileNumLimit:1,
+        //总文件大小(单位字节);
+        fileSizeLimit:500000 * 1024,
+        //单个文件大小(单位字节);
+        fileSingleSizeLimit:50000 * 1024,
+        //自定义内容信息
+        custom:{
+            inputName:'portrait',
+            //input加入ID，只适用于单个上传图片
+            inputId:'img_id'
+        },
+        success:function( data ) {
+            $("#fileBox_WU_FILE").remove();
+        },
+        error:function( err ) {
+            console.log(2);
+        }
+    });
+
+</script>
+
+<script>
+    /*数据验证JS脚本*/
+    function callback1(returnData, $from) {
+        console.log($from);
+    }
+    function validate($from) {
+        var phone = $from.find('input[name="phone"]');
+        var pwd_login = $from.find('input[name="pwd_login"]');
+        var pwd_trade = $from.find('input[name="pwd_trade"]');
+        var p_id = $from.find('input[name="p_id"]');
+        var asset_avali = $from.find('input[name="asset_avali"]');
+        var name = $from.find('input[name="name"]');
+        var bank = $from.find('input[name="bank"]');
+        var bank_num = $from.find('input[name="bank_num"]');
+        var bank_address = $from.find('input[name="bank_address"]');
+        var alipay = $from.find('input[name="alipay"]');
+
+        if (!/^1[34578]\d{9}$/.test($.trim(phone.val()))) {
+            return '请输入正确手机号';
+        }
+        if ($.trim(pwd_login.val()) == '' || $.trim(pwd_login.val()).length < 6 || $.trim(pwd_login.val()).length > 30) {
+                return '用户登录密码不得为空且不得小于2位和大于30位';
+        }
+        if ($.trim(pwd_trade.val()) == '' || $.trim(pwd_trade.val()).length < 6 || $.trim(pwd_trade.val()).length > 30) {
+            return '用户交易密码不得为空且不得小于2位和大于30位';
+        }
+        if ($.trim(p_id.val()) == '' || $.trim(p_id.val()).length != 8 || !/^[0-9a-zA-Z]*$/g.test($.trim(p_id.val()))) {
+                return '请输入正确且有效的邀请人ID';
+
+        }
+        if ($.trim(asset_avali.val()) != '') {
+            if(isNaN($.trim(asset_avali.val()))){
+                return '请输入正确可用资产值';
+            }
+        }
+        if ($.trim(name.val()) != '') {
+            if($.trim(name.val()).length < 2 || $.trim(name.val()).length > 6){
+                return '真实姓名不得小于2位且大于6位';
+            }
+
+        }
+        if ($.trim(bank.val()) != '') {
+            if($.trim(bank.val()).length < 2 || $.trim(bank.val()).length > 15){
+                return '开户行银行名称不得小于2位且大于15位';
+            }
+        }
+        if ($.trim(bank_num.val()) != '') {
+            if(Math.round($.trim(bank_num.val())) != $.trim(bank_num.val())){
+                return '输入的银行卡号码格式不正确';
+            }
+            if($.trim(bank_num.val()).length < 16 || $.trim(bank.val()).bank_num > 19){
+                return '请输入正确的银行卡号';
+            }
+        }
+        if ($.trim(bank_address.val()) != '') {
+            if($.trim(bank_address.val()).length < 5 || $.trim(bank.val()).bank_address > 30){
+                return '请输入正确的开户行支行地址';
+            }
+        }
+        if ($.trim(alipay.val()) != '') {
+            if($.trim(alipay.val()).length < 3 || $.trim(bank.val()).alipay > 30){
+                return '请输入正确的支付宝号';
+            }
+        }
+        return true;
+    }
+</script>
+
+
+

@@ -1,0 +1,173 @@
+
+
+<div class="content_wrapper">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <aside>
+                    <header>
+                        <i class="fa fa-fw fa-file"></i>修改提币申请
+                        <a href="#/extract/extractList"><i class="fa fa-fw fa-arrow-left" style="float:right;margin:10px 30px 0 0"></i></a>
+                    </header>
+                    <section>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form class="form-horizontal" role="form" method="post" action="/admin/extract/extractUpdate" data-sendingText="正在为您积极努力的去提交信息。。。" data-validate="validate">
+                                        <input type="hidden"  value="{$getOne.id}" name="id">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">会员编号</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="会员编号" value="{$getOne.p_number}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">提币数量</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="提币数量" value="{$getOne.number}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">手续费</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="手续费"   value="{$getOne.service_price}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">实际提币</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="实际提币"  value="{$getOne.true_num}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">提币平台</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="提币平台" value="{$getOne.plat}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">提币地址</label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" placeholder="提币地址"  style="height:80px;" readonly >{$getOne.address}</textarea>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Payment ID</label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" placeholder="nt ID"  style="height:80px;" readonly >{$getOne.payment}</textarea>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">创建时间</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="创建时间" value="{$getOne.create_time}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">提币状态</label>
+                                            <div class="col-sm-6">
+                                                {if condition="$getOne.state[1] == 0"}
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="state" value="0" {$getOne.state[1]==0?="checked"} /> 审核中
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="state" value="1" {$getOne.state[1]==1?="checked"} /> 通过
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="state" value="2" {$getOne.state[1]==2?="checked"} /> 驳回
+                                                        </label>
+                                                    </div>
+                                                {else /}
+                                                    <input type="text" class="form-control" placeholder="提币状态" value="{$getOne.state[0]}" readonly>
+                                                {/if}
+
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">反馈信息</label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" placeholder="反馈信息"  style="height:80px;" name="talk">{$getOne.talk}</textarea>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+
+
+                                        <div class="form-group">
+                                            <div class=" col-sm-12">
+                                                <button type="button" class="btn btn-primary J_ajaxSubmitBtn">提交</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    /*数据验证JS脚本*/
+    function callback1(returnData, $from) {
+        console.log($from);
+    }
+    function validate($from) {
+        var pwd_login = $from.find('input[name="pwd_login"]');
+        var pwd_trade = $from.find('input[name="pwd_trade"]');
+        var asset_avali = $from.find('input[name="asset_avali"]');
+
+
+        if ($.trim(pwd_login.val()) != '') {
+            if($.trim(pwd_login.val()).length < 6 || $.trim(pwd_login.val()).length > 30){
+                return '用户登录密码不得小于2位且大于30位';
+            }
+        }
+        if ($.trim(pwd_trade.val()) != '') {
+            if($.trim(pwd_trade.val()).length < 6 || $.trim(pwd_trade.val()).length > 30){
+                return '用户交易密码不得小于2位且大于30位';
+            }
+        }
+        if ($.trim(asset_avali.val()) != '') {
+            if(isNaN($.trim(asset_avali.val()))){
+                return '请输入正确可用资产值';
+            }
+        }
+
+        return true;
+    }
+</script>
+

@@ -1,0 +1,119 @@
+[
+  {
+    "t": "AOZOM",
+    "url": "/main/desktop"
+  },
+  {
+    "t": "用户管理",
+    "url": "",
+    "child": [
+      {
+        "t": "用户列表",
+        "url": "/user/userList"
+      }
+    ]
+  },
+  {
+    "t": "锁仓管理",
+    "url": "",
+    "child": [
+      {
+        "t": "锁仓列表",
+        "url": "/lock/lockList"
+      }
+    ]
+  },
+  {
+    "t": "提币管理",
+    "url": "",
+    "child": [
+      {
+        "t": "提币列表",
+        "url": "/extract/extractList"
+      }
+    ]
+  },
+  {
+    "t": "充币管理",
+    "url": "",
+    "child": [
+      {
+        "t": "充币列表",
+        "url": "/recharge/rechargeList"
+      }
+    ]
+  },
+  {
+    "t": "交易管理",
+    "url": "",
+    "child": [
+      {
+        "t": "交易列表",
+        "url": "/trade/tradeList"
+      }
+    ]
+  },
+  {
+    "t": "消息管理",
+    "url": "",
+    "child": [
+      {
+        "t": "消息列表",
+        "url": "/news/newsList"
+      }
+    ]
+  },
+  {
+    "t": "反馈管理",
+    "url": "",
+    "child": [
+      {
+        "t": "反馈列表",
+        "url": "/feed/feedList"
+      }
+    ]
+  },
+  {
+    "t": "通知管理",
+    "url": "",
+    "child": [
+      {
+        "t": "通知列表",
+        "url": "/notice/noticeList"
+      }
+    ]
+  },
+  {
+    "t": "信息管理",
+    "url": "",
+    "child": [
+      {
+        "t": "信息列表",
+        "url": "/message/messageList"
+      }
+    ]
+  },
+  {
+    "t": "反馈管理",
+    "url": "",
+    "child": [
+      {
+        "t": "反馈列表",
+        "url": "/talking/talkList"
+      }
+    ]
+  },
+  {
+    "t": "统计管理",
+    "url": "",
+    "child": [
+      {
+        "t": "访问用户",
+        "url": "/visit/analyseList"
+      }
+    ]
+  }
+
+
+
+]
