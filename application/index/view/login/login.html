@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+    <link rel="stylesheet" href="/static/index/style/register.css">
+    <link rel="stylesheet" href="/static/index/style/cssreset.css">
+    <link rel="stylesheet" href="/static/index/style/public.css">
+
+    <script type="text/javascript" src="/static/index/js/jquery-3.1.1.js"></script>
+    <!--弹框提示JS-->
+    <script type="text/javascript" src="/static/index/js/alertInfo.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <div>
+            登录
+        </div>
+    </header>
+    <div class="content">
+        <form action="" id="login_form">
+            <div class="input-box" >
+                <input type="number" placeholder="请输入注册手机号" name="phone" id="phone">
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="请输入用户密码" name="pwd_login" id="pwd_login">
+            </div>
+            <div class="forget">
+                <a href="/index/login/forget">
+                    忘记密码？
+                </a>
+            </div>
+            <div class="register">
+                <input type="button" value="登录" id="login_submit">
+            </div>
+            <div class="login">
+                <a href="/index/login/register">注册</a>
+            </div>
+
+        </form>
+    </div>
+    <div class="bottom-content">
+
+    </div>
+
+    <!--Alert-Start-->
+    <div class="bomb">
+        <p></p>
+    </div>
+    <!--Alert-End-->
+</body>
+<script>
+    window.addEventListener('touchmove', function(evt) {
+        evt.preventDefault()
+    });
+</script>
+
+<!--数据验证-->
+<script>
+    $("#login_submit").on('click',function(){
+        var phone = $('#phone').val();
+        var pwd = $('#pwd_login').val();
+
+        if(!/^1[34578]\d{9}$/.test($.trim(phone))){
+            showAlertAutoClose("请输入正确的手机登录帐号");
+            return false;
+        }
+        if($.trim(pwd) == '' || $.trim(pwd).length < 6) {
+            showAlertAutoClose("登录密码信息有误，请重新输入");
+            return false;
+        }
+
+
+        $.ajax({
+            url:"/index/login/loginCheck",
+            type:"POST",
+            dataType: "json",
+            //data:'phone:phone,password:password,invitation:invitation,code:code',
+            data:$('#login_form').serialize(),
+            success:function(data){
+                console.log(data);
+                jsonAlertAutoClose(data)
+            },
+            error:function () {
+                showAlertAutoClose("网络错误，请重试...");
+            }
+        });
+
+    });
+</script>
+
+</html>

@@ -55,6 +55,7 @@ class PublicFunction
      *          10=》提币减少
      *          11=》提币驳回增加
      *          12=》充币增加
+     *          13=》签到增加
      * */
     static function SetCapitalLog($id,$capital,$way=1){
         $data['user_id'] = $id;

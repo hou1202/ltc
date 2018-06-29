@@ -1,63 +1,96 @@
 <?php
-
 /**
  * Created by PhpStorm.
- * User: Administrator
- * Date: 2017/9/15
- * Time: 16:10
+ * User: Hou-ShiShu
+ * Date: 2018/6/25
+ * Time: 16:25
  */
-namespace app\admin\model;
 
+namespace app\admin\model;
 use think\Model;
 
-class Message  extends Model
+class Message extends Model
 {
-    //自动写入创建及修改的时间戳
+
+    public static $tableName = 'think_message';
+
     protected $autoWriteTimestamp = true;
 
-    public function getCreateTimeAttr($value){
-        return date('Y-m-d' , $value);
+    //取值时间显示
+    protected function getCreateTimeAttr($value){
+        return date('Y-m-d H:i:s',$value);
     }
 
-    //信息列表
-    public function getMessageList(){
-        return $this -> field('id,title,content,type,create_time')
-                    ->order('id DESC')
-                    -> paginate(5,false,['path' => '/admin/main#/message/messageList' ]);
-
+    /*
+     * 状态显示
+     * 0 =》 文字状态
+     * 1 =》 数值状态
+     * */
+    protected function getStateAttr($value){
+        $state=array();
+        $str = [0 => '未启用',1 => '已启用'];
+        $state[0] = $str[$value];
+        $state[1] = $value;
+        return $state;
     }
 
-    //按id统计信息数量
-    public function getCountMessage(){
-        return $this ->field('id') ->count();
+    /*
+     * @getMessageForList   信息列表列表显示
+     * $type    信息类型
+     *      1=》LTC简介
+     *      2=》注册协议
+     *      3=》提币平台
+     *      4=》充币地址
+     * */
+    public function getMessageForList($type,$list,$key='id',$des='DESC'){
+        return $this -> field('id,title,content,state,create_time')
+            -> where('type','in',$type)
+            -> order(''.$key.' '.$des.'')
+            -> paginate(10,false,['path' => '/admin/main#/setup/'.$list.'' ]);
     }
 
-    //添加信息
-    public function addMessage($data){
-        return $this -> allowField(true) -> save($data);
+    /*
+     * @ getCountMessage   统计信息数量
+     * $type    信息类型
+     * */
+    public function getCountMessage($type){
+        return $this -> where('type','in',$type) -> count('id');
     }
 
-    //检查类型代码是否存在
-    public function checkTypeState($data){
-        return $this -> field('id') -> where('type',$data) -> limit(1) -> find();
+    /*
+     * @ saveMessageById   保存信息
+     * */
+    public function saveMessageById($data,$id=null){
+        if(empty($id)){
+            return $this -> allowField(true) -> save($data);
+        }else{
+            return $this -> allowField(true) -> where('id',$id) -> update($data);
+        }
     }
 
-    //删除指定信息
-    public function delMessage($id)
-    {
-        return $this -> where('id',$id) ->delete();
+    /*
+     * @ getOneMessageById  获取指定信息
+     * $id      信息ID
+     * */
+    public function getOneMessageById($id,$field='id'){
+        return $this -> alias('l')
+            -> field('id,title,content,type,state,create_time')
+            -> where($field , $id)
+            -> find();
     }
 
-    //获取指定信息内容
-    public function getOneMessage($id){
-        return $this -> field('id,title,type,content') -> where('id',$id) -> limit(1) -> find();
+
+    /*
+     * @ delMessageById  删除指定信息
+     * $id      信息ID
+     * */
+    public function delMessageById($id){
+        return $this -> where('id' , $id)
+            -> delete();
     }
 
-    //更新信息内容
-    public function updateMessage($id,$data){
 
-        return $this -> allowField(true) -> where('id',$id) -> update($data);
-    }
+
 
 
 }

@@ -9,10 +9,8 @@
 namespace app\admin\controller;
 
 use app\common\controller\CommController;
-use app\common\controller\PublicFunction;
 use app\common\controller\ReturnJson;
 use app\admin\model\Trade as TradeModel;
-use app\admin\model\User;
 
 class Trade extends CommController
 {
@@ -33,30 +31,6 @@ class Trade extends CommController
      * @ tradeUpdate    操作交易信息
      * */
     public function tradeUpdate(){
-        //修改提交信息
-        if($this -> request -> isPost()){
-            $data = $this -> request -> Post();
-            if(isset($data['id']) && empty($data['id'])){
-                return ReturnJson::ReturnJ('无效的数据操作...','false','/trade/tradeList');
-            }
-            $trade = new TradeModel();
-            if(isset($data['state']) && $data['state'] == 2){
-                //驳回审核
-                $user = new User();
-                $oneTrade = $getOne = $trade -> getOneTradeInfoById($data['id']);
-                //返还用户交易数量至可用资产，并生成资产记录
-                $user -> updateAssetById($oneTrade['user_id'],$oneTrade['number']);
-                PublicFunction::SetCapitalLog($oneTrade['user_id'],$oneTrade['number'],11);
-            }
-
-            $updateTrade = $trade -> updateTradeInfoById($data['id'],$data);
-            if($updateTrade){
-                return ReturnJson::ReturnJ('数据更新成功...','success','/trade/tradeList');
-            }else{
-                return ReturnJson::ReturnJ('数据更新失败，请重新操作...','false');
-            }
-
-        }
 
         //获取、展示修改信息
         if(isset($_GET['id']) && !empty($_GET['id'])){

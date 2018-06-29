@@ -144,4 +144,24 @@ class User extends Model
     }
 
 
+    /*
+     * @getUserNumber           返回所有用户的会员编号
+     * */
+    public function getUserNumber(){
+        return $this -> field('id,number')->where('state',1)->select();
+    }
+
+
+    /*
+     * @ getNewsUserByKeyword  通过关键词搜索用户
+     * $keyword      关键词
+     * */
+    public function getNewsUserByKeyword($keyword){
+        return $this -> field('id,number')
+                    -> whereOr('phone','like','%'.$keyword.'%')
+                    -> whereOr('number','like','%'.$keyword.'%')
+                    -> select();
+    }
+
+
 }

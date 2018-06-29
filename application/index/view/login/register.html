@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册</title>
+    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+    <link rel="stylesheet" href="/static/index/style/register.css">
+    <link rel="stylesheet" href="/static/index/style/cssreset.css">
+    <link rel="stylesheet" href="/static/index/style/public.css">
+
+    <script type="text/javascript" src="/static/index/js/jquery-3.1.1.js"></script>
+    <!--弹框提示JS-->
+    <script type="text/javascript" src="/static/index/js/alertInfo.js"></script>
+</head>
+
+<body>
+    <header>
+        <div>
+            注册
+        </div>
+    </header>
+    <div class="content">
+        <form action="" id="register_form">
+            <div class="input-box">
+                <input type="text" placeholder="请输入注册手机号" name="phone" id="phone">
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="请设置用户登录密码" name="pwd_login" id="pwd_login">
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="请再次确认登录密码" name="sure_pwd_login" id="sure_pwd_login">
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="请设置交易密码"  name="pwd_trade" id="pwd_trade">
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="请再次确认交易密码"  name="sure_pwd_trade" id="sure_pwd_trade">
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="请输入用户邀请码" {$Inv ?="value='$Inv'"} name="p_id" id="p_id">
+                {if condition="!$Inv"}
+                    <a href="javascript:;" class="no-qr">
+                        没有邀请码?
+                    </a>
+                {/if}
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="请输入验证码" name="code" id="code">
+                <a href="javascript:;" class="get-qr" id="get_code">
+                    获取验证码
+                </a>
+            </div>
+            <div class="register">
+                <input type="button" value="注册" id="register_submit">
+            </div>
+            <div class="login">
+                <a href="/index/login/login">登录</a>
+            </div>
+        </form>
+    </div>
+    <div class="pin">
+        <div class="pin-content">
+            <div class="pin-title">
+                你的专属邀请码
+            </div>
+            <div class="pin-member">
+                FQWSA
+            </div>
+            <div class="close">
+                <img src="/static/index/images/close.png" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="bottom-content"></div>
+
+    <!--Alert-Start-->
+    <div class="bomb">
+        <p></p>
+    </div>
+    <!--Alert-End-->
+</body>
+<script>
+    var close = document.querySelector(".close");
+    var pin = document.querySelector(".pin");
+    var noQr = document.querySelector(".no-qr");
+    close.addEventListener("click", function() {
+        pin.style.display = "none";
+    });
+    noQr.addEventListener("click", function() {
+        pin.style.display = "flex";
+    });
+    window.addEventListener("touchmove", function(evt) {
+        evt.preventDefault();
+    })
+</script>
+
+
+<script type="text/javascript">
+
+    //短信验证
+    $(function(){
+        //获取短信验证码
+        var validCode=true;
+        $("#get_code").click (function () {
+            console.log(1);
+            var phone = $('#phone').val();
+            if(!/^1[34578]\d{9}$/.test(phone)){
+                showAlertAutoClose("请输入正确手机号");
+                return false;
+            }
+            var time=120;
+            var code=$(this);
+            if (validCode) {
+                $.post('/index/verify/get', {type:0, phone:phone}, function(data){
+                    if(data.code == 1){
+                        jsonAlertAutoClose(data);
+                        validCode=false;
+                        code.addClass("send_obtain");
+                        var t=setInterval(function () {
+                            time--;
+                            code.html(time+"秒");
+                            if (time==0) {
+                                clearInterval(t);
+                                code.html("重新获取");
+                                validCode=true;
+                                code.removeClass("send_obtain");
+                            } },1000);
+                    }else{
+                        jsonAlertAutoClose(data);
+                    }
+                });
+            }
+        })
+    });
+
+    //用户注册数据验证
+    $("#register_submit").on('click',function(){
+        var phone = $('#phone').val();
+        var pwd_login = $("#pwd_login").val();
+        var sure_pwd_login = $("#sure_pwd_login").val();
+        var pwd_trade = $("#pwd_trade").val();
+        var sure_pwd_trade = $("#sure_pwd_trade").val();
+        var p_id = $("#p_id").val();
+        var code = $("#code").val();
+
+        if(!/^1[3456789]\d{9}$/.test(phone)){
+            showAlertAutoClose("请输入正确手机号");
+            return false;
+        }
+        if(pwd_login == '' || pwd_login.length < 6 ) {
+            showAlertAutoClose("登录密码长度不得小于6位");
+            return false;
+        }
+        if(pwd_login != sure_pwd_login) {
+            showAlertAutoClose("两次输入登录密码不一致");
+            return false;
+        }
+        if(pwd_trade == '' || pwd_trade.length < 6 ) {
+            showAlertAutoClose("交易密码长度不得小于6位");
+            return false;
+        }
+        if(pwd_trade != sure_pwd_trade) {
+            showAlertAutoClose("两次输入交易密码不一致");
+            return false;
+        }
+        if(p_id.length =='' || p_id.length != 8) {
+            showAlertAutoClose("请正确填写邀请码");
+            return false;
+        }
+        if(code.length != 6) {
+            showAlertAutoClose("验证码有误，请确认");
+            return false;
+        }
+
+        $.ajax({
+            url:"/index/login/register",
+            type:"POST",
+            dataType: "json",
+            data:$('#register_form').serialize(),
+            success:function(data){
+                jsonAlertAutoClose(data);
+            },
+            error:function () {
+                showAlertAutoClose("网络错误，请重试...");
+            }
+        });
+
+    });
+
+
+
+</script>
+
+</html>

@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>个人中心</title>
     <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
-    <link rel="stylesheet" href="/static/index/css/person.css">
-    <link rel="stylesheet" href="/static/index/css/cssreset.css">
+    <link rel="stylesheet" href="/static/index/style/person.css">
+    <link rel="stylesheet" href="/static/index/style/cssreset.css">
+    <link rel="stylesheet" href="/static/index/style/public.css">
 </head>
+
 <body>
     <header>
         <div class="top-header">
-                <a href="javascript:;">
-                    <img class="arrow" src="/static/index/images/arrow.gif" alt="">
-                </a>
-                <h1>
-                    <img class="head" src="/static/index/images/head.gif" alt="">
-                    <!-- 首页 -->
-                </h1>
+            <a href="">
+                <img class="arrow" src="/static/index/images/arrow.gif" alt="">
+            </a>
+            <h1>
+                <img class="head" src="/static/index/images/head.gif" alt="">
+                <!-- 首页 -->
+            </h1>
         </div>
         <div class="top-title">
             <div>
@@ -45,70 +48,58 @@
     </header>
     <div class="app-content">
         <div class="list-top">
-                <a>
-                        <p>$2500</p>
-                        <p>今日收益</p>
-                    </a>
-                    <a class="line">
-                            <p>$2500</p>
-                            <p>分享收益</p>
-                        </a>
-                        <a class="line">
-                                <p>25</p>
-                                <p>分享列表</p>
-                            </a>
-        </div>
-        <div class="list-top center-line">
-            <!-- <a>
+            <a>
                 <p>$2500</p>
                 <p>今日收益</p>
             </a>
             <a class="line">
-                    <p>$2500</p>
-                    <p>分享收益</p>
-                </a>
-                <a class="line">
-                        <p>25</p>
-                        <p>分享列表</p>
-                    </a> -->
-                    <a>
-                            <p class="icon1"></p>
-                            <p>提币申请</p>
-                        </a>
-                        <a class="line">
-                                <p class="icon2"></p>
-                                <p>提币明细</p>
-                            </a>
-                            <a class="line" href="/index/person/personData">
-                                    <p class="icon3"></p>
-                                    <p>资料管理</p>
-                                </a>
-                                <a>
-                                        <p class="icon4"></p>
-                                        <p>充币地址</p>
-                                    </a>
-                                    <a class="line">
-                                            <p class="icon5"></p>
-                                            <p>充币明细</p>
-                                        </a>
-                                        <a class="line">
-                                                <p class="icon6"></p>
-                                                <p>密码管理</p>
-                                            </a>
-                                        </div>
-        <ul class="list-bottom">
-            <li>
-                    <p class="icon7"></p>
-                    <p>今日收益</p>
-            </li>
-            <li class="line">
-                    <p class="icon8"></p>
-                    <p>今日收益</p>
-            </li>
-            <li class="line">
-                    <p class="icon9"></p>
-                    <p>今日收益</p>
-            </li>
+                <p>$2500</p>
+                <p>分享收益</p>
+            </a>
+            <a class="line">
+                <p>25</p>
+                <p>分享列表</p>
+            </a>
+        </div>
+        <div class="list-top center-line">
+            <a href="./pull/apply.html">
+                <p class="icon1"></p>
+                <p>提币申请</p>
+            </a>
+            <a href="./pull/pulldetail.html" class="line">
+                <p class="icon2"></p>
+                <p>提币明细</p>
+            </a>
+            <a href="./person/data.html" class="line">
+                <p class="icon3"></p>
+                <p>资料管理</p>
+            </a>
+            <a href="./pull/pulladress.html">
+                <p class="icon4"></p>
+                <p>充币地址</p>
+            </a>
+            <a href="./pull/pull.html" class="line">
+                <p class="icon5"></p>
+                <p>充币明细</p>
+            </a>
+            <a class="line" href="./person/psw.html">
+                <p class="icon6"></p>
+                <p>密码管理</p>
+            </a>
+        </div>
+        <ul class="list-top">
+            <a href="/index/news/news">
+                <p class="icon7"></p>
+                <p>新闻中心</p>
+            </a>
+            <a href="./return/aboutltc.html" class="line">
+                <p class="icon8"></p>
+                <p>关于LTC</p>
+            </a>
+            <a href="./return/fankui.html" class="line">
+                <p class="icon9"></p>
+                <p>留言反馈</p>
+            </a>
         </ul>
     </div>
     <div class="exit">
@@ -116,8 +107,32 @@
             安全退出
         </a>
     </div>
+    <div class="bottom-content"></div>
+    <footer>
+        <div>
+            <a href="javascript:;">
+                <i class="ficon1"></i>
+                <p>首页</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon2"></i>
+                <p>锁仓</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon3"></i>
+                <p>锁仓</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon4"></i>
+                <p>我的</p>
+            </a>
+        </div>
+    </footer>
+</body>
+<script>
+    window.addEventListener('touchmove', function(evt) {
+        evt.preventDefault();
+    });
+</script>
 
-
-    <!--footer--引入-->
-    {include file="default/footer" /}
-    <!--footer--END-->
+</html>

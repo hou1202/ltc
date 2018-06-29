@@ -1,0 +1,66 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+
+    <link rel="stylesheet" href="/static/index/style/trade.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>出售</h1>
+    </header>
+
+    <!--trade_header--引入-->
+    {include file="default/trade_header" /}
+    <!--trade_header--END-->
+
+    <div class="price">
+        <div class="circle">
+            <div>
+                <p>可用资产</p>
+                <p>{$User.asset_avali}</p>
+            </div>
+            <div>
+                <p>LTC价格</p>
+                <p id="asset">{$Price.price}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 锁仓列表开始 -->
+    <div class="list-content">
+        <ul class="top-title">
+            <li>交易量</li>
+            <li>交易总价</li>
+            <li>状态</li>
+            <li>操作</li>
+        </ul>
+        {foreach name="List" item="l"}
+            <ul class="list-item">
+                <li>
+                    <p>{$l.number}</p>
+                </li>
+                <li>{$l.number * $Price.price}</li>
+                <li>{$l.trade_state.0}</li>
+                <li>
+                    <a href="javascript:;" class="trade">
+                            撮合
+                        </a>
+                </li>
+            </ul>
+        {/foreach}
+
+    </div>
+    <div class="trade_notice">
+        <h3>LTC平台提示</h3>
+
+    </div>>
+    <!-- 锁仓列表结束 -->
+    <div class="bottom-content"></div>
+
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

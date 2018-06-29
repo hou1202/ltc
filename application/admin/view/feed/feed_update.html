@@ -1,0 +1,109 @@
+
+
+<div class="content_wrapper">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <aside>
+                    <header>
+                        <i class="fa fa-fw fa-file"></i>编辑反馈信息
+                        <a href="#/feed/feedList"><i class="fa fa-fw fa-arrow-left" style="float:right;margin:10px 30px 0 0"></i></a>
+                    </header>
+                    <section>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form class="form-horizontal" role="form" method="post" action="/admin/feed/feedUpdate" data-sendingText="正在为您积极努力的去提交信息。。。" data-validate="validate">
+                                        <input type="hidden"  value="{$getOne.id}" name="id">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">用户</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="用户" value="{$getOne.name}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">创建时间</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="创建时间" value="{$getOne.create_time}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">反馈图</label>
+                                            <div class="col-sm-6">
+                                                {foreach name="$getOne.img" item="i"}
+                                                <a href="{$i}" target="_blank"><img src="{$i}" style="width:90px;height:160px;border-radius:5px;"></a>
+                                                {/foreach}
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">反馈内容</label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" readonly style="height:100px;resize: none;">{$getOne.content}</textarea>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">处理状态</label>
+                                            <div class="col-sm-6">
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="state" value="1" {$getOne.state[1]==1?="checked"} /> 已处理
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="state" value="0" {$getOne.state[1]==0?="checked"} /> 未处理
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">平台回复</label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" id="editor" name="reply" style="height:100px;resize: none;">{$getOne.reply}</textarea>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <div class=" col-sm-12">
+                                                <button type="button" class="btn btn-primary J_ajaxSubmitBtn">提交</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    /*数据验证JS脚本*/
+    function callback1(returnData, $from) {
+    }
+    function validate($from) {
+        return true;
+    }
+</script>
+

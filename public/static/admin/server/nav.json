@@ -74,42 +74,28 @@
     ]
   },
   {
-    "t": "通知管理",
+    "t": "系统设置",
     "url": "",
     "child": [
       {
-        "t": "通知列表",
-        "url": "/notice/noticeList"
-      }
-    ]
-  },
-  {
-    "t": "信息管理",
-    "url": "",
-    "child": [
+        "t": "锁仓计划",
+        "url": "/setup/setPlanList"
+      },
+      {
+        "t": "LTC价格",
+        "url": "/setup/setLtcPriceList"
+      },
+      {
+        "t": "充币地址",
+        "url": "/setup/setRechargeList"
+      },
+      {
+        "t": "提币平台",
+        "url": "/setup/setExtractList"
+      },
       {
         "t": "信息列表",
-        "url": "/message/messageList"
-      }
-    ]
-  },
-  {
-    "t": "反馈管理",
-    "url": "",
-    "child": [
-      {
-        "t": "反馈列表",
-        "url": "/talking/talkList"
-      }
-    ]
-  },
-  {
-    "t": "统计管理",
-    "url": "",
-    "child": [
-      {
-        "t": "访问用户",
-        "url": "/visit/analyseList"
+        "url": "/setup/setMessageList"
       }
     ]
   }

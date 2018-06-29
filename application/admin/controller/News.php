@@ -9,18 +9,20 @@
 namespace app\admin\controller;
 
 
-use think\Controller;
+use app\common\controller\CommController;
+use app\common\controller\ReturnJson;
 use app\admin\model\News as NewsModel;
-use think\Validate;
+use app\admin\model\User;
+use app\admin\Validate\NewsValidate;
 
 
-class News extends Controller
+class News extends CommController
 {
     //新闻列表
     public function newsList(){
         $news = new NewsModel();
         $newsCount = $news -> getCountNews();
-        $newsList = $news -> order('id DESC') -> paginate(5,false,['path' => '/admin/main#/news/newsList' ]);
+        $newsList = $news -> getNewsForList();
         return $newsList -> items() ? view('news_list',['List' => $newsList , 'Count' => $newsCount]) : ReturnJson::ReturnA('未查询到相关数据信息...');
     }
 
@@ -28,6 +30,7 @@ class News extends Controller
     public function newsAdd(){
         if($this->request->isPost()){
             $data = $this -> request -> post();
+            //var_dump($data);die;
             $validate = new NewsValidate();
             if($validate -> check($data)){
                 $news = new NewsModel();
@@ -36,7 +39,9 @@ class News extends Controller
                 return ReturnJson::ReturnJ($validate -> getError(),"false");
             }
         }else{
-            return view('news_add');
+            $user = new User();
+            $number = $user -> getUserNumber();
+            return view('news_add',['Number'=>$number]);
         }
     }
 
@@ -50,7 +55,7 @@ class News extends Controller
             $validate = new NewsValidate();
             if($validate -> check($data)){
                 $news = new NewsModel();
-                 return $news -> save($data,['id' => $data['id']]) ? ReturnJson::ReturnJ('数据更新成功...','success','/news/newsList') : ReturnJson::ReturnJ('数据更新失败，请重新操作...','false');
+                 return $news -> updateNewsInfoById($data['id'],$data) ? ReturnJson::ReturnJ('数据更新成功...','success','/news/newsList') : ReturnJson::ReturnJ('数据更新失败，请重新操作...','false');
             }
             return ReturnJson::ReturnJ($validate -> getError(),'false');
         }
@@ -59,7 +64,7 @@ class News extends Controller
         if(isset($_GET['id']) && !empty($_GET['id'])){
             $id = $this -> request -> get('id');
             $news = new NewsModel();
-            $getOne = $news -> where('id',$id) -> limit(1) -> find();
+            $getOne = $news -> getOneNewsById($id);
             return $getOne ?  view('news_update',['getOne' => $getOne]) : ReturnJson::ReturnH("未获取到相应的新闻数据信息...","#/news/news_list");
         }else{
             ReturnJson::ReturnA("无效的修改操作...");
@@ -67,11 +72,13 @@ class News extends Controller
 
     }
 
+    //新闻删除
     public function newsDel(){
         if(isset($_GET['id']) && !empty($_GET['id'])){
             $id = $this -> request -> get('id');
             $news = new NewsModel();
-            return $news -> where('id',$id) -> delete() ? ReturnJson::ReturnJ("已成功删除此信息...") : ReturnJson::ReturnJ($news -> getError(),"false");
+            $data['is_del']=time();
+            return $news -> updateNewsInfoById($id,$data) ? ReturnJson::ReturnJ("已成功删除此信息...") : ReturnJson::ReturnJ($news -> getError(),"false");
         }
         return ReturnJson::ReturnJ("非法的数据提交信息!","false");
     }
@@ -86,17 +93,47 @@ class News extends Controller
                 return ReturnJson::ReturnA('关键字不能为空，请重新搜索！');
             } else {
                 $news = new NewsModel();
-                $List = $news->getSerachNews($post_data);
+                $List = $news->getSearchNews($post_data);
                 if (empty($List->items())) {
                     return ReturnJson::ReturnA('未查询到相关数据，请重新搜索！');
                 } else {
-                    return view('news_list' , ['List' => $List , 'Count' => $news->getCountSerachNews($post_data)]);
+                    return view('news_list' , ['List' => $List , 'Count' => $news->getCountSearchNews($post_data)]);
                 }
             }
         }else{
             return ReturnJson::ReturnA('非法数据操作!');
         }
 
+    }
+
+
+    /*
+     * @newsUser            信息推送用户查找
+     *
+     * */
+    public function newsUser(){
+        if ($this->request->isPost()){
+            $post_data = $this->request->post('key');
+            if (empty($post_data)) {
+                return $this ->jsonFail("关键字不能为空，请重新搜索！");
+            } else {
+                $user = new User();
+                $List = $user->getNewsUserByKeyword($post_data);
+                if (empty($List)) {
+                    return $this ->jsonFail("未查询到相关数据，请重新搜索");
+                } else {
+                    $html = '<select class="form-control" name="user_id" id="select_user">';
+                    $html .= '<option value="0">所有用户</option>';
+                    foreach($List as $value){
+                        $html .= '<option value="'.$value['id'].'">'.$value['number'].'</option>';
+                    }
+                    $html .= '</select>';
+                    return $this ->jsonSuccess($html);
+                }
+            }
+        }else{
+            return $this ->jsonFail("非法数据操作");
+        }
     }
 
 

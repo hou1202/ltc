@@ -31,21 +31,13 @@ class Test extends CommController {
      * * */
     public function index()
     {
-        $rel = 10;
-        switch($rel){
-            case 1:
-                var_dump(1);
-                break;
-            case 2:
-                var_dump(2);
-                break;
-            case 3:
-                var_dump(3);
-                break;
-            case 4||5||6||7||8:
-                var_dump(45678);
-                break;
-        }
+        /*$todaytime=strtotime("today");
+        $start = strtotime(date('Y-m-d',time()));
+        $end = strtotime(date('Y-m-d',time()).' 23:59:59');
+        var_dump($todaytime);
+        var_dump($start);
+        var_dump($end);*/
+        var_dump(date('H',time()));
 
        return $this->fetch('index/test');
 

@@ -1,0 +1,29 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+
+    <link rel="stylesheet" href="/static/index/style/returnlist.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+
+        </a>
+        <h1>新闻详情</h1>
+    </header>
+
+    <div class="bottom-content">
+        <div class="msg_title">
+            {$News.title}
+        </div>
+        <div class="message">
+            {$News.content}
+        </div>
+    </div>
+
+
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

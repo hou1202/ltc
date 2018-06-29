@@ -1,0 +1,128 @@
+
+
+<div class="content_wrapper">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <aside>
+                    <header>
+                        <i class="fa fa-fw fa-file"></i>修改交易信息
+                        <a href="#/trade/tradeList"><i class="fa fa-fw fa-arrow-left" style="float:right;margin:10px 30px 0 0"></i></a>
+                    </header>
+                    <section>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form class="form-horizontal" role="form" method="post" action="/admin/trade/tradeUpdate" data-sendingText="正在为您积极努力的去提交信息。。。" data-validate="validate">
+                                        <input type="hidden"  value="{$getOne.id}" name="id">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">交易编号</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="交易编号" value="{$getOne.trade_id}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">买方会员</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="买方会员" value="{$getOne.buy_number}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">卖方会员</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="卖方会员" value="{$getOne.sell_number}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">交易数量</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="交易数量"  value="{$getOne.number}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">LTC价格</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="LTC价格" value="{$getOne.ltc_price}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">交易总价格</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="交易总价格" value="{$getOne.count_price}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">手续费</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="手续费"   value="{$getOne.service_price}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">交易时间</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="交易时间"   value="{$getOne.trade_time}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">汇款状态</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="汇款状态"   value="{$getOne.remit_state[0]}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">交易状态</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="交易状态"   value="{$getOne.trade_state[0]}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">创建时间</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" placeholder="创建时间"   value="{$getOne.create_time}" readonly>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

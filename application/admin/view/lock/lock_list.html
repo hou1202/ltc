@@ -53,6 +53,9 @@
                                                 <td>{$l.create_time}</td>
                                                 <td>
                                                     {switch name="l.state[1]"}
+                                                        {case value="2"}
+                                                            <a class="btn btn-primary btn-xs">无操作</a>
+                                                        {/case}
                                                         {case value="1"}
                                                             <a class="btn btn-primary btn-xs">无操作</a>
                                                         {/case}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>充币地址</title>
+    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+    <link rel="stylesheet" href="../style/cssreset.css">
+    <link rel="stylesheet" href="../style/pulladress.css">
+    <link rel="stylesheet" href="../style/public.css">
+    <script src="../lib/jquery-3.3.1.min .js"></script>
+</head>
+
+<body>
+    <header class="public">
+        <a href="javascript:;">
+            <img src="../image/arrow.gif" alt="">
+        </a>
+        <h1>充币地址</h1>
+    </header>
+    <div class="list-title">
+        <a href="javascript:;">
+            提币申请
+        </a>
+        <a href="javascript:;">
+            充币地址
+        </a>
+        <a href="javascript:;">
+            提币明细
+        </a>
+        <a href="javascript:;">
+            充币明细
+        </a>
+    </div>
+    <div class="list-content">
+        <form class="sub-box">
+            <div class="">
+                <p>会员编号</p>
+                <p>LTC180012345</p>
+            </div>
+            <div class="">
+                <p>手机号码</p>
+                <p>15715608013</p>
+            </div>
+            <div class="">
+                <p>可用资产</p>
+                <p>254.00</p>
+            </div>
+            <div class="">
+                <p>锁厂资产</p>
+                <p>234.00</p>
+            </div>
+            <div class="input-box">
+                <p>
+                    充币地址
+                </p>
+                <textarea name="" id="address" placeholder="你的充币地址"></textarea>
+            </div>
+        </form>
+        <div class="sub">
+            <button class="btn" form="userinfo" type="submit">获取充币地址</button>
+        </div>
+        <div class="info">
+            <ul>
+                <li>
+                    充币说明
+                </li>
+                <li>
+                    1.将你的LTC转入该地址即可
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 底部开始 -->
+    <div class="bottom-content">
+
+    </div>
+    <footer>
+        <div>
+            <a href="javascript:;">
+                <i class="ficon1"></i>
+                <p>首页</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon2"></i>
+                <p>锁仓</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon3"></i>
+                <p>分享</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon4"></i>
+                <p>我的</p>
+            </a>
+        </div>
+    </footer>
+    <!-- 底部结束 -->
+</body>
+<script>
+    function copyText() {
+        var text = document.getElementById("address");
+        console.log(text);
+        text.select(); // 选择对象  
+        document.execCommand("Copy"); // 执行浏览器复制命令  
+    }
+    $(".btn").on("click", function() {
+        //后台获取地址
+        var address = "后台获取地址";
+        $("#address").val(address);
+        $(".btn").html("一键复制地址");
+        $(this).on("click", function() {
+            copyText();
+            alert("已成功复制");
+        });
+    });
+
+    window.addEventListener('touchmove', function(evt) {
+        evt.preventDefault();
+    });
+</script>
+
+</html>

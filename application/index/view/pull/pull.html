@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>充币明细</title>
     <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
-    <link rel="stylesheet" href="/static/index/css/cssreset.css">
-    <link rel="stylesheet" href="/static/index/css/pull.css">
+    <link rel="stylesheet" href="../style/cssreset.css">
+    <link rel="stylesheet" href="../style/pull.css">
+    <link rel="stylesheet" href="../style/public.css">
 </head>
+
 <body>
-    <header>
+    <header class="public">
         <a href="javascript:;">
-            <img src="/static/index/images/arrow.gif" alt="">
+            <img src="../image/arrow.gif" alt="">
         </a>
         <h1>充币明细</h1>
     </header>
@@ -42,45 +45,70 @@
             <li>操作</li>
         </ul>
         <ul class="list-item">
-                <li>
-                    50
-                </li>
-                <li>SFF53OO23434</li>
-                <li>审核中</li>
-                <li>
-                    <a href="javascript:;">
+            <li>
+                50
+            </li>
+            <li>SFF53OO23434</li>
+            <li>审核中</li>
+            <li>
+                <a href="javascript:;">
                         查看
                     </a>
-                </li>
+            </li>
         </ul>
         <ul class="list-item">
-                <li>
-                    50
-                </li>
-                <li>SFF53OO23434SDSF</li>
-                <li>审核中</li>
-                <li>
-                    <a href="javascript:;">
+            <li>
+                50
+            </li>
+            <li>SFF53OO23434SDSF</li>
+            <li>审核中</li>
+            <li>
+                <a href="javascript:;">
                         查看
                     </a>
-                </li>
+            </li>
         </ul>
         <ul class="list-item">
-                <li>
-                    50
-                </li>
-                <li>SFF53OO23434</li>
-                <li>审核中</li>
-                <li>
-                    <a href="javascript:;">
+            <li>
+                50
+            </li>
+            <li>SFF53OO23434</li>
+            <li>审核中</li>
+            <li>
+                <a href="javascript:;">
                         查看
                     </a>
-                </li>
+            </li>
         </ul>
     </div>
     <!-- 锁仓列表结束 -->
+    <!-- 底部开始 -->
+    <footer>
+        <div>
+            <a href="javascript:;">
+                <i class="ficon1"></i>
+                <p>首页</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon2"></i>
+                <p>锁仓</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon3"></i>
+                <p>分享</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon4"></i>
+                <p>我的</p>
+            </a>
+        </div>
+    </footer>
+    <!-- 底部结束 -->
+</body>
+<script>
+    window.addEventListener('touchmove', function(evt) {
+        evt.preventDefault();
+    });
+</script>
 
-
-    <!--footer--引入-->
-    {include file="default/footer" /}
-    <!--footer--END-->
+</html>

@@ -1,0 +1,104 @@
+@rem:75rem;
+html,body{
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+body{
+    -webkit-overflow-scrolling:touch; 
+    overflow-scrolling: touch;
+}
+.public{
+    width: 100%;
+    height: 90/@rem;
+    background: url("/static/index/images/hback.gif") repeat-y;
+    background-size: 100%;
+    display: flex !important;
+    display: -webkit-flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30/@rem;
+    position: relative;
+    img{
+        width: 16/@rem;
+    }
+    h1{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 32/@rem;
+        font-weight: 600;
+        color: #ffffff;
+    }
+}
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100/@rem;
+    background: #ffffff;
+    z-index: 2000;
+    div{
+        display: flex;
+        display: -webkit-flex;
+        // padding: 0 30/@rem;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+        a{
+            flex-grow: 1;
+            text-align: center;
+            display: block;
+            color: #262626;
+            font-size: 30/@rem;
+        }
+    }
+    i{
+        display: inline-block;
+        width: 39/@rem;
+        height: 50/@rem;
+    }
+}
+i.ficon1{
+    background: url("/static/index/images/footer.gif");
+    background-size: 39/@rem;
+}
+i.ficon2{
+    background: url("/static/index/images/footer.gif") 0 -50/@rem;
+    background-size: 39/@rem;
+}
+i.ficon3{
+    background: url("/static/index/images/footer.gif") 0 -100/@rem;
+    background-size: 39/@rem;
+}
+i.ficon4{
+    background: url("/static/index/images/person.gif") 0 -150/@rem;
+    background-size: 39/@rem;
+}
+.bottom-content{
+    height: 120/@rem;
+}
+.bomb {
+    display:none;
+    width:80%;
+    font-size:30/@rem;
+    color:#5a1010;
+    text-align:center;
+    margin:0 10%;
+    background:#fff;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    box-shadow: 0 1px 1px #c0c0c0;
+    padding:77/@rem 39/@rem;
+    border:1px solid #e1e1e1;
+    position: absolute;
+    top:25%;
+    z-index: 777;
+    p {
+        line-height: 77/@rem;
+        margin-bottom: 0;
+    }
+}

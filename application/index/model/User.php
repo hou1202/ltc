@@ -9,91 +9,114 @@ namespace app\index\model;
 
 use think\Model;
 
+
 class User extends Model
 {
     public static $tableName = 'think_user';
 
     protected $autoWriteTimestamp = true;
 
-    //密码MD5自动加密
-    protected function setPasswordAttr($value){
+
+    //登录密码MD5自动加密
+    protected function setPwdLoginAttr($value){
+        return md5($value);
+    }
+
+    //交易密码MD5自动加密
+    protected function setPwdTradeAttr($value){
         return md5($value);
     }
 
     //取值时间显示
     protected function getCreateTimeAttr($value){
-        return date('Y-m-d',$value);
+        $create_time[0] = date('Y-m-d',$value);
+        $create_time[1] = $value;
+        return $create_time;
     }
 
-    protected function getGradeAttr($value){
-        $grade = [0 => '青铜小兵' , 1 => '白银连长', 2 => '黄金将军', 3 => '铂金元帅', 4 => '王者大帝'];
-        return $grade[$value];
-    }
+
 
     /*
-     * @ getUserInfoByMobile    通过手机号码获取用户完整信息
-     * $phone   用户手机号码
+     * @ getUserAllByKey    通过$key获取用户完整信息
+     * $key                 键值
+     * $field               键名：默认为ID
      * @return 用户完整信息
      * */
-    public function getUserInfoByMobile($phone){
-        return $this->where(['phone' => $phone])->find();
+    public function getUserAllByKey($key,$field='id'){
+        return $this->where($field,$key)->find();
     }
 
     /*
-     * @ getUserIdByMobile    通过手机号码获取用户ID信息
-     * $phone   用户手机号码
-     * @return 用户完整信息
+     * @ getUserPartByKey    通过$key获取用户部分信息
+     * $key                 键值
+     * $field               键名：默认为ID
+     * @return 用户部分信息
      * */
-    public function getUserIdByMobile($phone){
-        return $this->field('id')->where(['phone' => $phone])->find();
+    public function getUserPartByKey($key,$field='id'){
+        return $this->field('id,number,pwd_login,pwd_trade,phone,asset_avali,asset_fixed,state')->where($field,$key)->find();
     }
 
 
-
     /*
-     * @ getParentUserIdByInvite    通过邀请码，获取父级用户ID
-     * $invite 父级用户邀请码
-     * @return id
-     * */
-    public function getParentUserIdByInvite($invite){
-        return $this -> field('id') -> where('invite',$invite) -> find();
-    }
-
-    /*
-     * @ getLoginUserInfoByPhone 通过手机号码/密码，获取登录用户信息
+     * @ loginUserCheck     登录用户验证
      * $phone   登录用户手机号码
      * $password    登录用户密码
      * @return  id,phone,state
      * */
-    public function getLoginUserInfoByPhone($phone,$password){
-        return $this -> field('id,phone,state')
+    public function loginUserCheck($phone,$password){
+        return $this -> field('id,number,phone,state')
                      -> where('phone',$phone)
-                     -> where('password',md5($password))
+                     -> where('pwd_login',md5($password))
                      -> find();
     }
 
+
     /*
-     * @ getInviteUserByPId 通过PId，查找该用户下的当有邀请用户
-     * $pid     用户的ID，即父即用户的PID
-     * @return  id,portrait,phone,user_name,invite,grade,create_time
+     * @ insertUserReturnId     增加新用户
+     * $data                    用户数据
+     * @return                  新增用户ID
      * */
-    public function getInviteUserByPId($pid){
-        return  $this ->alias('u')
-            -> field('sum(r.money) as t_money,u.id,u.portrait,u.phone,u.user_name,u.invite,u.grade,u.create_time')
-            ->join('think_capital_record r','u.id = r.sid','inner')
-            -> where('u.p_id',$pid)
-            ->group('r.sid')
-            -> select();
+    public function insertUserReturnId($data){
+        if($this -> allowField(true) -> save($data)){
+            return $this ->getLastInsID();
+        }else{
+            return false;
+        }
     }
+
 
     /*
      *@setFieldById 更新某个字段的值
-     * $id  更新数据ID
-     * $field 更新的字段
-     * $value 更新字段的值
+     * $id  更新数据key值
+     * $field  更新数据key名
+     * $data 更新数据
      * */
-    public function setFieldById($id,$field,$value){
-        return $this -> where('id',$id) -> setField($field,$value);
+    public function setFieldById($data,$id,$field='id'){
+        return $this -> allowField(true) ->  save($data,[$field => $id]);
+    }
+
+    /*
+     * @setUserAsset        增加/减少指定用户的用户、固定资产
+     * $id                  条件KEY
+     * $key_field           KEY字段
+     * $type                增加/减少类型 (固定资产不可减少，只能增加)
+     *      1=》 增加
+     *      2=》 减少
+     * $field               改变值字段可用户资产/固定资产
+     *
+     * */
+    public function setUserAsset($id,$num,$type=1,$field='asset_avali',$key_field='id'){
+        switch($type){
+            case 1:
+                return $this -> where($key_field,$id)->setInc($field,$num);
+                break;
+            case 2:
+                return $this -> where($key_field,$id)->setDec('asset_avali',$num);
+                break;
+            default:
+                return false;
+                break;
+        }
     }
 
 

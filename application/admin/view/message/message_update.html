@@ -7,41 +7,34 @@
             <div class="col-sm-12">
                 <aside>
                     <header>
-                        <i class="fa fa-fw fa-file"></i>修改信息内容
-                        <a href="#/message/messageList"><i class="fa fa-fw fa-arrow-left" style="float:right;margin:10px 30px 0 0"></i></a>
+                        <i class="fa fa-fw fa-file"></i>修改信息
+                        <a href="#/setup/setMessageList"><i class="fa fa-fw fa-arrow-left" style="float:right;margin:10px 30px 0 0"></i></a>
                     </header>
                     <section>
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <form class="form-horizontal" role="form" method="post" action="/admin/message/messageUpdate" data-sendingText="正在为您积极努力的去提交信息。。。" data-validate="validate">
-                                        <input type="hidden" name="id" value="{$getOne.id}">
+                                    <form class="form-horizontal" role="form" method="post" action="/admin/setup/setMessageUpdate" data-sendingText="正在为您积极努力的去提交信息。。。" data-validate="validate">
+                                        <input type="hidden"  value="{$getOne.id}" name="id">
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">信息标题</label>
+                                            <label class="col-sm-2 control-label">信息名称</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" placeholder="信息标题" name="title" value="{$getOne.title}">
+                                                <input type="text" class="form-control" placeholder="信息名称" value="{$getOne.title}" name="title">
                                             </div>
                                             <p class="col-sm-4 help-block">*必填</p>
                                         </div>
                                         <hr/>
 
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">类型代码</label>
-                                            <div class="col-sm-6">
-                                                <input type="number" class="form-control" placeholder="大于0的正整数，且代码不得重复" name="type" value="{$getOne.type}">
-                                            </div>
-                                            <p class="col-sm-4 help-block">必填</p>
-                                        </div>
-                                        <hr/>
-
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">信息内容</label>
+                                            <label class="col-sm-2 control-label">内容</label>
                                             <div class="col-sm-6">
                                                 <textarea class="form-control" id="editor" name="content">{$getOne.content}</textarea>
                                             </div>
                                             <p class="col-sm-4 help-block">*必填</p>
                                         </div>
                                         <hr/>
+
+
                                         <div class="form-group">
                                             <div class=" col-sm-12">
                                                 <button type="button" class="btn btn-primary J_ajaxSubmitBtn">提交</button>
@@ -60,6 +53,7 @@
 </div>
 
 
+<!--富文本编辑器-->
 <script>
     //富文本编辑器
     var $textarea = $('#editor');
@@ -72,7 +66,7 @@
         langPath: '/static/admin/js/vendor/kindeditor/lang/',
         filePostName: 'imgFile',    //imgFile是编辑器中图片上传的默认表单域名称
         width: '100%',
-        minHeight: 200,    //最小高度，不用写px单位
+        minHeight: 400,    //最小高度，不用写px单位
         resizeType: 1,     //2时可以拖动改变宽度和高度，1时只能改变高度，0时不能拖动。
         allowPreviewEmoticons: true,  //允许预览表情图片
         allowImageUpload: true,       //允许本地上传图片
@@ -91,27 +85,24 @@
     });
 </script>
 
+
+<!--/*数据验证JS脚本*/-->
 <script>
-    /*数据验证JS脚本*/
     function callback1(returnData, $from) {
-        console.log($from);
     }
     function validate($from) {
         var title = $from.find('input[name="title"]');
-        var type = $from.find('input[name="type"]');
+        console.log(title.val());
         var content = $from.find('textarea[name="content"]');
-        if ($.trim(title.val()) == '') {
-            return '信息标题不能为空';
+
+        if ($.trim(title.val()) == '' || $.trim(title.val()).length > 30) {
+
+            return '信息标题不得为空且不得大于30位';
         }
 
-        if ($.trim(type.val()) == '') {
-            return '信息类型不能为空';
+        if($.trim(content.val()) == ''){
+            return '信息内容不得为空';
         }
-
-        if ($.trim(content.val()) == '') {
-            return '内容不能为空';
-        }
-
 
         return true;
     }

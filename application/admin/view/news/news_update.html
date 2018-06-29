@@ -1,6 +1,4 @@
 <script src="/static/admin/js/vendor/kindeditor/kindeditor-all-min.js"></script>
-<link rel="stylesheet" href="/static/admin/js/vendor/uploadify/mydemo/uploadify-demo.css">
-<script src="/static/admin/js/vendor/uploadify/jquery.uploadify.min.js"></script>
 
 <div class="content_wrapper">
 
@@ -26,62 +24,38 @@
                                             <p class="col-sm-4 help-block">*必填</p>
                                         </div>
                                         <hr/>
+
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">副标题</label>
+                                            <label class="col-sm-2 control-label">作者</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" placeholder="副标题" value="{$getOne.info}" name="info">
+                                                <input type="text" class="form-control" placeholder="作者" value="{$getOne.author}" name="author">
                                             </div>
                                             <p class="col-sm-4 help-block">*必填</p>
                                         </div>
                                         <hr/>
 
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">是否推荐</label>
-                                            <div class="col-sm-6">
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="recommend" value="1" {$getOne.recommend=="推荐"?="checked"}/> 推荐
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="recommend" value="0" {$getOne.recommend=="不推荐"?="checked"} /> 不推荐
-                                                    </label>
-                                                </div>
-
+                                            <label class="col-sm-2 control-label">推送用户</label>
+                                            <div class="col-sm-2">
+                                                <select class="form-control" name="user_id" id="select_user">
+                                                    <option value="{$getOne.user_id[0]}">{$getOne.user_id[1]}</option>
+                                                    <option value="0">所有用户</option>
+                                                </select>
                                             </div>
-                                            <p class="col-sm-4 help-block">*必填</p>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" placeholder="搜索会员编号或手机号码查找" id="userSearch">
+                                            </div>
+                                            <div class=" col-sm-1">
+                                                <button type="button" class="btn btn-primary" id="userButton">查找</button>
+                                            </div>
+                                            <p class="col-sm-5 help-block"></p>
                                         </div>
                                         <hr/>
 
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">审核状态</label>
+                                            <label class="col-sm-2 control-label">创建时间</label>
                                             <div class="col-sm-6">
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="state" value="1" {$getOne.state=="通过"?="checked"} /> 通过
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="state" value="0" {$getOne.state=="未通过"?="checked"} /> 未通过
-                                                    </label>
-                                                </div>
-
-                                            </div>
-                                            <p class="col-sm-4 help-block">*必填</p>
-                                        </div>
-                                        <hr/>
-
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">缩略图</label>
-                                            <div class="col-sm-6">
-                                                <input type="button" id="uploadify1"/>
-                                                <div id="waitUploadNum"></div>
-                                                <div id="imageView">
-
-                                                    {if condition="$getOne.thumbnail != ''"}
-                                                    <img src="{$getOne.thumbnail}" style="width:80px;height:120px">
-                                                    <input type='hidden' name='thumbnail' value={$getOne.thumbnail}>
-                                                    {/if}
-
-                                                </div>
+                                                <input type="text" class="form-control" placeholder="创建时间" value="{$getOne.create_time}" readonly>
                                             </div>
                                             <p class="col-sm-4 help-block"></p>
                                         </div>
@@ -112,49 +86,7 @@
 
 </div>
 
-<script>
-    /*图片上传JS脚本*/
-    try {
-        $('#uploadify1').uploadify('destroy');
-    } catch (e) {
-    }
-    $('#uploadify1').uploadify({
-        'auto': true,                                 //选择文件后是否自动上传
-        'multi': false,                               //是否支持多文件上传
-        'swf': '/static/admin/js/vendor/uploadify/uploadify.swf',                                   //swf文件路径
-        'buttonImage': '/static/admin/js/vendor/uploadify/mydemo/btn1.png',                   //按钮图片路径
-        'width': 90,                               //按钮宽
-        'height': 34,                             //按钮高
-        'fileObjName': 'imgFile',                   //表单域的name
-        'uploadLimit': 999,                   //最多上传文件数量，默认999
-        'queueSizeLimit': 999,             //队列长度限制，默认999
-        'buttonCursor': 'hand',                       //上传按钮Hover时的鼠标形状，默认值是’hand’
-        'queueID': 'waitUploadNum',                           //上传队列的#id，用于css。不设定则不显示进度条
-        'removeCompleted': true,           //表示在上传完成后是否删除队列中的对应元素。默认是True，即上传完成后就看不到上传文件进度条了
-        'removeTimeout': 2,               //表示上传完成后多久删除队列中的进度条，默认为3秒
-        'preventCaching': true,                       //若设置为true，一个随机数将被加载swf文件URL的后面，防止浏览器缓存
-        'fileSizeLimit': '3072KB',               //上传文件大小限制，默认单位是KB，若需要限制大小在100KB以内，可设置该属性为：100KB
-        'fileTypeDesc': 'Image Files',                 //文件类型的说明
-        'fileTypeExts': '*.gif; *.jpg; *.png; *.jpeg',                 //指定允许上传的文件类型。默认*.*。比如只支持gif , jpg , png类型的图像，那么该属性设置为: ‘*.gif; *.jpg ; *.png’
-        'formData': '{"uid":"250"}',                         //指定上传文件附带的其他数据
-        'uploader': '/static/admin/server/upload.php',                         //服务器脚本路径
-        'onUploadSuccess': function (file, data, response) {
-            /**
-             * 在每一个文件上传成功后触发！
-             * file：为uploadify自己组装的文件对象
-             * data：为服务器返回的信息
-             * response：true或false
-             */
-            var data = jQuery.parseJSON(data);
-            var $imageView = $("#imageView");
-            $imageView.empty();
-            $imageView.append($("<img src='" + data.url + "' style='width:80px;height:120px'/><input type='hidden' name='thumbnail' value='" + data.url + "'>"));  //这里不能遍历data对象，因为它不是一个队列
-            console.log(data);
-        }
-
-    });
-</script>
-
+<!--富文本编辑器-->
 <script>
     //富文本编辑器
     var $textarea = $('#editor');
@@ -186,31 +118,58 @@
     });
 </script>
 
+<!--推送用户搜索控制-->
 <script>
-    /*数据验证JS脚本*/
+    $("#userButton").on("click",function(){
+        key = $("#userSearch").val();
+
+        if($.trim(key) == '') {
+            alert('请输入要搜索的会员编号或手机号码');
+            return false;
+        }
+
+        $.ajax({
+            url:"/admin/news/newsUser",
+            type:"POST",
+            dataType: "json",
+            data:"key="+key,
+            success:function(data){
+                console.log(data);
+                if(data.code == 1){
+                    $("#select_user").replaceWith(data.msg);
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error:function () {
+                alert("网络错误，请重试...");
+            }
+        });
+    })
+
+</script>
+
+<!--/*数据验证JS脚本*/-->
+<script>
     function callback1(returnData, $from) {
         console.log($from);
     }
     function validate($from) {
         var title = $from.find('input[name="title"]');
-        var info = $from.find('input[name="info"]');
-        var recommend = $from.find('input[name="recommend"]');
-        var thumbnail = $from.find('input[name="thumbnail"]');
+        var author = $from.find('input[name="author"]');
+        var userId = $from.find('select[name="user_id"]');
         var content = $from.find('textarea[name="content"]');
-        if ($.trim(title.val()) == '') {
-            return '新闻标题不能为空';
+        if ($.trim(title.val()) == '' || $.trim(title.val()).length > 30) {
+
+            return '新闻标题不能为空且不得大于30个字';
         }
 
-        if ($.trim(info.val()) == '') {
-            return '新闻副标题不能为空';
+        if ($.trim(author.val()) == '') {
+            return '作者名称不能为空且不得大于8个字';
         }
 
-        if ($.trim(recommend.val()) == '') {
-            return '推荐设置不能为空';
-        }
-
-        if ($.trim(thumbnail.val()) == '') {
-            return '缩略图不能为空';
+        if ($.trim(userId.val()) == '') {
+            return '推送用户不能为空';
         }
 
         if ($.trim(content.val()) == '') {

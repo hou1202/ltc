@@ -8,7 +8,7 @@
 * */
 function showAlertAutoClose(data) {
         $(".bomb p").html(data);
-        $(".bomb").show(300).delay(1500).hide(100);
+        $(".bomb").show(300).delay(2000).hide(100);
 
 }
 
@@ -19,9 +19,11 @@ function showAlertAutoClose(data) {
 function jsonAlertAutoClose(data) {
     if(data.msg != ""){
         $(".bomb p").html(data.msg);
-        $(".bomb").show(300).delay(1500).hide(100);
+        $(".bomb").show(300).delay(2000).hide(100);
         if(!jQuery.isEmptyObject(data.data)){
-            location.href=data.data;
+            //延迟3秒跳转
+            setTimeout(function () { location.href=data.data; }, 3000);
+
         }
     }
 

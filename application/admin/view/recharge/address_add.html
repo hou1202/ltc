@@ -1,0 +1,78 @@
+
+
+<div class="content_wrapper">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <aside>
+                    <header>
+                        <i class="fa fa-fw fa-file"></i>新建充币地址
+                        <a href="#/setup/setRechargeList"><i class="fa fa-fw fa-arrow-left" style="float:right;margin:10px 30px 0 0"></i></a>
+                    </header>
+                    <section>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form class="form-horizontal" role="form" method="post" action="/admin/setup/setRechargeAdd" data-sendingText="正在为您积极努力的去提交信息。。。" data-validate="validate">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">充币地址</label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" placeholder="充币地址"  style="height:80px;" name="content"></textarea>
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">启用状态</label>
+                                            <div class="col-sm-6">
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="state" value="1" checked="checked" /> 启用
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="state" value="0" /> 关闭
+                                                    </label>
+
+                                                </div>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+
+                                        <div class="form-group">
+                                            <div class=" col-sm-12">
+                                                <button type="button" class="btn btn-primary J_ajaxSubmitBtn">提交</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!--/*数据验证JS脚本*/-->
+<script>
+    function callback1(returnData, $from) {
+    }
+    function validate($from) {
+        var content = $from.find('textarea[name="content"]');
+
+        if($.trim(content.val()) == ''){
+            return '充币地址不得为空';
+        }
+
+        return true;
+    }
+</script>
+

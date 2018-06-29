@@ -1,0 +1,132 @@
+
+
+<div class="content_wrapper">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <aside>
+                    <header>
+                        <i class="fa fa-fw fa-file"></i>新建锁仓计划
+                        <a href="#/setup/setPlanList"><i class="fa fa-fw fa-arrow-left" style="float:right;margin:10px 30px 0 0"></i></a>
+                    </header>
+                    <section>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form class="form-horizontal" role="form" method="post" action="/admin/setup/setPlanAdd" data-sendingText="正在为您积极努力的去提交信息。。。" data-validate="validate">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">锁仓时间</label>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" placeholder="锁仓时间:30" name="day">
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填</p>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">锁仓利率</label>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" placeholder="锁仓利率：1.5"  name="ratio">
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">锁仓份额</label>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" placeholder="锁仓份额：888"  name="number">
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">开始时间</label>
+                                            <div class="col-sm-6">
+                                                <input type="time" class="form-control" placeholder="开始时间: 2018/05/05 09:00"  name="start_time">
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填(24小时制)</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">结束时间</label>
+                                            <div class="col-sm-6">
+                                                <input type="time" class="form-control" placeholder="结束时间: 2018/05/05 12:00"  name="end_time">
+                                            </div>
+                                            <p class="col-sm-4 help-block">*必填(24小时制)</p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">计划状态</label>
+                                            <div class="col-sm-6">
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="state" value="1" checked="checked" /> 开启计划
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="state" value="0"  /> 关闭计划
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <p class="col-sm-4 help-block"></p>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="form-group">
+                                            <div class=" col-sm-12">
+                                                <button type="button" class="btn btn-primary J_ajaxSubmitBtn">提交</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!--/*数据验证JS脚本*/-->
+<script>
+    function callback1(returnData, $from) {
+        console.log($from);
+    }
+    function validate($from) {
+        var planDay = $from.find('input[name="day"]');
+        var planRatio = $from.find('input[name="ratio"]');
+        var planNum = $from.find('input[name="number"]');
+        var startTime = $from.find('input[name="start_time"]');
+        var endTime = $from.find('input[name="end_time"]');
+
+        if($.trim(planDay.val()) == '' || isNaN($.trim(planDay.val())) || $.trim(planDay.val()) <= 0 || $.trim(planDay.val())%1 != 0){
+            return '请输入正确锁仓时间(大于0的正整数)';
+        }
+
+        if($.trim(planRatio.val()) == '' || isNaN($.trim(planRatio.val())) || $.trim(planRatio.val()) <= 0){
+            return '请输入正确锁仓利率';
+        }
+
+        if($.trim(planNum.val()) == '' || isNaN($.trim(planNum.val())) || $.trim(planNum.val()) <= 0 || $.trim(planNum.val())%1 != 0){
+            return '请输入正确锁仓份额数(大于0的正整数)';
+        }
+
+        if($.trim(startTime.val()) == ''){
+            return '请输入正确锁仓开始时间';
+        }
+
+        if($.trim(endTime.val()) == ''){
+            return '请输入正确锁仓关闭时间';
+        }
+
+        return true;
+    }
+</script>
+

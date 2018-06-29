@@ -1,0 +1,82 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+    <link rel="stylesheet" href="/static/index/style/lock.css">
+    <link rel="stylesheet" href="/static/index/style/selllist.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>锁仓详情</h1>
+    </header>
+    <div class="list-title">
+        <a href="/index/lock/lock">
+            锁仓计划
+        </a>
+        <a href="javascript:;">
+            锁仓明细
+        </a>
+        <a href="/index/lock/newDeal">
+            最新成交
+        </a>
+    </div>
+    <div class="list-content">
+        <ul class="userinfo">
+            <li>
+                <p>锁仓数量</p>
+                <p>{$getOne.number}</p>
+            </li>
+            <li>
+                <p>开始时间</p>
+                <p>{$getOne.create_time.0}</p>
+            </li>
+            <li>
+                <p>结束时间</p>
+                <p>{$Other.end_time}</p>
+            </li>
+            <li>
+                <p>锁仓时长</p>
+                <p>{$getOne.lock_time} 天</p>
+            </li>
+            <li>
+                <p>锁仓进度</p>
+                <p>第 {$Other.process} 天</p>
+            </li>
+            <li>
+                <p>锁仓利率</p>
+                <p>{$getOne.lock_ratio} %</p>
+            </li>
+        </ul>
+        <ul class="bank">
+            <li>
+                <p>当前收益</p>
+                <p>{$getOne.number*$getOne.lock_ratio*$Other.process*0.01}</p>
+            </li>
+            <li>
+                <p>预计收益</p>
+                {if condition="$getOne.state.1 == 2 "}
+                    {$getOne.number*$getOne.lock_ratio*$Other.process*0.01}
+                {else /}
+                    <p>{$getOne.number*$getOne.lock_ratio*$getOne.lock_time*0.01}</p>
+                {/if}
+
+            </li>
+            <li>
+                <p>锁仓状态</p>
+                <p>{$getOne.state.0}</p>
+            </li>
+
+        </ul>
+    </div>
+    <!-- 锁仓列表结束 -->
+    <div class="bottom-content">
+
+    </div>
+
+
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

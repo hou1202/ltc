@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>分享列表</title>
     <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
-    <link rel="stylesheet" href="/static/index/css/cssreset.css">
-    <link rel="stylesheet" href="/static/index/css/sharefriend.css">
+    <link rel="stylesheet" href="./style/cssreset.css">
+    <link rel="stylesheet" href="./style/sharefriend.css">
+    <link rel="stylesheet" href="./style/public.css">
 </head>
+
 <body>
-    <header>
+    <header class="public">
         <a href="javascript:;">
-            <img src="/static/index/images/arrow.gif" alt="">
+            <img src="./image/arrow.gif" alt="">
         </a>
         <h1>分享列表</h1>
     </header>
@@ -37,36 +40,62 @@
             <li>团队数</li>
         </ul>
         <ul class="list-item">
-                <li>
-                    <p>LTC18001324234234</p>
-                </li>
-                <li>2018-05-06</li>
-                <li>65</li>
-                <li>100</li>
-                <li>254</li>
+            <li>
+                <p>LTC18001324234234</p>
+            </li>
+            <li>2018-05-06</li>
+            <li>65</li>
+            <li>100</li>
+            <li>254</li>
         </ul>
         <ul class="list-item">
-                <li>
-                    <p>LTC18001324234234</p>
-                </li>
-                <li>2018-05-06</li>
-                <li>65</li>
-                <li>100</li>
-                <li>254</li>
+            <li>
+                <p>LTC18001324234234</p>
+            </li>
+            <li>2018-05-06</li>
+            <li>65</li>
+            <li>100</li>
+            <li>254</li>
         </ul>
         <ul class="list-item">
-                <li>
-                    <p>LTC18001324234234</p>
-                </li>
-                <li>2018-05-06</li>
-                <li>65</li>
-                <li>100</li>
-                <li>254</li>
+            <li>
+                <p>LTC18001324234234</p>
+            </li>
+            <li>2018-05-06</li>
+            <li>65</li>
+            <li>100</li>
+            <li>254</li>
         </ul>
     </div>
     <!-- 锁仓列表结束 -->
+    <div class="bottom-content"></div>
+    <!-- 底部开始 -->
+    <footer>
+        <div>
+            <a href="javascript:;">
+                <i class="ficon1"></i>
+                <p>首页</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon2"></i>
+                <p>锁仓</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon3"></i>
+                <p>分享</p>
+            </a>
+            <a href="javascript:;">
+                <i class="ficon4"></i>
+                <p>我的</p>
+            </a>
+        </div>
+    </footer>
+    <!-- 底部结束 -->
+</body>
+<script>
+    window.addEventListener('touchmove', function(evt) {
+        evt.preventDefault();
+    });
+</script>
 
-
-    <!--footer--引入-->
-    {include file="default/footer" /}
-    <!--footer--END-->
+</html>

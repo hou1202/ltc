@@ -1,0 +1,250 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+
+    <link rel="stylesheet" href="/static/index/style/lockdetail.css">
+    <!--<script src="./lib/jquery-3.3.1.min .js"></script>-->
+    <script src="/static/index/lib/echarts.common.min.js"></script>
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>锁仓计划</h1>
+    </header>
+    <div class="list-title">
+        <a href="javascript:;">
+            锁仓计划
+        </a>
+        <a href="/index/lock/lockList">
+            锁仓明细
+        </a>
+        <a href="/index/lock/newDeal">
+            最新成交
+        </a>
+    </div>
+    <div class="price">
+        <div class="circle">
+            <div>
+                <p>固定LTC（元）</p>
+                <p>{$User.asset_fixed}</p>
+            </div>
+            <div>
+                <p>可用LTC（元）</p>
+                <p id="asset">{$User.asset_avali}</p>
+            </div>
+        </div>
+    </div>
+    <!-- 锁仓列表开始 -->
+    <div class="list-content">
+        <form action="" id="lock_form">
+            <div class="item">
+                <p>锁仓份额</p>
+                <input type="number" placeholder="为小于50的可用LTC数量整数" name="number" id="number">
+            </div>
+            <div class="list">
+                <p>
+                    剩余份额
+                </p>
+                <p> <label id="surplus">{$Surplus}</label> 个</p>
+
+            </div>
+            <!--<input type="hidden" value="{$User.asset_avali}" id="asset"  />-->
+            <!--<input type="hidden" value="{$Surplus}" id="surplus" />-->
+            <div class="cate">
+                锁仓类型
+            </div>
+            <div class="box">
+
+                {foreach name="Plan" item="p"}
+
+                    <div class="rad-box"
+                         {if condition="date('H',$p.start_time) <= date('H',time()) && date('H',$p.end_time) > date('H',time())"}
+                         style="background:url(/static/index/images/xuan_03.png) no-repeat;background-size:100%;"
+                         {/if}
+                    >
+
+                        <div class="rad-test">
+                            <p>锁仓{$p.day}天</p>
+                            <p>{$p.ratio}%
+                                <span>
+                                        利率
+                                </span>
+                            </p>
+                            <p>{$p.start_time|date="H",###}点开抢</p>
+                        </div>
+                        {if condition="date('H',$p.start_time) <= date('H',time()) && date('H',$p.end_time) > date('H',time())"}
+                            <input type="radio" name="plan" value="{$p.id}" id="plan" checked>
+                        {/if}
+
+                    </div>
+
+                {/foreach}
+            </div>
+            <div class="item">
+                <p style="color:#000000;">交易密码</p>
+                <input type="password" placeholder="请输入交易密码" class="psw" name="pwd_trade" id="pwd_trade">
+            </div>
+            <div class="sub">
+                <a href="javascript:;" id="lock_submit">
+                    确认锁仓
+                </a>
+            </div>
+        </form>
+        <div>
+            <div id="main"></div>
+        </div>
+    </div>
+
+    <!-- 锁仓列表结束 -->
+    <div class="bottom-content">
+
+    </div>
+
+
+
+<script>
+    /*$(function() {
+        $(".rad-box").click(function() {
+            $(".rad-box").each(function(index, item) {
+                item.style.background = "";
+            })
+            $(this).css({
+                "background": "url(/static/index/images/xuan_03.png) no-repeat",
+                "backgroundSize": "100%"
+            });
+        });
+    });*/
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    option = {
+        // title: {
+        //     text: '一天用电量分布',
+        //     subtext: '纯属虚构'
+        // },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross'
+            }
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['00:00', '01:15', '02:30', '03:45', '05:00', '06:15', '07:30', '08:45', '10:00', '11:15', '12:30', '13:45', '15:00', '16:15', '17:30', '18:45', '20:00', '21:15', '22:30', '23:45']
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value} '
+            },
+            axisPointer: {
+                snap: true
+            }
+        },
+        visualMap: {
+            show: false,
+            dimension: 0,
+            // pieces: [{
+            //     lte: 6,
+            //     color: 'green'
+            // }, {
+            //     gt: 6,
+            //     lte: 8,
+            //     color: 'red'
+            // }, {
+            //     gt: 8,
+            //     lte: 14,
+            //     color: 'green'
+            // }, {
+            //     gt: 14,
+            //     lte: 17,
+            //     color: 'red'
+            // }, {
+            //     gt: 17,
+            //     color: 'green'
+            // }]
+        },
+        series: [{
+            name: '用电量',
+            type: 'line',
+            smooth: true,
+            data: [300, 280, 250, 260, 270, 300, 550, 500, 400, 390, 380, 390, 400, 500, 600, 750, 800, 700, 600, 400],
+            // markArea: {
+            //     data: [
+            //         [{
+            //             name: '早高峰',
+            //             xAxis: '07:30'
+            //         }, {
+            //             xAxis: '10:00'
+            //         }],
+            //         [{
+            //             name: '晚高峰',
+            //             xAxis: '17:30'
+            //         }, {
+            //             xAxis: '21:15'
+            //         }]
+            //     ]
+            // }
+        }]
+    };
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+
+</script>
+
+    <script>
+        //用户锁仓数据验证
+        $("#lock_submit").on('click',function(){
+            var number = $('#number').val();
+            var plan = $("#plan").val();
+            var pwd_trade = $("#pwd_trade").val();
+            var asset = $("#asset").text();
+            var surplus = $("#surplus").text();
+
+            if(isNaN($.trim(number)) || $.trim(number)%1 != 0 || $.trim(number) < 1 ||  parseInt(number) > parseInt(asset) || parseInt(number) > $.trim(surplus) || $.trim(number) > 50){
+                showAlertAutoClose("锁仓份额为不得大于50和可用资产的整数");
+                return false;
+            }
+
+            if($.trim(plan) == '' || isNaN($.trim(plan)) ) {
+                showAlertAutoClose("锁仓类型信息有误，请重新确认");
+                return false;
+            }
+            if($.trim(pwd_trade) == '' || $.trim(pwd_trade).length < 6 ) {
+                showAlertAutoClose("交易密码不正确，请确认");
+                return false;
+            }
+
+
+            $.ajax({
+                url:"/index/lock/lockPlan",
+                type:"POST",
+                dataType: "json",
+                data:$('#lock_form').serialize(),
+                success:function(data){
+                    jsonAlertAutoClose(data);
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+        });
+    </script>
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

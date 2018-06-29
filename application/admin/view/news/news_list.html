@@ -15,7 +15,7 @@
 
                                         <form style="float:left;margin-left:30px" class="form-inline">
                                             <div class="form-group">
-                                                <input type="text" name="keyword" class="form-control" placeholder="请输入文章ID或标题关键词">
+                                                <input type="text" name="keyword" class="form-control" placeholder="请输入会员编号或手机号">
                                             </div>
                                             <input type="button" onclick="submitSearch()" class="btn btn-primary " value="查询" name="submit">
                                             <a href="#/news/newsSerach" style="display: none" id="searchA"></a>
@@ -29,10 +29,9 @@
                                             <tr>
                                                 <th>id</th>
                                                 <th>标题</th>
-                                                <th>副标题</th>
-                                                <th width="100">缩略图</th>
-                                                <th width="90">推荐状态</th>
-                                                <th width="90">审核状态</th>
+                                                <th>作者</th>
+                                                <th>内容</th>
+                                                <th>用户</th>
                                                 <th width="100">添加时间</th>
                                                 <th width="140">操作</th>
                                             </tr>
@@ -41,11 +40,10 @@
                                             {foreach name='List' item='l'}
                                                 <tr>
                                                     <td>{$l.id}</td>
-                                                    <td>{$l.title|mb_substr=0,30,'utf-8'}</td>
-                                                    <td>{$l.info|mb_substr=0,30,'utf-8'}</td>
-                                                    <td><img src="{$l.thumbnail}" style="width:40px;height:60px"></td>
-                                                    <td>{$l.recommend}</td>
-                                                    <td>{$l.state}</td>
+                                                    <td>{$l.title|mb_substr=0,20,'utf-8'}</td>
+                                                    <td>{$l.author|mb_substr=0,8,'utf-8'}</td>
+                                                    <td>{$l.content|mb_substr=0,25,'utf-8'}</td>
+                                                    <td>{$l.user_id[1]}</td>
                                                     <td>{$l.create_time}</td>
                                                     <td>
                                                         <a class="btn btn-primary btn-xs" href="#/news/newsUpdate?id={$l.id}">编辑</a>

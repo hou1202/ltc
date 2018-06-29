@@ -1,0 +1,66 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+    <link rel="stylesheet" href="/static/index/style/lock.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>锁仓明细</h1>
+    </header>
+    <div class="list-title">
+        <a href="/index/lock/lock">
+            锁仓计划
+        </a>
+        <a href="javascript:;">
+            锁仓明细
+        </a>
+        <a href="/index/lock/newDeal">
+            最新成交
+        </a>
+    </div>
+    <div class="price">
+        <div class="circle">
+            <div>
+                <p>今日锁仓收益（元）</p>
+                <p>{$Capital.today}</p>
+            </div>
+            <div>
+                <p>锁仓总收益（元）</p>
+                <p>{$Capital.count}</p>
+            </div>
+        </div>
+    </div>
+    <!-- 锁仓列表开始 -->
+    <div class="list-content">
+        <h2>锁仓列表</h2>
+        <ul class="top-title">
+            <li>数量</li>
+            <li>开始时间</li>
+            <li>锁仓时间</li>
+            <li>状态</li>
+            <li>操作</li>
+        </ul>
+        {foreach name="List" item="l"}
+            <ul class="list-item">
+                <li>{$l.number}</li>
+                <li>{$l.create_time.0}</li>
+                <li>{$l.lock_time}天</li>
+                <li>{$l.state.0}</li>
+                <li><a href="/index/lock/lockDetail?id={$l.id}">查看</a></li>
+            </ul>
+        {/foreach}
+
+    </div>
+    <!-- 锁仓列表结束 -->
+    <div class="bottom-content">
+
+    </div>
+
+
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

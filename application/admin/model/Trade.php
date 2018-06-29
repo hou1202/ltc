@@ -15,7 +15,7 @@ class Trade extends Model
 
     protected $autoWriteTimestamp = true;
 
-    /*//取值交易状态显示
+    //取值交易状态显示
     protected function getTradeStateAttr($value){
         $state=array();
         $str = [0 => '未交易',1 => '交易中',2 => '待确认',3 => '已完成',4 => '已失效'];
@@ -33,14 +33,14 @@ class Trade extends Model
         $remitState[0] = $str[$value];
         $remitState[1] = $value;
         return $remitState;
-    }*/
+    }
 
     //取值时间显示
     protected function getCreateTimeAttr($value){
         return date('Y-m-d H:i:s',$value);
     }
 
-    //取值时间显示
+    //取值交易时间显示
     protected function getTradeTimeAttr($value){
         return date('Y-m-d H:i:s',$value);
     }
@@ -53,7 +53,7 @@ class Trade extends Model
         return $this -> alias('l')
             -> field('r.number as buy_number,t.number as sell_number,l.id,l.trade_id,l.number,l.ltc_price,l.count_price,l.service_price,l.remit_state,l.trade_state,l.trade_time')
             -> join('think_user r','r.id = l.buy_id','left')
-            -> join('think_user t','t.id = l.sell_id','right')
+            -> join('think_user t','t.id = l.sell_id','left')
             -> order('l.'.$key.' '.$des.'')
             -> group('l.id')
             -> paginate(10,false,['path' => '/admin/main#/trade/tradeList' ]);
@@ -73,22 +73,14 @@ class Trade extends Model
      * */
     public function getOneTradeInfoById($id,$field='id'){
         return $this -> alias('l')
-            -> field('r.number as p_number,l.id,l.user_id,l.number,l.plat,l.address,l.payment,l.service_price,l.true_num,l.state,l.talk,l.create_time')
-            ->join('think_user r','l.user_id = r.id','left')
+            -> field('r.number as buy_number,t.number as sell_number,l.id,l.trade_id,l.number,l.ltc_price,l.count_price,l.service_price,l.remit_state,l.trade_state,l.trade_time,l.create_time')
+            -> join('think_user r','r.id = l.buy_id','left')
+            -> join('think_user t','t.id = l.sell_id','left')
             -> where('l.'.$field,$id)
-            ->group('l.id')
+            -> group('l.id')
             -> find();
     }
 
-    /*
-     * @ updateTradeInfoById  更新指定交易信息
-     * $id      交易ID
-     * */
-    public function updateTradeInfoById($id,$data){
-        return $this -> allowField(true)
-            -> where('id',$id)
-            -> update($data);
-    }
 
     /*
      * @ getSearchTradeByKeyword  通过关键词搜索交易信息
@@ -96,12 +88,12 @@ class Trade extends Model
      * */
     public function getSearchTradeByKeyword($keyword){
         return $this -> alias('l')
-            -> field('r.number as p_number,l.id,l.number,l.plat,l.address,l.payment,l.service_price,l.true_num,l.state,l.create_time')
-            -> join('think_user r','l.user_id = r.id','left')
+            -> field('r.number as buy_number,t.number as sell_number,l.id,l.trade_id,l.number,l.ltc_price,l.count_price,l.service_price,l.remit_state,l.trade_state,l.trade_time')
+            -> join('think_user r','r.id = l.buy_id','left')
+            -> join('think_user t','t.id = l.sell_id','left')
             -> where('l.id','like',$keyword)
             -> whereOr('r.number','like','%'.$keyword.'%')
-            -> whereOr('l.plat','like','%'.$keyword.'%')
-            -> whereOr('r.phone','like','%'.$keyword.'%')
+            -> whereOr('t.number','like','%'.$keyword.'%')
             -> order('l.id DESC')
             -> paginate(10,false,['path' => '/admin/main#/trade/tradeList' ]);
     }
@@ -113,11 +105,11 @@ class Trade extends Model
     public function getCountSearchTradeByKeyword($keyword){
         return $this -> alias('l')
             -> field('l.id')
-            -> join('think_user r','l.user_id = r.id','left')
+            -> join('think_user r','r.id = l.buy_id','left')
+            -> join('think_user t','t.id = l.sell_id','left')
             -> where('l.id','like',$keyword)
             -> whereOr('r.number','like','%'.$keyword.'%')
-            -> whereOr('l.plat','like','%'.$keyword.'%')
-            -> whereOr('r.phone','like','%'.$keyword.'%')
+            -> whereOr('t.number','like','%'.$keyword.'%')
             ->count();
     }
 

@@ -11,6 +11,10 @@ use app\common\controller\CommController;
 
 class Share extends CommController
 {
+    public function share(){
+        return $this -> fetch('share/share');
+    }
+
     public function shareFriend(){
         return $this -> fetch('share/sharefriend');
 

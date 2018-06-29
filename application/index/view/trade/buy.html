@@ -1,0 +1,159 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+
+    <link rel="stylesheet" href="/static/index/style/buy.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>购买</h1>
+    </header>
+
+    <!--trade_header--引入-->
+    {include file="default/trade_header" /}
+    <!--trade_header--END-->
+
+    <div class="content">
+        <form action="" id="buy_form">
+            <div class="item-input">
+                <p>会员编号</p>
+                <p>{$User.number}</p>
+            </div>
+            <div class="item-input">
+                <p>手机号码</p>
+                <p>{$User.phone}</p>
+                <input type="hidden" value="{$User.phone}" id="phone" name="phone" readonly />
+            </div>
+            <div class="item-input">
+                <p>可用资产</p>
+                <p>{$User.asset_avali}</p>
+                <input type="hidden" value="{$User.asset_avali}" id="asset_avali" readonly />
+            </div>
+            <div class="item-input">
+                <p>LTC价格</p>
+                <p>{$Price.price}</p>
+                <input type="hidden" value="{$Price.price}" id="price" readonly />
+            </div>
+            <div class="input-box">
+                <p>
+                    购买数量
+                </p>
+                <input type="number" placeholder="请输入购买数量" name="number" id="number">
+            </div>
+            <div class="input-box">
+                <p>
+                    交易密码
+                </p>
+                <input type="password" placeholder="请输入交易密码" name="pwd_trade" id="pwd_trade">
+            </div>
+            <div class="input-box">
+                <p>
+                    验证码
+                </p>
+                <input type="text" placeholder="请输入验证码" name="code" id="code">
+                <a href="javascript:;" id="get_code">
+                    获取验证码
+                </a>
+            </div>
+            <div class="sub">
+                <input type="button" value="发布购买需求" id="buy_submit">
+            </div>
+        </form>
+    </div>
+    <div class="bottom-content">
+
+    </div>
+    <script>
+        //短信验证
+        $(function(){
+            //获取短信验证码
+            var validCode=true;
+            $("#get_code").click (function () {
+                console.log(1);
+                var phone = $('#phone').val();
+                if(!/^1[34578]\d{9}$/.test(phone)){
+                    showAlertAutoClose("手机号码信息有误");
+                    return false;
+                }
+                var time=120;
+                var code=$(this);
+                if (validCode) {
+                    $.post('/index/verify/get', {type:4, phone:phone}, function(data){
+                        if(data.code == 1){
+                            jsonAlertAutoClose(data);
+                            validCode=false;
+                            code.addClass("send_obtain");
+                            var t=setInterval(function () {
+                                time--;
+                                code.html(time+"秒");
+                                if (time==0) {
+                                    clearInterval(t);
+                                    code.html("重新获取");
+                                    validCode=true;
+                                    code.removeClass("send_obtain");
+                                } },1000);
+                        }else{
+                            jsonAlertAutoClose(data);
+                        }
+                    });
+                }
+            })
+        });
+
+        //用户购买数据验证
+        $("#buy_submit").on('click',function(){
+            var phone = $('#phone').val();
+            var asset_avali = $("#asset_avali").val();
+            var price = $("#price").val();
+            var number = $('#number').val();
+            var pwd_trade = $("#pwd_trade").val();
+            var code = $("#code").val();
+
+            if(isNaN($.trim(number)) || $.trim(number)%1 != 0 || $.trim(number) < 1){
+                showAlertAutoClose("购买数量为大于1的正整数");
+                return false;
+            }
+
+            if($.trim(pwd_trade) == '' || $.trim(pwd_trade).length < 6 ) {
+                showAlertAutoClose("交易密码不正确，请确认");
+                return false;
+            }
+
+            if($.trim(code) == '' || $.trim(pwd_trade).length != 6 ) {
+                showAlertAutoClose("验证码不正确，请确认");
+                return false;
+            }
+
+
+            $.ajax({
+                url:"/index/trade/buyCheck",
+                type:"POST",
+                dataType: "json",
+                data:$('#buy_form').serialize(),
+                success:function(data){
+                    jsonAlertAutoClose(data);
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

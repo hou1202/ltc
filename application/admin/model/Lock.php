@@ -18,7 +18,7 @@ class Lock extends Model
     //取值锁仓状态显示
     protected function getStateAttr($value){
         $state=array();
-        $str = [0 => '锁仓中',1 => '已完成'];
+        $str = [0 => '锁仓中',1 => '已完成',2 => '中断锁仓'];
         $state[0] = $str[$value];
         $state[1] = $value;
         return $state;
@@ -93,7 +93,7 @@ class Lock extends Model
      * $id      锁仓ID
      * */
     public function breakLockById($id){
-        $data['state'] = 1;
+        $data['state'] = 2;
         $data['is_break'] = time();
         return $this -> allowField(['state','is_break']) -> where('id',$id) -> update($data);
     }
