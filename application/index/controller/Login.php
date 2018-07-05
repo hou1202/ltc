@@ -81,9 +81,9 @@ class Login extends CommController
             if($userVal -> check($data)){
                 //判断验证码
 
-                /*if($data['code'] != Session::get('login_'.$data['phone'])){
+                if($data['code'] != Session::get('login_'.$data['phone'])){
                     return $this ->jsonFail('您的验证码信息有误，请重新确认...');
-                }*/
+                }
 
                 //实例化用户User  Model
                 $user = new User();
@@ -109,11 +109,11 @@ class Login extends CommController
                 $data['share_id'] = PublicFunction::SetShareId(8);
                 if($result = $user -> insertUserReturnId($data)){
                     //清除短信Session
-                    //Session::delete('login_'.$data['phone']);
+                    Session::delete('login_'.$data['phone']);
                     //设置用户COOKIE，并设置保存时间7天
                     Cookie::set('user',$result,604800);
                     //更新验证码记录
-                    //Db::table('think_log_verify')->where('phone='.$data['phone'].' AND type=0 AND verify='.$data['code'])->update(['status'=>1, 'e_time'=>date('Y-m-d H:i:s')]);
+                    Db::table('think_log_verify')->where('phone='.$data['phone'].' AND type=0 AND verify='.$data['code'])->update(['status'=>1, 'e_time'=>date('Y-m-d H:i:s')]);
 
                     //写入分销关系
                     $pShareId=$data['p_id'];

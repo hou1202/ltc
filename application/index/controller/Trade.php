@@ -45,7 +45,7 @@ class Trade extends CommController
             $user = new User();
             $userInfo = $user -> getUserPartByKey($id);
             if(!$user -> checkUserAccount($userInfo->id)){
-                return $this ->jsonFail('您的帐户信息尚不完整，请先完善帐户信息','/index/person/personAccount');
+                return $this ->jsonFail('您的帐户信息尚不完整，请先完善帐户信息','/index/account/personAccount');
             }
             if(md5($data['pwd_trade']) != $userInfo -> pwd_trade){
                 return $this ->jsonFail('交易密码不正确...');
