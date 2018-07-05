@@ -155,9 +155,9 @@ class Lock extends CommController
         }
     }
 
-    //最新成交
+    /*//最新成交
     public function newDeal(){
         return $this -> fetch('lock/new_deal');
-    }
+    }*/
 
 }

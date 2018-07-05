@@ -1,25 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>个人中心</title>
-    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
     <link rel="stylesheet" href="/static/index/style/person.css">
-    <link rel="stylesheet" href="/static/index/style/cssreset.css">
-    <link rel="stylesheet" href="/static/index/style/public.css">
-</head>
 
-<body>
     <header>
         <div class="top-header">
-            <a href="">
+            <a href="javascript:history.back(-1);">
                 <img class="arrow" src="/static/index/images/arrow.gif" alt="">
             </a>
             <h1>
-                <img class="head" src="/static/index/images/head.gif" alt="">
+                <img class="head" src="{$User.portrait}" alt="">
                 <!-- 首页 -->
             </h1>
         </div>
@@ -27,22 +17,22 @@
             <div>
                 <img class="id-head" src="/static/index/images/id.gif" alt="">
                 <span>
-                        LTC55521457
+                        {$User.number}
                 </span>
             </div>
         </div>
         <div class="top-list">
             <div>
-                <p>分享编码</p>
-                <p>SC5E52</p>
+                <p><strong>分享编码</strong></p>
+                <p>{$User.share_id}</p>
             </div>
             <div>
                 <p>手机号码</p>
-                <p>18656027295</p>
+                <p>{$User.phone}</p>
             </div>
             <div>
                 <p>注册日期</p>
-                <p>2018-06-01</p>
+                <p>{$User.create_time.0}</p>
             </div>
         </div>
     </header>
@@ -62,27 +52,27 @@
             </a>
         </div>
         <div class="list-top center-line">
-            <a href="./pull/apply.html">
+            <a href="/index/recharge/extract">
                 <p class="icon1"></p>
                 <p>提币申请</p>
             </a>
-            <a href="./pull/pulldetail.html" class="line">
+            <a href="/index/recharge/extractList" class="line">
                 <p class="icon2"></p>
                 <p>提币明细</p>
             </a>
-            <a href="./person/data.html" class="line">
+            <a href="/index/account/personAccount" class="line">
                 <p class="icon3"></p>
                 <p>资料管理</p>
             </a>
-            <a href="./pull/pulladress.html">
+            <a href="/index/recharge/recharge">
                 <p class="icon4"></p>
                 <p>充币地址</p>
             </a>
-            <a href="./pull/pull.html" class="line">
+            <a href="/index/recharge/rechargeList" class="line">
                 <p class="icon5"></p>
                 <p>充币明细</p>
             </a>
-            <a class="line" href="./person/psw.html">
+            <a class="line" href="/index/account/pwdLogin">
                 <p class="icon6"></p>
                 <p>密码管理</p>
             </a>
@@ -92,11 +82,11 @@
                 <p class="icon7"></p>
                 <p>新闻中心</p>
             </a>
-            <a href="./return/aboutltc.html" class="line">
+            <a href="/index/feed/aboutLtc" class="line">
                 <p class="icon8"></p>
                 <p>关于LTC</p>
             </a>
-            <a href="./return/fankui.html" class="line">
+            <a href="/index/feed/feedLog" class="line">
                 <p class="icon9"></p>
                 <p>留言反馈</p>
             </a>
@@ -108,31 +98,9 @@
         </a>
     </div>
     <div class="bottom-content"></div>
-    <footer>
-        <div>
-            <a href="javascript:;">
-                <i class="ficon1"></i>
-                <p>首页</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon2"></i>
-                <p>锁仓</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon3"></i>
-                <p>锁仓</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon4"></i>
-                <p>我的</p>
-            </a>
-        </div>
-    </footer>
-</body>
-<script>
-    window.addEventListener('touchmove', function(evt) {
-        evt.preventDefault();
-    });
-</script>
 
-</html>
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

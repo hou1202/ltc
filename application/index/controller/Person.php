@@ -7,17 +7,28 @@
  */
 
 namespace app\index\controller;
+
 use app\common\controller\CommController;
+use app\index\model\User;
+use app\index\model\Trade as TradeModel;
+use app\index\validate\AccountValidate;
+use app\common\controller\PublicFunction;
+use think\Session;
+use think\Cookie;
+use think\Hook;
+use think\Db;
 
 class Person extends CommController
 {
     public function person(){
-        return $this -> fetch('person/person');
+        Hook::listen('CheckAuth',$params);
+        $id = Cookie::get('user');
+        $user = new User();
+        $userInfo = $user -> getUserAllByKey($id);
+        return $this -> fetch('person/person',['User'=>$userInfo]);
 
     }
 
-    public function personData(){
-        return $this -> fetch('person/data');
 
-    }
+
 }

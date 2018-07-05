@@ -47,7 +47,7 @@ class Trade extends Model
      * $field           主键字段，默认id
      * */
     public function saveTrade($data,$key=null,$field='id'){
-        if($key){
+        if($key != null){
             return $this -> allowField(true) -> save($data,[$field=>$key]);
         }else{
             return $this -> allowField(true) -> save($data);
@@ -57,8 +57,11 @@ class Trade extends Model
     /*
      * @getTradeOrderByKey     按指定字段返回交易信息
      * */
-    public function getTradeOrderByKey($id,$field='buy_id'){
-        return $this -> where($field,$id)-> select();
+    public function getTradeOrderByKey($id,$field='buy_id',$state='1,2,3,4'){
+        return $this -> where($field,$id)
+                    -> where('trade_state','in',$state)
+                    -> order('id DESC')
+                    -> select();
     }
 
     /*
@@ -75,7 +78,53 @@ class Trade extends Model
     public function noSelfUnTraded($id){
         return $this -> where('buy_id','not in',$id)
                     -> where('trade_state',0)
+                    -> order('id DESC')
                     ->select();
+    }
+
+    /*
+     * @getTradeInfoByKey       获取唯一指定交易信息
+     * $key             主键值
+     * $field           主键字段，默认id
+     * */
+    public function getTradeInfoByKey($key,$field='id'){
+        return $this -> where($field,$key) -> find();
+    }
+
+
+    /*
+     * @getTradeDetailById       获取唯一指定交易详细信息
+     * $id             ID
+     * */
+    public function getTradeDetailById($id){
+        return $this -> alias('t')
+            -> field('l.number as buy_number,l.name as buy_name,l.phone as buy_phone,r.bank as sell_bank,r.bank_num as sell_bank_num,r.alipay as sell_alipay,r.bank_address as sell_bank_address,r.number as sell_number,r.name as sell_name,r.phone as sell_phone,t.id,t.trade_id,t.number,t.ltc_price,t.count_price,t.service_price,t.remit_state,t.trade_state,t.trade_time,t.create_time')
+            -> join('think_user l','t.buy_id = l.id','left')
+            -> join('think_user r','t.sell_id = r.id','right')
+            -> where('t.id',$id)
+            -> group('t.id')
+            -> find();
+    }
+
+    /*
+     * @setTradeStateById       设置指定交易订单状态
+     * $id             ID
+     * */
+    public function setTradeStateById($id,$value,$field='trade_state'){
+        return $this -> where('id',$id)
+            ->setField($field,$value);
+    }
+
+    //获取最新交易订单
+    public function getNewestDealTrade(){
+        return $this -> alias('t')
+            -> field('l.number as buy_number,r.number as sell_number,t.number,t.count_price,t.trade_time')
+            ->join('think_user l','t.buy_id = l.id','left')
+            ->join('think_user r','t.sell_id = r.id','right')
+            -> where('t.trade_state',3)
+            -> group('t.id')
+            -> order('t.id DESC')
+            -> select();
     }
 
 

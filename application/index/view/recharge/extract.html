@@ -1,0 +1,260 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+
+    <link rel="stylesheet" href="/static/index/style/apply.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>提币申请</h1>
+    </header>
+
+    <!--rechrage-header--引入-->
+    {include file="default/recharge_header" /}
+    <!--rechrage-header--END-->
+
+    <div class="userinfo">
+        <form id="extract_form">
+            <div class="user-item">
+                <input type="hidden" name="user_id" id="id" value="{$User.id}">
+                <input type="hidden" name="phone" id="phone" value="{$User.phone}">
+                <img src="{$User.portrait}" alt="">
+                <div class="user-text">
+                    <p>{$User.number}</p>
+                    <P>{$User.phone}</P>
+                </div>
+            </div>
+            <div class="price-content">
+                <div class="price-item">
+                    <p>
+                        可用资产
+                    </p>
+                    <p class="default" id="asset">
+                        {$User.asset_avali}
+                    </p>
+                </div>
+                <div class="price-item">
+                    <p>
+                        锁仓资产
+                    </p>
+                    <p>
+                        {$User.asset_fixed}
+                    </p>
+                </div>
+            </div>
+            <div class="form-box">
+                <div class="input-item">
+                    <p>
+                        提币平台
+                    </p>
+                    <div class="selcet-box">
+                        <img src="/static/index/images/bottom.png" alt="">
+                        <select class="" name="plat" id="plat">
+                            {foreach name="Extract" item="e"}
+                                <option  value ="{$e.content}">{$e.content}</option>
+                            {/foreach}
+
+                        </select>
+                    </div>
+                </div>
+                <div class="input-item">
+                    <p>
+                        提币数量
+                    </p>
+                    <input type="number" placeholder="数量为不大于可用资产的整数" onchange="javascript:extractChanged();" name="number" id="number">
+                </div>
+                <div class="input-text">
+                    手续费： <span class="default" id="service_price">0.00 </span> (实际到账金额：<span class="default" id="fact_number">0.00</span>)
+                </div>
+                <div class="input-box">
+                    <p>
+                        提币地址
+                    </p>
+                    <textarea name="address" id="address" placeholder="你在提币平台的地址"></textarea>
+                </div>
+                <div class="input-item">
+                    <p>
+                        Payment ID
+                    </p>
+                    <input type="text" placeholder="提币平台的PaymentID(没有可不填)" name="payment" id="payment">
+                </div>
+                <div class="input-item">
+                    <p>
+                        验证码
+                    </p>
+                    <input type="text" placeholder="请输入验证码" name="code" id="code">
+                    <a href="javascript:;" class="get-qr" id="get_code">
+                        获取验证码
+                    </a>
+                </div>
+                <div class="input-item">
+                    <p>
+                        交易密码
+                    </p>
+                    <input type="password" placeholder="请输入交易密码" name="pwd_trade" id="pwd_trade">
+                </div>
+                <div class="sub">
+                    <button class="btn" type="button" id="extract_submit">确认提币</button>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>
+                            注意事项
+                        </li>
+                        <li>
+                            1.请确保提币地址与对应的平台一致
+                        </li>
+                        <li>
+                            2.提笔审核通过后不能退回
+                        </li>
+                        <li>
+                            3.提笔审核通过后4小时内到对应地址
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="bottom-content">
+
+    </div>
+
+    <script>
+        window.addEventListener('touchmove', function(evt) {
+            evt.preventDefault();
+        });
+    </script>
+
+    <script>
+        function extractChanged()
+        {
+            var asset = $('#asset').text();
+            var number =document.getElementById('number').value;
+            console.log(number);
+            if($.trim(number) != ''){
+                if(isNaN($.trim(number)) || $.trim(number)%1 != 0 || $.trim(number) < 1 ||  parseInt(number) > parseInt(asset)){
+                    showAlertAutoClose("提币数量为大于0和小于可用资产的整数");
+                    document.getElementById('number').value = null;
+                    document.getElementById('service_price').textContent = '0.00';
+                    document.getElementById('fact_number').textContent = '0.00';
+                    return false;
+                }
+            }
+            document.getElementById('service_price').textContent=(number*0.05).toFixed(2)
+            document.getElementById('fact_number').textContent=number-(number*0.05).toFixed(2)
+        }
+    </script>
+
+
+    <script>
+        //短信验证
+        $(function(){
+            //获取短信验证码
+            var validCode=true;
+            $("#get_code").click (function () {
+                console.log(1);
+                var phone = $('#phone').val();
+                if(!/^1[34578]\d{9}$/.test(phone)){
+                    showAlertAutoClose("手机号码信息有误");
+                    return false;
+                }
+                var time=120;
+                var code=$(this);
+                if (validCode) {
+                    $.post('/index/verify/get', {type:3, phone:phone}, function(data){
+                        if(data.code == 1){
+                            jsonAlertAutoClose(data);
+                            validCode=false;
+                            code.addClass("send_obtain");
+                            var t=setInterval(function () {
+                                time--;
+                                code.html(time+"秒");
+                                if (time==0) {
+                                    clearInterval(t);
+                                    code.html("重新获取");
+                                    validCode=true;
+                                    code.removeClass("send_obtain");
+                                } },1000);
+                        }else{
+                            jsonAlertAutoClose(data);
+                        }
+                    });
+                }
+            })
+        });
+
+        //用户数据验证
+        $("#extract_submit").on('click',function(){
+            var id = $('#id').val();
+            var phone = $('#phone').val();
+            var plat = $('#plat').val();
+            var number = $('#number').val();
+            var address = $('#address').val();
+            var payment = $('#payment').val();
+            var pwd_trade = $("#pwd_trade").val();
+            var code = $("#code").val();
+            var asset = $('#asset').text();
+
+            if(isNaN($.trim(id)) || $.trim(id)%1 != 0 || $.trim(id) < 1){
+                showAlertAutoClose("提币信息有误");
+                return false;
+            }
+
+            if(!/^1[34578]\d{9}$/.test(phone)){
+                showAlertAutoClose("提币信息有误");
+                return false;
+            }
+
+            if($.trim(plat) == '') {
+                showAlertAutoClose("提币平台信息有误");
+                return false;
+            }
+
+            if(isNaN($.trim(number)) || $.trim(number)%1 != 0 || $.trim(number) < 1 ||  parseInt(number) > parseInt(asset)){
+                showAlertAutoClose("提币数量为大于0和小于可用资产的整数");
+                return false;
+            }
+
+            if($.trim(address) == '') {
+                showAlertAutoClose("提币地址不得为空");
+                return false;
+            }
+
+            if($.trim(payment).length >35) {
+                showAlertAutoClose("提币Payment ID信息有误");
+                return false;
+            }
+
+            if($.trim(pwd_trade) == '' || $.trim(pwd_trade).length < 6 ) {
+                showAlertAutoClose("交易密码不正确");
+                return false;
+            }
+
+            if($.trim(code) == '' || $.trim(code).length != 6 || isNaN($.trim(code))) {
+                showAlertAutoClose("验证码不正确，请确认");
+                return false;
+            }
+
+
+            $.ajax({
+                url:"/index/recharge/extractCheck",
+                type:"POST",
+                dataType: "json",
+                data:$('#extract_form').serialize(),
+                success:function(data){
+                    jsonAlertAutoClose(data);
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+        });
+    </script>
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

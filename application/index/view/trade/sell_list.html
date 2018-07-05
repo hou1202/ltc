@@ -24,45 +24,20 @@
             <li>状态</li>
             <li>操作</li>
         </ul>
-        <ul class="list-item">
-            <li>
-                50
-            </li>
-            <li>0.09</li>
-            <li>150.09</li>
-            <li>交易中</li>
-            <li>
-                <a href="javascript:;">
-                    查看
-                </a>
-            </li>
-        </ul>
-        <ul class="list-item">
-            <li>
-                50
-            </li>
-            <li>0.09</li>
-            <li>150.09</li>
-            <li>交易中</li>
-            <li>
-                <a href="javascript:;">
-                    查看
-                </a>
-            </li>
-        </ul>
-        <ul class="list-item">
-            <li>
-                50
-            </li>
-            <li>0.09</li>
-            <li>150.09</li>
-            <li>交易中</li>
-            <li>
-                <a href="javascript:;">
-                    查看
-                </a>
-            </li>
-        </ul>
+        {foreach name="List" item="l"}
+            <ul class="list-item">
+                <li>{$l.number}</li>
+                <li>{$l.service_price}</li>
+                <li>{$l.count_price}</li>
+                <li>{$l.trade_state.0}</li>
+                <li>
+                    <a href="/index/trade/sellDetail?id={$l.id}">
+                        查看
+                    </a>
+                </li>
+            </ul>
+        {/foreach}
+
     </div>
     <!-- 锁仓列表结束 -->
     <div class="bottom-content"></div>

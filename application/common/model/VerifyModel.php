@@ -22,6 +22,7 @@ class VerifyModel
     const TYPE_TRADE_PASSWD = 2;     // 修改交易密码
     const TYPE_PULL = 3;     // 提币
     const TYPE_TRADE_BUY = 4;     // 交易购买
+    const TYPE_ACCOUNT = 5;         //修改帐号资料
 
     public static $sVerifyLogTable = 'think_log_verify';
 
@@ -31,6 +32,7 @@ class VerifyModel
         self::TYPE_TRADE_PASSWD => 'trade_',
         self::TYPE_PULL => 'pull_',
         self::TYPE_TRADE_BUY => 'buy_',
+        self::TYPE_ACCOUNT => 'account_',
     ];
 
     /**
@@ -117,6 +119,10 @@ class VerifyModel
             case self::TYPE_TRADE_BUY:
                 $text = '【LTC】您的购买交易验证码为：' . $verifyCode . '，请在10分钟内完成验证';
                 break;
+            case self::TYPE_ACCOUNT:
+                $text = '【LTC】您的帐户资料修改验证码为：' . $verifyCode . '，请在10分钟内完成验证';
+                break;
+
             default:
                 $text = '【LTC】您的验证码为：' . $verifyCode . '，请在10分钟内完成验证';
         }

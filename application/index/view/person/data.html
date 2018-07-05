@@ -1,144 +1,304 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+    <link rel="stylesheet" href="/static/index/style/data.css">
+    <link rel="stylesheet" type="text/css" href="/static/plugin/aoupload/css/data_globle.css" />
+    <script src="/static/plugin/aoupload/js/webuploader.min.js"></script>
+    <script src="/static/plugin/aoupload/js/diyUpload.js"></script>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>资料管理</title>
-    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
-    <link rel="stylesheet" href="../style/cssreset.css">
-    <link rel="stylesheet" href="../style/data.css">
-    <link rel="stylesheet" href="../style/public.css">
-</head>
-
-<body>
     <header class="public">
-        <a href="javascript:;">
-            <img src="../image/arrow.gif" alt="">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
         </a>
         <h1>资料管理</h1>
     </header>
     <div class="list-title">
-        <a href="javascript:;">
+        <a href="/index/account/personAccount">
             资料管理
         </a>
-        <a href="javascript:;">
+        <a href="/index/account/pwdLogin">
             登录密码
         </a>
-        <a href="javascript:;">
+        <a href="/index/account/pwdTrade">
             交易密码
         </a>
     </div>
     <!-- 锁仓列表开始 -->
     <div class="list-content">
-        <div class="head-image">
-            <a href="javascript:;">
-                <div class="head-box">
-                    <img src="../image/head.gif" alt="" id="show">
-                    <input type="file" accept="image/*" onchange="showImage(this)">
+        <form id="userinfo">
+            <input type="hidden" value="{$User.id}" name="id" id="id">
+            <input type="hidden" value="{$User.phone}" name="phone" id="phone">
+            <div class="head-image">
+                <!--<a href="javascript:;">-->
+                <a>
+                    <div class="head-box">
+                        <!--<img src="{$User.portrait}" alt="" id="show">
+                        <input type="file" accept="image/*" onchange="showImage(this)">-->
+
+                        <ul class="upload-ul clearfix">
+                            <li id="fileBox_WU_FILE" class="" >
+                                <div class="viewThumb">
+                                    <input type="hidden" name="portrait" id="portrait_id" value="{$User.portrait}">
+                                    <img src="{$User.portrait}">
+                                </div>
+                            </li>
+                            <li class="upload-pick">
+                                <div class="webuploader-container clearfix" id="portraitUpload" style="width:100%"></div>
+                            </li>
+                        </ul>
+
+
+                    </div>
+                    <!--<img src="." alt="">-->
+                </a>
+            </div>
+            <div class="sub-box" >
+                <div class="">
+                    <p>会员编号</p>
+                    <p>{$User.number}</p>
                 </div>
-                <img src="." alt="">
-            </a>
-        </div>
-        <form class="sub-box" id="userinfo">
-            <div class="">
-                <p>会员编号</p>
-                <p>LTC180012345</p>
-            </div>
-            <div class="">
-                <p>手机号码</p>
-                <p>15715608013</p>
-            </div>
-            <div class="">
-                <p>分享码</p>
-                <p>LTC180012</p>
-            </div>
-            <div class="">
-                <p>注册时间</p>
-                <p>2016-03-02</p>
-            </div>
-            <div>
-                <p>
-                    开户行
-                </p>
-                <select>
-                        <option value ="1">工商银行</option>
-                        <option value ="2">农业银行</option>
-                        <option value="3">建设银行</option>
-                        <option value="4">交通银行</option>
-                        <option value="5">花旗银行</option>
-                        <option value="6">徽商银行</option>
-                </select>
-            </div>
-            <div>
-                <p>开户姓名</p>
-                <input type="text" placeholder="请输入开户姓名">
-            </div>
-            <div>
-                <p>开户账户</p>
-                <input type="text" placeholder="请输入开户账户">
-            </div>
-            <div>
-                <p>开户支行</p>
-                <input type="text" placeholder="请输入开户支行">
-            </div>
-            <div>
-                <p>支付宝（选填）</p>
-                <input type="text" placeholder="请输入支付宝账号">
-            </div>
-            <div>
-                <p>验证码</p>
+                <div class="">
+                    <p>手机号码</p>
+                    <p>{$User.phone}</p>
+                </div>
+                <div class="">
+                    <p>分享码</p>
+                    <p>{$User.share_id}</p>
+                </div>
+                <div class="">
+                    <p>注册时间</p>
+                    <p>{$User.create_time.0}</p>
+                </div>
                 <div>
-                    <input type="text" placeholder="输入验证码">
-                    <a href="javascript:;" class="huoqu">
-                                获取验证码
-                            </a>
+                    <p>
+                        开户行
+                    </p>
+                    <input type="text" placeholder="开户银行：中国工商银行" name="bank" value="{$User.bank}">
+                </div>
+                <div>
+                    <p>开户姓名</p>
+                    <input type="text" placeholder="开户姓名：张三" name="name" value="{$User.name}" id="name">
+                </div>
+                <div>
+                    <p>开户账户</p>
+                    <input type="number" placeholder="开户账户：6222021001054125468....." name="bank_num" value="{$User.bank_num}" id="bank_num">
+                </div>
+                <div>
+                    <p>开户支行</p>
+                    <input type="text" placeholder="开户支行:北京朝阳区政西路支行" name="bank_address" value="{$User.bank_address}" id="bank_address">
+                </div>
+                <div>
+                    <p>支付宝（选填）</p>
+                    <input type="text" placeholder="支付宝账号:13800000000" name="alipay" value="{$User.alipay}" id="alipay">
+                </div>
+                <div>
+                    <p>验证码</p>
+                    <div>
+                        <input type="number" placeholder="输入验证码" name="code" id="code">
+                        <a href="javascript:;" class="huoqu" id="get_code">
+                            获取验证码
+                        </a>
+                    </div>
                 </div>
             </div>
         </form>
+
         <div class="sub">
-            <button class="btn" form="userinfo" type="submit">确认修改资料</button>
+            <button class="btn" form="userinfo" type="button" id="data_submit">确认修改资料</button>
         </div>
     </div>
     <!-- 锁仓列表结束 -->
     <div class="bottom-content"></div>
-    <!-- 底部开始 -->
-    <footer>
-        <div>
-            <a href="javascript:;">
-                <i class="ficon1"></i>
-                <p>首页</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon2"></i>
-                <p>锁仓</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon3"></i>
-                <p>分享</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon4"></i>
-                <p>我的</p>
-            </a>
-        </div>
-    </footer>
-    <!-- 底部结束 -->
-</body>
-<script>
-    window.addEventListener('touchmove', function(evt) {
-        evt.preventDefault();
-    });
 
-    function showImage(obj) {
-        var file = obj.files[0];
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function(e) {
-            document.getElementById("show").src = e.target.result;
+    <!--<script>
+        window.addEventListener('touchmove', function(evt) {
+            evt.preventDefault();
+        });
+
+        function showImage(obj) {
+            var file = obj.files[0];
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                document.getElementById("show").src = e.target.result;
+            }
         }
-    }
-</script>
+    </script>-->
 
-</html>
+    <!--上传图片-->
+    <script>
+        //上传图片
+        var $tgaUpload = $('#portraitUpload').diyUpload({
+            url:'{:url("index/account/uploader")}',
+            buttonText : '',
+            //类型限制;
+            accept: {
+                title: "Images",
+                extensions: 'jpg,jpeg,png'
+            },
+            //配置生成缩略图的选项
+            thumb:{
+                width:64,
+                height:64,
+                quality:100,
+                allowMagnify:true,
+                crop:true,
+                type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+            },
+            swf:"/static/plugin/aoupload/Uploader.swf",
+            //是否支持多文件上传
+            multiple:false,
+            //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+            auto:true,
+            //文件上传方式,POST或者GET
+            method:"POST",
+            //服务器地址;
+            server:'{:url("index/account/uploader")}',
+            //最大上传的文件数量
+            fileNumLimit:10,
+            //总文件大小(单位字节);
+            fileSizeLimit:500000 * 1024,
+            //单个文件大小(单位字节);
+            fileSingleSizeLimit:50000 * 1024,
+            //自定义内容信息
+            custom:{
+                inputName:'portrait',
+                //input加入ID，只适用于单个上传图片
+                inputId:'portrait_id'
+            },
+            success:function( data ) {
+                $(".upload-ul li").first().next().remove();
+            },
+            error:function( err ) { }
+        });
+
+    </script>
+
+    <script>
+        //短信验证
+        $(function(){
+            //获取短信验证码
+            var validCode=true;
+            $("#get_code").click (function () {
+                console.log(1);
+                var phone = $('#phone').val();
+                if(!/^1[34578]\d{9}$/.test(phone)){
+                    showAlertAutoClose("手机号码信息有误");
+                    return false;
+                }
+                var time=120;
+                var code=$(this);
+                if (validCode) {
+                    $.post('/index/verify/get', {type:5, phone:phone}, function(data){
+                        if(data.code == 1){
+                            jsonAlertAutoClose(data);
+                            validCode=false;
+                            code.addClass("send_obtain");
+                            var t=setInterval(function () {
+                                time--;
+                                code.html(time+"秒");
+                                if (time==0) {
+                                    clearInterval(t);
+                                    code.html("重新获取");
+                                    validCode=true;
+                                    code.removeClass("send_obtain");
+                                } },1000);
+                        }else{
+                            jsonAlertAutoClose(data);
+                        }
+                    });
+                }
+            })
+        });
+
+        //用户数据验证
+        $("#data_submit").on('click',function(){
+            var id = $('#id').val();
+            var phone = $('#phone').val();
+            var bank = $("#bank").val();
+            var bank_num = $("#bank_num").val();
+            var bank_address = $('#bank_address').val();
+            var alipay = $("#alipay").val();
+            var code = $("#code").val();
+
+            if(isNaN($.trim(id)) || $.trim(id)%1 != 0 || $.trim(id) < 1){
+                showAlertAutoClose("资料修改信息有误");
+                return false;
+            }
+
+            if(!/^1[34578]\d{9}$/.test(phone)){
+                showAlertAutoClose("资料修改信息有误");
+                return false;
+            }
+
+            if($.trim(bank) != '') {
+                if($.trim(bank).length > 20 ) {
+                    showAlertAutoClose("开户银行信息有误");
+                    return false;
+                }
+            }
+
+            if($.trim(bank_num) != ''){
+                if($.trim(bank_num).length < 16 || $.trim(bank_num).length > 19) {
+                    showAlertAutoClose("银行卡号信息不正确");
+                    return false;
+                }
+                var num = /^\d*$/;//全数字
+                if(!num.exec($.trim(bank_num))) {
+                    showAlertAutoClose("银行卡号信息不正确");
+                    return false;
+                }
+                //开头6位
+                var strBin = "10,18,30,35,37,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,60,62,65,68,69,84,87,88,94,95,98,99";
+                if(strBin.indexOf($.trim(bank_num).substring(0, 2)) == -1) {
+                    showAlertAutoClose("银行卡号信息不正确");
+                    return false;
+                }
+            }
+
+
+            if($.trim(bank_address) != '') {
+                if($.trim(bank_address).length > 30 ) {
+                    showAlertAutoClose("开户行支行信息有误");
+                    return false;
+                }
+            }
+
+            if($.trim(alipay) != '') {
+                if($.trim(alipay).length > 30 ) {
+                    showAlertAutoClose("支付宝信息有误");
+                    return false;
+                }
+            }
+
+
+            if($.trim(code) == '' || $.trim(code).length != 6 || isNaN($.trim(code))) {
+                showAlertAutoClose("验证码不正确，请确认");
+                return false;
+            }
+
+
+            $.ajax({
+                url:"/index/account/accountCheck",
+                type:"POST",
+                dataType: "json",
+                data:$('#userinfo').serialize(),
+                success:function(data){
+                    jsonAlertAutoClose(data);
+                    if(data.code == 1){
+                        setTimeout(function () { location.reload(); }, 3000);
+                    }
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+        });
+    </script>
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->
+

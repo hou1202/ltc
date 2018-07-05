@@ -1,0 +1,71 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+    <link rel="stylesheet" href="/static/index/style/rechargedetail.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>充币详情</h1>
+    </header>
+
+    <!--rechrage-header--引入-->
+    {include file="default/recharge_header" /}
+    <!--rechrage-header--END-->
+
+    <div class="list-content">
+        <ul class="userinfo">
+            <li>
+                <p>会员编号</p>
+                <p>{$getOne.user_number}</p>
+            </li>
+            <li>
+                <p>联系方式</p>
+                <p>{$getOne.phone}</p>
+            </li>
+        </ul>
+        <ul class="bank">
+            <li>
+                <p>充币数量</p>
+                <p>{$getOne.number}</p>
+            </li>
+            <li>
+                <p>交 易 ID</p>
+                <p class="area" >{$getOne.recharge_id}</p>
+            </li>
+            <li>
+                <p>提交时间</p>
+                <p>{$getOne.create_time}</p>
+            </li>
+            <li>
+                <p>系统反馈</p>
+                <p class="area" >{$getOne.talk}</p>
+            </li>
+
+        </ul>
+        <ul class="bank">
+            <li>
+                <p>充币状态</p>
+                <p>{$getOne.state.0}</p>
+            </li>
+        </ul>
+
+    </div>
+    <div class="bottom-content"></div>
+
+    <script>
+        var q = document.querySelector("footer");
+        window.addEventListener('touchmove', function(evt) {
+            console.log("sdfasfa");
+            evt.preventDefault()
+        });
+
+    </script>
+
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->
+

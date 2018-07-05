@@ -16,115 +16,50 @@
         <a href="/index/lock/lockList">
             锁仓明细
         </a>
-        <a href="javascript:;">
+        <a href="/index/trade/newestDeal">
             最新成交
         </a>
     </div>
 
     <!-- 锁仓列表开始 -->
     <div class="list-content">
-        <div>
-            <div class="pay-time">
-                <p>
-                    交易时间 ：2018-06-07
-                </p>
-            </div>
-            <div class="pay-bottom">
-                <div>
-                    <p>买方</p>
+        {foreach name="List" item="l"}
+            <div>
+                <div class="pay-time">
                     <p>
-                        LTC234324
+                        交易时间 ：{$l.trade_time|date="Y-m-d H:i:s",###}
                     </p>
                 </div>
-                <div>
-                    <p>成交价</p>
-                    <p class="price">
-                        $23.6
-                    </p>
-                </div>
-                <div>
-                    <p>成交量</p>
-                    <p>
-                        45
-                    </p>
-                </div>
-                <div>
-                    <p>卖方</p>
-                    <p>
-                        LTC234324
-                    </p>
-                </div>
+                <div class="pay-bottom">
+                    <div>
+                        <p>买方</p>
+                        <p>
+                            {$l.buy_number}
+                        </p>
+                    </div>
+                    <div>
+                        <p>成交价</p>
+                        <p class="price">
+                            {$l.count_price}
+                        </p>
+                    </div>
+                    <div>
+                        <p>成交量</p>
+                        <p>
+                            {$l.number}
+                        </p>
+                    </div>
+                    <div>
+                        <p>卖方</p>
+                        <p>
+                            {$l.sell_number}
+                        </p>
+                    </div>
 
+                </div>
             </div>
-        </div>
-        <div>
-            <div class="pay-time">
-                <p>
-                    交易时间 ：2018-06-07
-                </p>
-            </div>
-            <div class="pay-bottom">
-                <div>
-                    <p>买方</p>
-                    <p>
-                        LTC234324
-                    </p>
-                </div>
-                <div>
-                    <p>成交价</p>
-                    <p class="price">
-                        $23.6
-                    </p>
-                </div>
-                <div>
-                    <p>成交量</p>
-                    <p>
-                        45
-                    </p>
-                </div>
-                <div>
-                    <p>卖方</p>
-                    <p>
-                        LTC234324
-                    </p>
-                </div>
+        {/foreach}
 
-            </div>
-        </div>
-        <div>
-            <div class="pay-time">
-                <p>
-                    交易时间 ：2018-06-07
-                </p>
-            </div>
-            <div class="pay-bottom">
-                <div>
-                    <p>买方</p>
-                    <p>
-                        LTC234324
-                    </p>
-                </div>
-                <div>
-                    <p>成交价</p>
-                    <p class="price">
-                        $23.6
-                    </p>
-                </div>
-                <div>
-                    <p>成交量</p>
-                    <p>
-                        45
-                    </p>
-                </div>
-                <div>
-                    <p>卖方</p>
-                    <p>
-                        LTC234324
-                    </p>
-                </div>
-
-            </div>
-        </div>
     </div>
     <!-- 锁仓列表结束 -->
 

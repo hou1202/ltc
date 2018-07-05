@@ -9,12 +9,13 @@
 namespace app\index\controller;
 
 
+
 use app\common\controller\CommController;
 
 use think\Loader;
 use think\Db;
-use app\admin\model\TaoOrder;
 use think\Session;
+
 
 
 use PHPExcel;
@@ -31,17 +32,56 @@ class Test extends CommController {
      * * */
     public function index()
     {
-        /*$todaytime=strtotime("today");
-        $start = strtotime(date('Y-m-d',time()));
-        $end = strtotime(date('Y-m-d',time()).' 23:59:59');
-        var_dump($todaytime);
-        var_dump($start);
-        var_dump($end);*/
-        var_dump(date('H',time()));
 
-       return $this->fetch('index/test');
+
+        $str = "0123456789QWERTYUPASDFGHJKLZXCVBNM";
+        $share = '';
+        for ( $i = 0; $i < 8; $i++ )
+        {
+            $share .= $str[ mt_rand(0, strlen($str) - 1) ];
+        }
+        var_dump($share);
+        //return $this -> fetch('index/test');
+
 
     }
+
+
+
+
+    public function img(){
+        Loader::import('phpqrcode.phpqrcode');
+        $value = $_GET['url'];//二维码内容
+        $errorCorrectionLevel = 'L';//容错级别
+        $matrixPointSize = 6;//生成图片大小
+        //生成二维码图片
+
+        \QRcode::png($value, 'qrcode.png', $errorCorrectionLevel, $matrixPointSize, 2);
+        $logo = 'web.ltc.com/static/index/images/';//准备好的logo图片
+        $QR = 'qrcode.png';//已经生成的原始二维码图
+        if ($logo !== FALSE) {
+            $QR = imagecreatefromstring(file_get_contents($QR));
+            $logo = imagecreatefromstring(file_get_contents($logo));
+            $QR_width = imagesx($QR);//二维码图片宽度
+            $QR_height = imagesy($QR);//二维码图片高度
+            $logo_width = imagesx($logo);//logo图片宽度
+            $logo_height = imagesy($logo);//logo图片高度
+            $logo_qr_width = $QR_width / 5;
+            $scale = $logo_width/$logo_qr_width;
+            $logo_qr_height = $logo_height/$scale;
+            $from_width = ($QR_width - $logo_qr_width) / 2;
+            //重新组合图片并调整大小
+            imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width,
+                $logo_qr_height, $logo_width, $logo_height);
+        }
+        //输出图片
+        Header("Content-type: image/png");
+        ImagePng($QR);
+    }
+
+
+
+
 
     public function wxShare(){
         $appId='wx4f12e20059703cc2';

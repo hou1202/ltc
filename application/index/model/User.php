@@ -119,6 +119,40 @@ class User extends Model
         }
     }
 
+    /*
+     * @checkUserAccount        查检用户帐户信息完整性
+     * $id                      用户ID
+     * */
+    public function checkUserAccount($id){
+        return $this -> field('id')
+                -> where('id',$id)
+                -> where(trim('name'),'NEQ','')
+                -> where(trim('bank'),'NEQ','')
+                -> where(trim('bank_num'),'NEQ','')
+                -> where(trim('bank_address'),'NEQ','')
+                -> find();
+    }
+
+
+    /*
+     * @saveUserAccount        更新用户资料
+     * $id                      用户ID
+     * $data                    更新数据
+     * */
+    public function saveUserAccount($id,$data){
+        return $this -> allowField(true)
+            ->save($data,['id'=>$id]);
+    }
+
+
+    public function getShareFriends($id){
+        return $this -> alias('u')
+            ->field('u.id,u.number,u.share_id,u.create_time')
+            ->join('think_user l','l.share_id = u.p_id','left')
+            -> where('l.id',$id)
+            ->select();
+    }
+
 
 
 }

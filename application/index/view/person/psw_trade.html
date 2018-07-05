@@ -1,0 +1,157 @@
+
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+
+    <link rel="stylesheet" href="/static/index/style/pswtrade.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>交易密码</h1>
+    </header>
+    <div class="list-title">
+        <a href="/index/account/personAccount">
+            资料管理
+        </a>
+        <a href="/index/account/pwdLogin">
+            登录密码
+        </a>
+        <a href="/index/account/pwdTrade">
+            交易密码
+        </a>
+    </div>
+    <!-- 锁仓列表开始 -->
+    <div class="list-content">
+        <form class="sub-box" id="userinfo">
+            <input type="hidden" name="id" id="id" value="{$User.id}">
+            <input type="hidden" name="phone" id="phone" value="{$User.phone}">
+            <div class="">
+                <p>会员编号</p>
+                <p>{$User.number}</p>
+            </div>
+            <div class="">
+                <p>手机号码</p>
+                <p>{$User.phone}</p>
+            </div>
+            <div>
+                <p>设置交易密码</p>
+                <input type="password" placeholder="请输入新交易密码" name="pwd_trade" id="pwd_trade">
+            </div>
+            <div>
+                <p>确认交易密码</p>
+                <input type="password" placeholder="请确认新交易密码" name="sure_pwd" id="sure_pwd">
+            </div>
+            <div>
+                <p>验证码</p>
+                <div>
+                    <input type="text" placeholder="输入验证码" name="code" id="code">
+                    <a href="javascript:;" class="huoqu" id="get_code">
+                                获取验证码
+                            </a>
+                </div>
+            </div>
+        </form>
+        <div class="sub">
+            <button class="btn"  type="button" id="pwd_submit">修改交易密码</button>
+        </div>
+    </div>
+    <!-- 锁仓列表结束 -->
+    <div class="bottom-content"></div>
+
+    <script>
+        //短信验证
+        $(function(){
+            //获取短信验证码
+            var validCode=true;
+            $("#get_code").click (function () {
+                console.log(1);
+                var phone = $('#phone').val();
+                if(!/^1[34578]\d{9}$/.test(phone)){
+                    showAlertAutoClose("手机号码信息有误");
+                    return false;
+                }
+                var time=120;
+                var code=$(this);
+                if (validCode) {
+                    $.post('/index/verify/get', {type:1, phone:phone}, function(data){
+                        if(data.code == 1){
+                            jsonAlertAutoClose(data);
+                            validCode=false;
+                            code.addClass("send_obtain");
+                            var t=setInterval(function () {
+                                time--;
+                                code.html(time+"秒");
+                                if (time==0) {
+                                    clearInterval(t);
+                                    code.html("重新获取");
+                                    validCode=true;
+                                    code.removeClass("send_obtain");
+                                } },1000);
+                        }else{
+                            jsonAlertAutoClose(data);
+                        }
+                    });
+                }
+            })
+        });
+
+        //用户数据验证
+        $("#pwd_submit").on('click',function(){
+            var id = $('#id').val();
+            var phone = $('#phone').val();
+            var pwd_trade = $("#pwd_trade").val();
+            var sure_pwd = $("#sure_pwd").val();
+            var code = $("#code").val();
+
+            if(isNaN($.trim(id)) || $.trim(id)%1 != 0 || $.trim(id) < 1){
+                showAlertAutoClose("交易密码修改信息有误");
+                return false;
+            }
+
+            if(!/^1[34578]\d{9}$/.test(phone)){
+                showAlertAutoClose("交易密码修改信息有误");
+                return false;
+            }
+
+            if($.trim(pwd_trade) == '' || $.trim(pwd_trade).length < 6 ) {
+                showAlertAutoClose("交易密码不得为空且不得小于6位");
+                return false;
+            }
+
+            if($.trim(sure_pwd) != $.trim(pwd_trade) ) {
+                showAlertAutoClose("两次输入密码信息不一致");
+                return false;
+            }
+
+            if($.trim(code) == '' || $.trim(code).length != 6 || isNaN($.trim(code))) {
+                showAlertAutoClose("验证码不正确，请确认");
+                return false;
+            }
+
+            console.log(1);
+            $.ajax({
+                url:"/index/account/pwdCheck",
+                type:"POST",
+                dataType: "json",
+                data:$('#userinfo').serialize(),
+                success:function(data){
+                    jsonAlertAutoClose(data);
+                    if(data.code == 1){
+                        setTimeout(function () { location.reload(); }, 3000);
+                    }
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+        });
+    </script>
+
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

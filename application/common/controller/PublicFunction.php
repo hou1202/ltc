@@ -70,4 +70,21 @@ class PublicFunction
             return false;
         }
     }
+
+    static function getTotalProfit($user,$type=3,$today=1){
+        switch($today){
+            case 1:
+                //总收益
+                return Db::name('capital_log') -> where('user_id',$user) -> where('way',$type) -> count('capital');
+                break;
+            case 2:
+                //今天收益
+                return  Db::name('capital_log') -> where('user_id',$user) -> where('way',$type) -> where('create_time','>',strtotime(date('Y-m-d',time()))) ->count('capital');
+                break;
+            default:
+                return false;
+                break;
+        }
+        //$profit = Db::name('capital_log') -> where('user_id',$user) -> where('way',$type) -> count('capital');
+    }
 }

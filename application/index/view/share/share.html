@@ -1,35 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>分享列表</title>
-    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
-    <link rel="stylesheet" href="./style/cssreset.css">
-    <link rel="stylesheet" href="./style/share.css">
-    <link rel="stylesheet" href="./style/public.css">
-</head>
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
 
-<body>
+    <link rel="stylesheet" href="/static/index/style/share.css">
+
     <header class="public">
-        <a href="javascript:;">
-            <img src="./image/arrow.gif" alt="">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
         </a>
         <h1>分享列表</h1>
     </header>
-    <div class="list-title">
-        <a href="javascript:;">
-            分享好友
-        </a>
-        <a href="javascript:;">
-            分享收益
-        </a>
-        <a href="javascript:;">
-            分享列表
-        </a>
-    </div>
+
+    <!--share_header--引入-->
+    {include file="default/share_header" /}
+    <!--share_header--END-->
+
     <!-- 锁仓列表开始 -->
     <div class="top-yao">
         <div class="yao">
@@ -37,25 +23,25 @@
                 我的分享码
             </p>
             <p>
-                L1T2C300
+                {$User.share_id}
             </p>
         </div>
     </div>
     <div class="qr-content">
         <div class="qr-box">
-            <img src="./image/qr.png" alt="">
+            <img src="/index/share/shareImg?url=https://web.ltc.com/index/login/register?$invitation={$User.share_id}" alt="">
             <p>
                 邀请好友扫码注册
             </p>
         </div>
     </div>
-    <div class="android">
-        <a href="javascript:;">
+    <div class="ios">
+        <a href="/index/share/downApp?type=5">
             下载安卓版
         </a>
     </div>
     <div class="ios">
-        <a href="javascript:;">
+        <a href="/index/share/downApp?type=6">
                 下载IOS版
             </a>
     </div>
@@ -74,33 +60,9 @@
     </div>
     <!-- 锁仓列表结束 -->
     <div class="bottom-content"></div>
-    <!-- 底部开始 -->
-    <footer>
-        <div>
-            <a href="javascript:;">
-                <i class="ficon1"></i>
-                <p>首页</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon2"></i>
-                <p>锁仓</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon3"></i>
-                <p>分享</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon4"></i>
-                <p>我的</p>
-            </a>
-        </div>
-    </footer>
-    <!-- 底部结束 -->
-</body>
-<script>
-    window.addEventListener('touchmove', function(evt) {
-        evt.preventDefault();
-    });
-</script>
 
-</html>
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

@@ -1,0 +1,109 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+
+    <link rel="stylesheet" href="/static/index/style/pulladress.css">
+    <!--<script src="../lib/jquery-3.3.1.min .js"></script>-->
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>充币地址</h1>
+    </header>
+
+    <!--rechrage-header--引入-->
+    {include file="default/recharge_header" /}
+    <!--rechrage-header--END-->
+
+    <div class="list-content">
+        <form class="sub-box">
+            <div class="">
+                <p>会员编号</p>
+                <p>{$User.number}</p>
+            </div>
+            <div class="">
+                <p>手机号码</p>
+                <p>{$User.phone}</p>
+            </div>
+            <div class="">
+                <p>可用资产</p>
+                <p>{$User.asset_avali}</p>
+            </div>
+            <div class="">
+                <p>锁仓资产</p>
+                <p>{$User.asset_fixed}</p>
+            </div>
+            <div class="input-box">
+                <p>
+                    充币地址
+                </p>
+                <textarea name="" id="address" placeholder="你的充币地址" readonly>
+                    {if condition="$User.recharge_address"}{$User.recharge_address}{/if}
+                </textarea>
+            </div>
+        </form>
+        <div class="sub">
+            {if condition="$User.recharge_address"}
+            <button class="btn" type="button" id="cp_address">一键复制地址</button>
+            {else /}
+            <button class="btn" type="button" id="get_address">获取充币地址</button>
+            {/if}
+
+        </div>
+        <div class="info">
+            <ul>
+                <li>
+                    充币说明
+                </li>
+                <li>
+                    1.将你的LTC转入该地址即可
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 底部开始 -->
+    <div class="bottom-content">
+
+    </div>
+
+    <script>
+        $("#cp_address").on("click", function() {
+            var text = document.getElementById("address");
+            //console.log(text);
+            text.select(); // 选择对象
+            document.execCommand("Copy"); // 执行浏览器复制命令
+            showAlertAutoClose("已成功复制您的充币地址");
+        });
+        $("#get_address").on("click", function() {
+            //后台获取地址
+            var id = "{$User.id}";
+            $.ajax({
+                url:"/index/recharge/getRechargeAddress",
+                type:"POST",
+                dataType: "json",
+                data:"id="+id,
+                success:function(data){
+                     if(data.code == 1){
+                         jsonAlertAutoClose(data);
+                         setTimeout(function () { location.reload(); }, 3000);
+                     }else{
+                         jsonAlertAutoClose(data);
+                     }
+
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+
+        });
+
+    </script>
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->
+

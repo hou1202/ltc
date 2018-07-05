@@ -38,7 +38,7 @@ class News extends CommController
                 if(!$detail){
                     return $this ->jsonFail('新闻内容信息有误，请重新查看...');
                 }
-                return $this -> fetch('person/news_detail',['News' => $detail]);
+                return $this -> fetch('person/news_detail',['News' => $detail,'Title'=>'新闻详情']);
             }
             return $this ->jsonFail('新闻内容信息有误，请重新查看...');
         }

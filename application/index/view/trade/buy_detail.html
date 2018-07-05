@@ -1,7 +1,7 @@
     <!--header--引入-->
     {include file="default/header" /}
     <!--header--END-->
-    <link rel="stylesheet" href="/static/index/style/selldetail.css">
+    <link rel="stylesheet" href="/static/index/style/buydetail.css">
 
     <header class="public">
         <a href="javascript:history.back(-1);">
@@ -18,70 +18,76 @@
         <ul class="userinfo">
             <li>
                 <p>卖家编号</p>
-                <p>LTC0012345</p>
+                <p>{$getOne.sell_number}</p>
             </li>
             <li>
                 <p>卖家姓名</p>
-                <p>小鱼儿</p>
+                <p>{$getOne.sell_name}</p>
             </li>
             <li>
                 <p>卖家电话</p>
-                <p>12324354354</p>
+                <p>{$getOne.sell_phone}</p>
             </li>
         </ul>
         <ul class="bank">
             <li>
                 <p>开户银行</p>
-                <p>中国建设银行</p>
+                <p>{$getOne.sell_bank}</p>
             </li>
             <li>
                 <p>开户支行</p>
-                <p>合肥天鹅湖支行</p>
+                <p>{$getOne.sell_bank_address}</p>
             </li>
             <li>
                 <p>开户账号</p>
-                <p>622021001054256845</p>
+                <p>{$getOne.sell_bank_num}</p>
             </li>
             <li>
                 <p>支付宝</p>
-                <p>12324354354</p>
+                <p>{$getOne.sell_alipay}</p>
             </li>
         </ul>
         <ul class="detail">
             <li>
                 <p>购买数量</p>
-                <p>50</p>
+                <p>{$getOne.number}</p>
             </li>
             <li>
                 <p>LTC价格</p>
-                <p>￥120.50</p>
+                <p>{$getOne.ltc_price}</p>
             </li>
             <li>
                 <p>交易总价</p>
-                <p>￥20000.00</p>
+                <p>{$getOne.count_price}</p>
             </li>
             <li>
                 <p>交易计时</p>
-                <p>2:24:34</p>
+                <p><label id="RemainH">00</label>:<label id="RemainM">00</label>:<label id="RemainS">00</label></p>
             </li>
             <li>
                 <p>汇款状态</p>
-                <p>已付款</p>
+                <p>{$getOne.remit_state.0}</p>
             </li>
             <li>
                 <p>交易状态</p>
-                <p>待确认</p>
+                <p>{$getOne.trade_state.0}</p>
             </li>
+        </ul>
+
+        {if condition="$getOne.trade_state.1 == 1"}
+        <ul class="detail">
             <li>
                 <p>交易密码</p>
-                <form id="voteform" action="/" method="get">
-                    <input type="text" placeholder="请输入交易密码">
+                <form id="trade_form" action="" >
+                    <input type="hidden"  value={$getOne.id} name="id" id="id">
+                    <input type="password" placeholder="请输入交易密码" name="pwd_trade" id="pwd_trade">
                 </form>
             </li>
         </ul>
         <div class="sub">
-            <button class="btn" form="voteform" type="submit">确认收款</button>
+            <button class="btn" type="button" id="trade_submit">确认收款</button>
         </div>
+        {/if}
     </div>
     <div class="bottom-content"></div>
 
@@ -91,11 +97,69 @@
             console.log("sdfasfa");
             evt.preventDefault()
         });
-        q.addEventListener('click', function(evt) {
+        /*q.addEventListener('click', function(evt) {
             console.log("sdfasfa");
             evt.preventDefault()
-        });
+        });*/
 
+    </script>
+
+    <!--倒计时 -->
+    <script language="JavaScript">
+        var runtimes = 0;
+        function GetRTime(){
+            var lTS = "{$getOne.leftTime}";
+            var tS = "{$getOne.trade_state.1}";
+            var nMS = lTS*1000-runtimes*1000;
+            var nH=Math.floor(nMS/(1000*60*60))%24;
+            var nM=Math.floor(nMS/(1000*60)) % 60;
+            var nS=Math.floor(nMS/1000) % 60;
+            if(nMS > 0 && tS != 3 && tS != 4)
+            {
+                document.getElementById("RemainH").innerHTML=nH;
+                document.getElementById("RemainM").innerHTML=nM;
+                document.getElementById("RemainS").innerHTML=nS;
+                runtimes++;
+                setTimeout("GetRTime()",1000);
+            }
+        }
+        window.onload=GetRTime;
+    </script>
+
+    <!--确认付款验证-->
+    <script>
+        $("#trade_submit").on('click',function(){
+            var id = $('#id').val();
+            var pwd_trade = $('#pwd_trade').val();
+
+            if(isNaN($.trim(id)) || $.trim(id)%1 != 0 || $.trim(id) < 1){
+                showAlertAutoClose("交易确认信息有误");
+                return false;
+            }
+
+            if($.trim(pwd_trade) == '' || $.trim(pwd_trade).length < 6 ) {
+                showAlertAutoClose("交易密码不正确，请确认");
+                return false;
+            }
+            console.log(id);
+            console.log(pwd_trade);
+            $.ajax({
+                url:"/index/trade/buyConfirm",
+                type:"POST",
+                dataType: "json",
+                data:$('#trade_form').serialize(),
+                success:function(data){
+                    jsonAlertAutoClose(data);
+                    if(data.code == 1){
+                        setTimeout(function () { location.reload(); }, 3000);
+                    }
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+        });
     </script>
 
     <!-- 底部开始 -->

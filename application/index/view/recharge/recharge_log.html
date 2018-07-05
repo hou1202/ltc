@@ -1,0 +1,120 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+
+    <link rel="stylesheet" href="/static/index/style/rec_log.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>提交记录</h1>
+    </header>
+
+    <!--rechrage-header--引入-->
+    {include file="default/recharge_header" /}
+    <!--rechrage-header--END-->
+
+    <div class="userinfo">
+        <form id="recharge_form">
+            <div class="user-item">
+                <input type="hidden" name="user_id" id="user_id" value="{$User.id}">
+                <img src="{$User.portrait}" alt="">
+                <div class="user-text">
+                    <p>{$User.number}</p>
+                    <P>{$User.phone}</P>
+                </div>
+            </div>
+            <div class="price-content">
+                <div class="price-item">
+                    <p>
+                        可用资产
+                    </p>
+                    <p class="default">
+                        {$User.asset_avali}
+                    </p>
+                </div>
+                <div class="price-item">
+                    <p>
+                        锁仓资产
+                    </p>
+                    <p>
+                        {$User.asset_fixed}
+                    </p>
+                </div>
+            </div>
+            <div class="form-box">
+
+                <div class="input-item">
+                    <p>
+                        充币数量
+                    </p>
+                    <input type="number" placeholder="充币数量为正整数"  name="number" id="number">
+                </div>
+
+                <div class="input-box">
+                    <p>
+                        交易ID
+                    </p>
+                    <textarea name="recharge_id" id="recharge_id" placeholder="您在平台平台的充币交易记录ID"></textarea>
+                </div>
+
+                <div class="sub">
+                    <button class="btn" type="button" id="recharge_submit">提交充币记录</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="bottom-content">
+
+    </div>
+
+    <script>
+        window.addEventListener('touchmove', function(evt) {
+            evt.preventDefault();
+        });
+    </script>
+
+    <script>
+
+        //用户数据验证
+        $("#recharge_submit").on('click',function(){
+            var user_id = $('#user_id').val();
+            var number = $('#number').val();
+            var recharge_id = $('#recharge_id').val();
+
+            if(isNaN($.trim(user_id)) || $.trim(user_id)%1 != 0 || $.trim(user_id) < 1){
+                showAlertAutoClose("充币信息有误");
+                return false;
+            }
+
+            if(isNaN($.trim(number)) || $.trim(number)%1 != 0 || $.trim(number) < 1){
+                showAlertAutoClose("充币数量为大于0的整数");
+                return false;
+            }
+
+            if($.trim(recharge_id) == '') {
+                showAlertAutoClose("交易ID不得为空");
+                return false;
+            }
+
+            $.ajax({
+                url:"/index/recharge/logCheck",
+                type:"POST",
+                dataType: "json",
+                data:$('#recharge_form').serialize(),
+                success:function(data){
+                    jsonAlertAutoClose(data);
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+        });
+    </script>
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

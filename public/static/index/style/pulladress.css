@@ -34,6 +34,7 @@ div.list-title a:nth-child(2) {
 }
 .list-content {
   margin-top: 0.66666667rem;
+  color:#4d4d4d;
 }
 .sub-box {
   padding: 0 0.4rem;
@@ -110,11 +111,12 @@ div.list-title a:nth-child(2) {
 .input-box textarea {
   flex-grow: 1;
   height: 100%;
-  line-height: 1.06666667rem;
+  line-height: 0.6rem;
   border: none;
   outline: none;
   padding-left: 0.53333333rem;
-  height: 3.2rem;
+  padding-top:0.28rem;
+  min-height: 3.2rem;
 }
 .userinfo {
   color: #4d4d4d;

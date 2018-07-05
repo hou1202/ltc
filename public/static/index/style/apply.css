@@ -132,6 +132,7 @@ div.list-title a:nth-child(1) {
   border: none;
   outline: none;
   padding-left: 0.53333333rem;
+  text-align:right;
 }
 :-ms-input-placeholder {
   text-align: right;
@@ -172,11 +173,12 @@ div.list-title a:nth-child(1) {
 .input-box textarea {
   flex-grow: 1;
   height: 100%;
-  line-height: 1.06666667rem;
+  line-height: 0.6rem;
   border: none;
   outline: none;
   padding-left: 0.53333333rem;
-  height: 3.2rem;
+  padding-top: 0.26666666rem;
+  min-height: 3.2rem;
 }
 .userinfo {
   color: #4d4d4d;
@@ -228,10 +230,13 @@ div.sub .btn {
 }
 .selcet-box {
   position: relative;
+  width:100%;
+  padding-left:1.29333333rem;
+  text-align:right;
 }
 .selcet-box img {
   position: absolute;
-  right: 0.4rem;
+  right: 0.10666666rem;
   top: 50%;
   transform: translateY(-50%);
   width: 0.33333333rem;
@@ -239,4 +244,5 @@ div.sub .btn {
 .selcet-box select {
   height: 100%;
   background: #ffffff;
+  padding-right:0.50666666rem;
 }

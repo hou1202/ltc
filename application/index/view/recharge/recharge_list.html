@@ -1,0 +1,56 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+
+    <link rel="stylesheet" href="/static/index/style/pull.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>提币明细</h1>
+    </header>
+
+    <!--rechrage-header--引入-->
+    {include file="default/recharge_header" /}
+    <!--rechrage-header--END-->
+
+    <!-- 锁仓列表开始 -->
+    <div class="list-content">
+        <div class="btn-box">
+            <a class="btn-pull" href="/index/recharge/rechargeLog">提交充币记录</a>
+        </div>
+        <ul class="top-title">
+            <li>金额</li>
+            <li>交易ID</li>
+            <li>状态</li>
+            <li>操作</li>
+        </ul>
+        {foreach name="List" item="l"}
+            <ul class="list-item">
+                <li>
+                    {$l.number}
+                </li>
+                <li>{$l.recharge_id}</li>
+                <li>{$l.state.0}</li>
+                <li>
+                    <a href="/index/recharge/rechargeDetail?id={$l.id}">
+                            查看
+                        </a>
+                </li>
+            </ul>
+        {/foreach}
+
+    </div>
+    <!-- 锁仓列表结束 -->
+
+    <script>
+        window.addEventListener('touchmove', function(evt) {
+            evt.preventDefault();
+        });
+    </script>
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

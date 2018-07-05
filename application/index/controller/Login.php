@@ -80,12 +80,10 @@ class Login extends CommController
             $userVal = new UserRegisterValidate();
             if($userVal -> check($data)){
                 //判断验证码
-                /*if(!Session::has('login_'.$data['phone'])){
-                    return ReturnJson::ReturnA("请获取有效验证码...");
-                }*/
-                if($data['code'] != Session::get('login_'.$data['phone'])){
+
+                /*if($data['code'] != Session::get('login_'.$data['phone'])){
                     return $this ->jsonFail('您的验证码信息有误，请重新确认...');
-                }
+                }*/
 
                 //实例化用户User  Model
                 $user = new User();
@@ -108,14 +106,39 @@ class Login extends CommController
                  * */
                 $data['number'] = PublicFunction::SetUserNumber();
                 $data['portrait'] = '/static/index/images/head.png';
-                $data['share_id'] = PublicFunction::SetShareId(7);
+                $data['share_id'] = PublicFunction::SetShareId(8);
                 if($result = $user -> insertUserReturnId($data)){
                     //清除短信Session
-                    Session::delete('login_'.$data['phone']);
+                    //Session::delete('login_'.$data['phone']);
                     //设置用户COOKIE，并设置保存时间7天
                     Cookie::set('user',$result,604800);
                     //更新验证码记录
-                    Db::table('think_log_verify')->where('phone='.$data['phone'].' AND type=0 AND verify='.$data['code'])->update(['status'=>1, 'e_time'=>date('Y-m-d H:i:s')]);
+                    //Db::table('think_log_verify')->where('phone='.$data['phone'].' AND type=0 AND verify='.$data['code'])->update(['status'=>1, 'e_time'=>date('Y-m-d H:i:s')]);
+
+                    //写入分销关系
+                    $pShareId=$data['p_id'];
+                    $share = array();
+                    for($i=0;$i<10;$i++){
+                        if($pShareId){
+                            $isPUser = $user -> getUserAllByKey($pShareId,'share_id');
+                            $share[$i]['user_id'] = $result;
+                            $share[$i]['p_id'] = $isPUser['id'];
+                            $share[$i]['grade'] = $i+1;
+                            $share[$i]['create_time'] = time();
+                            $pShareId = $isPUser['p_id'];
+                        }else{
+                            break;
+                        }
+                    }
+                    $insertShare = Db::name('friend')->insertAll($share);
+                    if(!$insertShare){
+                        //若分销关系建立失败，撤销创建
+                        $user -> where('id',$result) -> delete();
+                        return $this ->jsonFail('注册出现了一些小故障，请重新操作...');
+                    }
+
+
+
                     return $this->jsonSuccess('恭喜您，帐户已经注册成功','/index/index/index');
                 }else{
                     return $this ->jsonFail('注册出现了一些小故障，请重新操作...');

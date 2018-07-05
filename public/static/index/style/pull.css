@@ -9,7 +9,7 @@ div.btn-box {
   margin-bottom: 0.4rem;
 }
 div.btn-box .btn-pull {
-  width: 2.66666667rem;
+  width: 3rem;
   height: 0.93333333rem;
   line-height: 0.93333333rem;
   border: none;
@@ -18,6 +18,7 @@ div.btn-box .btn-pull {
   background: #216ea8;
   font-size: 0.4rem;
   border-radius: 0.13333333rem;
+  text-align:center;
 }
 div.list-title {
   display: flex;

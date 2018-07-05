@@ -72,6 +72,63 @@ div.list-title a:nth-child(1) {
   color: #ffffff;
   background: #216ea8;
 }
+div.trade_notice{
+  display:none;
+  width:90%;
+  margin:0 5%;
+  background:#fff;
+  -webkit-border-radius:0.13333333rem;
+  -moz-border-radius:0.13333333rem;
+  border-radius:0.13333333rem;
+  box-shadow: 0 2px 2px #c0c0c0;
+  padding:0.54666666rem 0.54666666rem;
+  border:1px solid #e1e1e1;
+  position: absolute;
+  top:25%;
+  z-index: 777;
+}
+div.trade_notice h3{
+  height:1rem;
+  line-height:1rem;
+  font-size:0.50666666rem;
+  color:#216ea8;
+  text-align:center;
+  border-bottom:1px solid #ebebeb;
+}
+div.trade_notice .notice_info{
+  padding:0.37333333rem 1rem;
+}
+div.trade_notice .notice_info p{
+  height:0.70666666rem;
+  line-height:0.70666666rem;
+  font-size:0.37333333rem;
+}
+div.trade_notice .notice_info p label{
+  color:#216ea8;
+  padding-left:0.37333333rem;
+}
+div.trade_notice .notice_sub{
+}
+div.trade_notice input{
+  width:38%;
+  margin-left:8%;
+  float:left;
+  border:none;
+  height:1rem;
+  line-height:1rem;
+  font-size:0.37333333rem;
+  border-radius:0.13333333rem;
+}
+div.trade_notice .notice_sure{
+  color:#fff;
+  background:#216ea8;
+  border:1px solid #216ea8;
+}
+div.trade_notice .notice_cancel{
+  color:#216ea8;
+  background:#fff;
+  border:1px solid #216ea8;
+}
 .list-content {
   /*margin-top: 0.66666667rem;*/
 }

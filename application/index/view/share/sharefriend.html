@@ -1,35 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+<!--header--引入-->
+{include file="default/header" /}
+<!--header--END-->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>分享列表</title>
-    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
-    <link rel="stylesheet" href="./style/cssreset.css">
-    <link rel="stylesheet" href="./style/sharefriend.css">
-    <link rel="stylesheet" href="./style/public.css">
-</head>
+    <link rel="stylesheet" href="/static/index/style/sharefriend.css">
 
-<body>
     <header class="public">
-        <a href="javascript:;">
-            <img src="./image/arrow.gif" alt="">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
         </a>
         <h1>分享列表</h1>
     </header>
-    <div class="list-title">
-        <a href="javascript:;">
-            分享好友
-        </a>
-        <a href="javascript:;">
-            分享收益
-        </a>
-        <a href="javascript:;">
-            分享列表
-        </a>
-    </div>
+
+    <!--share_header--引入-->
+    {include file="default/share_header" /}
+    <!--share_header--END-->
+
     <!-- 锁仓列表开始 -->
     <div class="list-content">
         <ul class="top-title">
@@ -39,63 +24,24 @@
             <li>活跃数</li>
             <li>团队数</li>
         </ul>
-        <ul class="list-item">
-            <li>
-                <p>LTC18001324234234</p>
-            </li>
-            <li>2018-05-06</li>
-            <li>65</li>
-            <li>100</li>
-            <li>254</li>
-        </ul>
-        <ul class="list-item">
-            <li>
-                <p>LTC18001324234234</p>
-            </li>
-            <li>2018-05-06</li>
-            <li>65</li>
-            <li>100</li>
-            <li>254</li>
-        </ul>
-        <ul class="list-item">
-            <li>
-                <p>LTC18001324234234</p>
-            </li>
-            <li>2018-05-06</li>
-            <li>65</li>
-            <li>100</li>
-            <li>254</li>
-        </ul>
+        {foreach name="List" item="l"}
+            <ul class="list-item">
+                <li>
+                    <p>{$l.number}</p>
+                </li>
+                <li>{$l.create_time.0}</li>
+                <li>{$l.first}</li>
+                <li>{$l.active}</li>
+                <li>{$l.total}</li>
+            </ul>
+        {/foreach}
+
     </div>
     <!-- 锁仓列表结束 -->
     <div class="bottom-content"></div>
-    <!-- 底部开始 -->
-    <footer>
-        <div>
-            <a href="javascript:;">
-                <i class="ficon1"></i>
-                <p>首页</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon2"></i>
-                <p>锁仓</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon3"></i>
-                <p>分享</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon4"></i>
-                <p>我的</p>
-            </a>
-        </div>
-    </footer>
-    <!-- 底部结束 -->
-</body>
-<script>
-    window.addEventListener('touchmove', function(evt) {
-        evt.preventDefault();
-    });
-</script>
 
-</html>
+
+<!-- 底部开始 -->
+<!--footer--引入-->
+{include file="default/footer" /}
+<!--footer--END-->

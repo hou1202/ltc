@@ -283,7 +283,7 @@ class Setup extends CommController
      * */
     public function setMessageList(){
         $message = new Message();
-        $type='1,2';
+        $type='1,2,5,6';
         $Count = $message -> getCountMessage($type);
         $List = $message -> getMessageForList($type,'setMessageList');
         return $List -> items() ? view('message/message_list',['List' => $List , 'Count' => $Count]) : ReturnJson::ReturnA('未查询到相关数据信息...');

@@ -1,0 +1,121 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+    <link rel="stylesheet" href="/static/index/style/extractdetail.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>提币详情</h1>
+    </header>
+
+    <!--rechrage-header--引入-->
+    {include file="default/recharge_header" /}
+    <!--rechrage-header--END-->
+
+    <div class="list-content">
+        <ul class="userinfo">
+            <li>
+                <p>会员编号</p>
+                <p>{$getOne.user_number}</p>
+            </li>
+            <li>
+                <p>联系方式</p>
+                <p>{$getOne.phone}</p>
+            </li>
+        </ul>
+        <ul class="bank">
+            <li>
+                <p>提币数量</p>
+                <p>{$getOne.number}</p>
+            </li>
+            <li>
+                <p>手续费</p>
+                <p>{$getOne.service_price}</p>
+            </li>
+            <li>
+                <p>到帐户数量</p>
+                <p>{$getOne.true_num}</p>
+            </li>
+        </ul>
+        <ul class="detail">
+            <li>
+                <p>提币平台</p>
+                <p>{$getOne.plat}</p>
+            </li>
+            <li>
+                <p>提币地址</p>
+                <p class="area" >{$getOne.address}</p>
+            </li>
+            <li>
+                <p>Payment</p>
+                <p class="area" >{$getOne.payment}</p>
+            </li>
+            <li>
+                <p>提币时间</p>
+                <p>{$getOne.create_time}</p>
+            </li>
+            <li>
+                <p>系统反馈</p>
+                <p class="area" >{$getOne.talk}</p>
+            </li>
+
+        </ul>
+        <ul class="bank">
+            <li>
+                <p>提币状态</p>
+                <p>{$getOne.state.0}</p>
+            </li>
+        </ul>
+
+        {if condition="$getOne.state.1 == 0"}
+
+            <div class="sub">
+                <button class="btn" type="button" id="cancel_submit">取消申请</button>
+            </div>
+        {/if}
+    </div>
+    <div class="bottom-content"></div>
+
+    <script>
+        var q = document.querySelector("footer");
+        window.addEventListener('touchmove', function(evt) {
+            console.log("sdfasfa");
+            evt.preventDefault()
+        });
+
+    </script>
+
+
+
+    <!--确认付款验证-->
+    <script>
+        $("#cancel_submit").on('click',function(){
+            var id = "{$getOne.id}";
+
+            if(isNaN($.trim(id)) || $.trim(id)%1 != 0 || $.trim(id) < 1){
+                showAlertAutoClose("信息有误");
+                return false;
+            }
+            $.ajax({
+                url:"/index/recharge/extractDetail",
+                type:"POST",
+                dataType: "json",
+                data:"id="+id,
+                success:function(data){
+                    jsonAlertAutoClose(data);
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+        });
+    </script>
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->
+

@@ -1,44 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>分享收益</title>
-    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
-    <link rel="stylesheet" href="./style/cssreset.css">
-    <link rel="stylesheet" href="./style/shareprofit.css">
-    <link rel="stylesheet" href="./style/public.css">
-</head>
+<!--header--引入-->
+{include file="default/header" /}
+<!--header--END-->
 
-<body>
+    <link rel="stylesheet" href="/static/index/style/shareprofit.css">
+
     <header class="public">
-        <a href="javascript:;">
-            <img src="./image/arrow.gif" alt="">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
         </a>
         <h1>分享收益</h1>
     </header>
-    <div class="list-title">
-        <a href="javascript:;">
-            分享好友
-        </a>
-        <a href="javascript:;">
-            分享收益
-        </a>
-        <a href="javascript:;">
-            分享列表
-        </a>
-    </div>
+
+    <!--share_header--引入-->
+    {include file="default/share_header" /}
+    <!--share_header--END-->
+
     <div class="price">
         <div class="circle">
             <div>
                 <p>今日分享收益（元）</p>
-                <p>+50.69</p>
+                <p>+{$Profit.today}</p>
             </div>
             <div>
                 <p>分享总收益（元）</p>
-                <p>5003.27</p>
+                <p>+{$Profit.total}</p>
             </div>
         </div>
     </div>
@@ -72,33 +58,9 @@
     </div>
     <!-- 锁仓列表结束 -->
     <div class="bottom-content"></div>
-    <!-- 底部开始 -->
-    <footer>
-        <div>
-            <a href="javascript:;">
-                <i class="ficon1"></i>
-                <p>首页</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon2"></i>
-                <p>锁仓</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon3"></i>
-                <p>分享</p>
-            </a>
-            <a href="javascript:;">
-                <i class="ficon4"></i>
-                <p>我的</p>
-            </a>
-        </div>
-    </footer>
-    <!-- 底部结束 -->
-</body>
-<script>
-    window.addEventListener('touchmove', function(evt) {
-        evt.preventDefault();
-    });
-</script>
 
-</html>
+
+<!-- 底部开始 -->
+<!--footer--引入-->
+{include file="default/footer" /}
+<!--footer--END-->

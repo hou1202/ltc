@@ -19,11 +19,11 @@
         <div class="circle">
             <div>
                 <p>可用资产</p>
-                <p>{$User.asset_avali}</p>
+                <p class="asset">{$User.asset_avali}</p>
             </div>
             <div>
                 <p>LTC价格</p>
-                <p id="asset">{$Price.price}</p>
+                <p class="ltc_price">{$Price.price}</p>
             </div>
         </div>
     </div>
@@ -38,27 +38,96 @@
         </ul>
         {foreach name="List" item="l"}
             <ul class="list-item">
-                <li>
-                    <p>{$l.number}</p>
-                </li>
-                <li>{$l.number * $Price.price}</li>
+                <li class="number">{$l.number}</li>
+                <li class="count">{$l.number * $Price.price}</li>
                 <li>{$l.trade_state.0}</li>
-                <li>
-                    <a href="javascript:;" class="trade">
+                <li class="trade">
+                    <a href="javascript:;" >
                             撮合
-                        </a>
+                    </a>
+                    <a style="display:none" class="trade_id">{$l.id}</a>
                 </li>
             </ul>
         {/foreach}
 
     </div>
+    <!--撮合提示信息-->
     <div class="trade_notice">
         <h3>LTC平台提示</h3>
-
-    </div>>
+        <div class="notice_info">
+            <p style="display:none" id="id"></p>
+            <p>交易数量：<label id="trade_num"></label></p>
+            <p>LTC价格 ：<label id="trade_price"></label></p>
+            <p>交易总价：<label id="trade_count"></label></p>
+        </div>
+        <div class="notice_sub">
+            <input type="button" value="确 认" class="notice_sure">
+            <input type="button" value="取 消" class="notice_cancel">
+        </div>
+    </div>
     <!-- 锁仓列表结束 -->
     <div class="bottom-content"></div>
 
+    <script>
+        $(".trade").on('click',function(){
+            //console.log(1);
+            var asset = Number($(".asset").text());
+            var price = Number($(".ltc_price").text());
+            var num = Number($(this).siblings(".number").text());
+            var count = Number($(this).siblings(".count").text());
+            var tradeCount = (count+num*0.03).toFixed(2);
+            var trade_id = $(this).find(".trade_id").text();
+
+            if(asset < tradeCount){
+                return showAlertAutoClose("您的当前可用资产不足"+tradeCount+"，无法进行交易");
+            }
+
+            $.ajax({
+                url:"/index/trade/checkAccountIntact",
+                type:"POST",
+                dataType: "json",
+                data:"type=true",
+                success:function(data){
+                    if(data.code == 1){
+                            $("#id").html(trade_id);
+                            $("#trade_num").html(num);
+                            $("#trade_price").html(price);
+                            $("#trade_count").html(count);
+                            $(".trade_notice").show(300);
+                    }else{
+                        return jsonAlertAutoClose(data);
+                    }
+                },
+                error:function () {
+                    return showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+        });
+
+        $(".notice_cancel").on("click",function(){
+            $(".trade_notice").hide();
+        });
+
+        $(".notice_sure").on("click",function(){
+            var id = $("#id").text();
+            $.ajax({
+                url:"/index/trade/sellCheck",
+                type:"POST",
+                dataType: "json",
+                data:"id="+id,
+                success:function(data){
+                    jsonAlertAutoClose(data);
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+        });
+
+
+
+    </script>
 
     <!-- 底部开始 -->
     <!--footer--引入-->

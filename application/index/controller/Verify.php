@@ -20,6 +20,7 @@ class Verify extends IndexController
     const TYPE_TRADE_PASSWD = 2;     // 修改交易密码
     const TYPE_PULL = 3;     // 提币
     const TYPE_TRADE_BUY = 4;     // 交易购买
+    const TYPE_ACCOUNT = 5;         //修改帐号资料
 
 
 
@@ -29,6 +30,7 @@ class Verify extends IndexController
         self::TYPE_TRADE_PASSWD => 'trade_',
         self::TYPE_PULL => 'pull_',
         self::TYPE_TRADE_BUY => 'buy_',
+        self::TYPE_ACCOUNT => 'account_',
     ];
 
     /**
@@ -56,7 +58,7 @@ class Verify extends IndexController
                     return $this->jsonFail('该手机号已经注册过了');
                 };
                 break;
-            case self::TYPE_EDIT_PASSWD || self::TYPE_TRADE_PASSWD || self::TYPE_PULL || self::TYPE_TRADE_BUY:
+            case self::TYPE_EDIT_PASSWD || self::TYPE_TRADE_PASSWD || self::TYPE_PULL || self::TYPE_TRADE_BUY || self::TYPE_ACCOUNT:
                 $user = new User();
                 $userInfo = $user->getUserPartByKey($data['phone'],'phone');
                 if (!$userInfo) {

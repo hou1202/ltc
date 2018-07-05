@@ -1,0 +1,131 @@
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+
+    <link rel="stylesheet" href="/static/index/style/returnlist.css">
+    <link rel="stylesheet" href="/static/index/style/fankui.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/plugin/aoupload/css/feed_globle.css" />
+    <script src="/static/plugin/aoupload/js/webuploader.min.js"></script>
+    <script src="/static/plugin/aoupload/js/diyUpload.js"></script>
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>反馈留言</h1>
+    </header>
+
+    <!--feed_header--引入-->
+    {include file="default/feed_header" /}
+    <!--feed_header--END-->
+
+    <!-- 锁仓列表开始 -->
+    <div class="list-content">
+        <form action="" id="feed_form">
+            <div class="text-box">
+                <p>
+                    问题描述
+                </p>
+                <textarea name="content" id="content" placeholder="请输入问题的描述信息，不得少于15字，请将涉及到的账号信息注明"></textarea>
+            </div>
+            <div class="text-box">
+                <p>
+                    上传图片
+                </p>
+                <div class="file-box" style="width:80%">
+                    <div>
+                        <ul class="upload-ul clearfix">
+                            <li class="upload-pick">
+                                <div class="webuploader-container clearfix" id="imgUpload"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="sub">
+                <button class="btn"  type="button" id="feed_submit">提交留言反馈</button>
+            </div>
+        </form>
+    </div>
+    <!-- 锁仓列表结束 -->
+    <div class="bottom-content">
+    </div>
+
+    <!--图片上传JS脚本-->
+    <script>
+        //上传图片
+        var $tgaUpload = $('#imgUpload').diyUpload({
+            buttonText : '',
+            //类型限制;
+            accept: {
+                title: "Images",
+                extensions: 'jpg,jpeg,png'
+            },
+            //配置生成缩略图的选项
+            thumb:{
+                width:50,
+                height:50,
+                quality:100,
+                allowMagnify:true,
+                crop:true,
+                type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+            },
+            swf:"/static/plugin/aoupload/Uploader.swf",
+            //是否支持多文件上传
+            multiple:false,
+            //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+            auto:true,
+            //文件上传方式,POST或者GET
+            method:"POST",
+            //服务器地址;
+            server:'/index/feed/uploader',
+            //最大上传的文件数量
+            fileNumLimit:3,
+            //总文件大小(单位字节);
+            fileSizeLimit:500000 * 1024,
+            //单个文件大小(单位字节);
+            fileSingleSizeLimit:50000 * 1024,
+            //自定义内容信息
+            custom:{
+                inputName:'img[]',
+                //input加入ID，只适用于单个上传图片
+                //inputId:'img_id'
+            },
+            success:function( data ) {
+            },
+            error:function( err ) { }
+        });
+
+    </script>
+
+    <script>
+        //用户数据验证
+        $("#feed_submit").on('click',function(){
+            var content = $('#content').val();
+            if($.trim(content) == '' ){
+                showAlertAutoClose("提交反馈内容不得为空");
+                return false;
+            }
+
+            $.ajax({
+                url:"/index/feed/feedLog",
+                type:"POST",
+                dataType: "json",
+                data:$('#feed_form').serialize(),
+                success:function(data){
+                    jsonAlertAutoClose(data);
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+        });
+    </script>
+
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

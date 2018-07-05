@@ -1,0 +1,48 @@
+
+    <!--header--引入-->
+    {include file="default/header" /}
+    <!--header--END-->
+    <link rel="stylesheet" href="/static/index/style/returnlist.css">
+
+    <header class="public">
+        <a href="javascript:history.back(-1);">
+            <img src="/static/index/images/arrow.gif" alt="">
+        </a>
+        <h1>留言记录</h1>
+    </header>
+
+    <!--feed_header--引入-->
+    {include file="default/feed_header" /}
+    <!--feed_header--END-->
+
+    <!-- 锁仓列表开始 -->
+    <div class="list-content">
+        <ul class="top-title">
+            <li>留言问题</li>
+            <li>提交时间</li>
+            <li>操作</li>
+        </ul>
+        {foreach name="List" item="l"}
+            <ul class="list-item">
+                <li>
+                    {$l.content}
+                </li>
+                <li>{$l.create_time|mb_substr=0,10,'utf-8'}</li>
+                <li>
+                    <a href="/index/feed/feedDetail?id={$l.id}">
+                            查看
+                        </a>
+                </li>
+            </ul>
+        {/foreach}
+
+    </div>
+    <!-- 锁仓列表结束 -->
+    <div class="bottom-content">
+
+    </div>
+
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

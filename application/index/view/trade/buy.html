@@ -121,7 +121,7 @@
                 return false;
             }
 
-            if($.trim(code) == '' || $.trim(pwd_trade).length != 6 ) {
+            if($.trim(code) == '' || $.trim(code).length != 6 || isNaN($.trim(code))) {
                 showAlertAutoClose("验证码不正确，请确认");
                 return false;
             }
