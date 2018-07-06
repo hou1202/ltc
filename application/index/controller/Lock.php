@@ -128,7 +128,7 @@ class Lock extends CommController
         return $this -> fetch('lock/lock_list',['List'=>$list,'Capital'=>$Capital]);
     }
 
-    //最新成交
+    //最新详情
     public function lockDetail(){
 
         if(isset($_GET['id']) && !empty($_GET['id'])){

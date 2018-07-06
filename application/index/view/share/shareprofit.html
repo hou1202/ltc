@@ -37,24 +37,15 @@
             <li>锁仓时间</li>
             <li>收益</li>
         </ul>
-        <ul class="list-item">
-            <li>LTC18001324234234</li>
-            <li>450</li>
-            <li>180天</li>
-            <li>0.02</li>
-        </ul>
-        <ul class="list-item">
-            <li>LTC18001324234234</li>
-            <li>2018-06-09</li>
-            <li>180天</li>
-            <li><a href="javascript:;">0.04</a></li>
-        </ul>
-        <ul class="list-item">
-            <li>LTC18001324234234</li>
-            <li>2018-06-09</li>
-            <li>180天</li>
-            <li><a href="javascript:;">0.05</a></li>
-        </ul>
+        {foreach name="List" item="l"}
+            <ul class="list-item">
+                <li>{$l.name}</li>
+                <li>{$l.number}</li>
+                <li>{$l.lock_time}天</li>
+                <li>{$l.profit}</li>
+            </ul>
+        {/foreach}
+
     </div>
     <!-- 锁仓列表结束 -->
     <div class="bottom-content"></div>

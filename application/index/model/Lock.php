@@ -64,4 +64,18 @@ class Lock extends Model
     public function getOneLockInfo($key,$field="id"){
         return $this -> where($field,$key) -> find();
     }
+
+    /*
+     * @getFriendLock      查找所有好友进行中的锁仓计划
+     * */
+    public function getFriendLock($id){
+        return $this -> alias('l')
+            ->field('u.number as name,l.id,l.user_id,l.number,l.lock_time,l.lock_ratio,l.is_break,l.create_time')
+            ->join('think_user u','u.id = l.user_id','inner')
+            ->where('l.user_id','in',$id)
+            ->where('l.state',0)
+            ->where('l.is_break',null)
+            ->group('l.id')
+            ->select();
+    }
 }

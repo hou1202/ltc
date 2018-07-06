@@ -9,10 +9,8 @@
 namespace app\index\controller;
 use app\common\controller\CommController;
 use app\index\model\User;
-use app\index\validate\TradeValidate;
-use app\index\validate\TradeConfirm;
+use app\index\model\Lock;
 use app\common\controller\PublicFunction;
-use think\Session;
 use think\Cookie;
 use think\Hook;
 use think\Db;
@@ -71,8 +69,36 @@ class Share extends CommController
         $data['today'] = PublicFunction::getTotalProfit($id,4,2);
         $data['total'] = PublicFunction::getTotalProfit($id,4,1);
         $friend = Db::name('friend') -> field('user_id,p_id,grade') -> where('p_id',$id) -> select();
-        //var_dump($friend);die;
-        return $this -> fetch('share/shareprofit',['Profit'=>$data]);
+
+        $f_list = null;
+        foreach($friend as $value){
+            $f_list .= $value['user_id'].',';
+        }
+        $f_list = substr($f_list,0,-1);
+        //var_dump($f_list);die;
+        $lock = new Lock();
+        $list = $lock -> getFriendLock($f_list);
+        //遍历锁仓计划，得出收益
+        foreach($list as $lockInfo){
+            //进度时间(天)$process
+            $process = intval((time()-$lockInfo -> create_time[1])/86400)+1;
+            //今天锁的仓
+            if($lockInfo -> create_time[0] == date('Y-m-d',time())){
+                $process = 0;
+            }
+            //超过锁仓时间
+            if($process > $lockInfo -> lock_time){
+                $process = $lockInfo -> lock_time;
+            }
+            //如果为系统中断，赋值
+            if($lockInfo -> is_break){
+                $process = intval(($lockInfo -> is_break - $lockInfo -> create_time[1])/86400);
+            }
+            //收益
+            $lockInfo -> profit = $lockInfo -> number * $process * $lockInfo -> lock_ratio * 0.01;
+
+        }
+        return $this -> fetch('share/shareprofit',['Profit'=>$data,'List'=>$list]);
 
     }
 
