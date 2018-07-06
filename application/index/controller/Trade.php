@@ -154,7 +154,7 @@ class Trade extends CommController
         $price = Db::name('price') -> field('price') ->order('id DESC')-> find();
         //判断可用资产是否大于交易总金额
 
-        $total = ($getTrade->number * $price['price']) + ($getTrade->number * 0.03) ;
+        $total = $getTrade->number + ($getTrade->number * 0.03) ;
         if($userInfo -> asset_avali < $total){
             return $this ->jsonFail('您的可用资产不足，无法完成交易');
         }
@@ -168,10 +168,10 @@ class Trade extends CommController
         $data['trade_time'] = time();
         //保存数据
         if($trade -> saveTrade($data,$getTrade->id)){
-            //减少用户可用资产，并生成记录
+            //减少用户可用资产
             $user ->  setUserAsset($userInfo->id,$total,2);
             //交易减少记录
-            PublicFunction::SetCapitalLog($userInfo->id,$getTrade->number * $price['price'],5);
+            PublicFunction::SetCapitalLog($userInfo->id,$getTrade->number,5);
             //手续费减少记录
             PublicFunction::SetCapitalLog($userInfo->id,$getTrade->number * 0.03,7);
             return $this ->jsonSuccess('您的出售交易操作成功，请等待买方付款','/index/trade/sellList');
@@ -222,7 +222,16 @@ class Trade extends CommController
             }
             $trade = new TradeModel();
             //更改状态，并返回结果
-            return $trade -> setTradeStateById($data['id'],3) ? $this ->jsonSuccess('确认收款成功，此次交易已完成') : $this ->jsonFail('确认收款出现问题，请重新操作');
+            if($trade -> setTradeStateById($data['id'],3)){
+                $tradeInfo= $trade -> getTradeInfoByKey($data['id']);
+                //增加用户可用资产
+                $user ->  setUserAsset($tradeInfo->buy_id,$tradeInfo->number);
+                //交易减少记录
+                PublicFunction::SetCapitalLog($tradeInfo->buy_id,$tradeInfo->number,6);
+                return $this ->jsonSuccess('确认收款成功，此次交易已完成');
+            }else{
+                return $this ->jsonFail('确认收款出现问题，请重新操作');
+            }
 
         }else{
             return $this ->jsonFail($validate->getError());
@@ -267,7 +276,7 @@ class Trade extends CommController
         $id = Cookie::get('user');
         $user = new User();
         if(!$user -> checkUserAccount($id)){
-            return $this ->jsonFail('您的帐户信息尚不完整，请先完善帐户信息','/index/person/personAccount');
+            return $this ->jsonFail('您的帐户信息尚不完整，请先完善帐户信息','/index/account/personAccount');
         }else{
             return $this ->jsonSuccess('您的帐户信息尚完整');
         }

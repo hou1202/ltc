@@ -22,9 +22,6 @@ class News extends CommController
         $id = Cookie::get('user');
         $news = new NewsModel();
         $list = $news -> getNewsForList($id);
-        if(!$list){
-            return $this ->jsonFail('暂未查询到有关于您的新闻信息...');
-        }
         return $this -> fetch('person/news',['List'=>$list]);
 
     }
