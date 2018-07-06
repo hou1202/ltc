@@ -1,28 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>今日收益</title>
-    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
-    <link rel="stylesheet" href="./style/cssreset.css">
-    <link rel="stylesheet" href="./style/today.css">
-    <link rel="stylesheet" href="./style/public.css">
-</head>
+<!--header--引入-->
+{include file="default/header" /}
+<!--header--END-->
 
-<body>
+    <link rel="stylesheet" href="/static/index/style/today.css">
     <div class="back-content">
         <header class="public">
-            <a href="javascript:;">
-                <img src="./image/arrow.gif" alt="">
+            <a href="javascript:history.back(-1);">
+                <img src="/static/index/images/arrow.gif" alt="">
             </a>
             <h1>今日收益</h1>
         </header>
         <div class="top-content">
             <div class="number">
-                188.88
+                {$Profit.total}
             </div>
             <p>
                 今日总收益
@@ -35,26 +26,28 @@
                 今日锁仓收益
             </p>
             <p>
-                +108.32
+                +{$Profit.lock}
             </p>
         </div>
         <div class="item">
             <p>
-                今日锁仓收益
+                今日分享收益
             </p>
             <p>
-                +108.32
+                +{$Profit.share}
             </p>
         </div>
         <div class="item">
             <p>
-                今日锁仓收益
+                今日签到收益
             </p>
             <p>
-                +108.32
+                +{$Profit.sign}
             </p>
         </div>
     </div>
-</body>
 
-</html>
+    <!-- 底部开始 -->
+    <!--footer--引入-->
+    {include file="default/footer" /}
+    <!--footer--END-->

@@ -38,16 +38,16 @@
     </header>
     <div class="app-content">
         <div class="list-top">
-            <a>
-                <p>$2500</p>
+            <a class="line" href="/index/person/todayProfit">
+                <p>{$Profit.total}</p>
                 <p>今日收益</p>
             </a>
-            <a class="line">
-                <p>$2500</p>
+            <a class="line" href="/index/share/shareProfit">
+                <p>{$Profit.share}</p>
                 <p>分享收益</p>
             </a>
-            <a class="line">
-                <p>25</p>
+            <a class="line" href="/index/share/shareFriend">
+                <p>{$Profit.friend}</p>
                 <p>分享列表</p>
             </a>
         </div>
@@ -93,11 +93,31 @@
         </ul>
     </div>
     <div class="exit">
-        <a href="javascript:;">
+        <a href="javascript:;" id="loginOut">
             安全退出
         </a>
     </div>
     <div class="bottom-content"></div>
+
+    <script>
+
+        // 退出登录
+        $("#loginOut").on('click',function(){
+
+            $.ajax({
+                url:"/index/person/loginOut",
+                type:"POST",
+                dataType: "json",
+                success:function(data){
+                    jsonAlertAutoClose(data);
+                },
+                error:function () {
+                    showAlertAutoClose("网络错误，请重试...");
+                }
+            });
+
+        });
+    </script>
 
 
     <!-- 底部开始 -->

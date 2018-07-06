@@ -71,15 +71,23 @@ class PublicFunction
         }
     }
 
-    static function getTotalProfit($user,$type=3,$today=1){
-        switch($today){
+    /*
+     * getTotalProfit       计算收益
+     * $id                  用户ID
+     * $way                收益获取方式（对应way）
+     * $type                收益时间
+     *      1=》总收益  （默认）
+     *      2=》当天收益
+     * */
+    static function getTotalProfit($user,$way=3,$type=1){
+        switch($type){
             case 1:
                 //总收益
-                return Db::name('capital_log') -> where('user_id',$user) -> where('way',$type) -> count('capital');
+                return Db::name('capital_log') -> where('user_id',$user) -> where('way',$way) -> sum('capital');
                 break;
             case 2:
                 //今天收益
-                return  Db::name('capital_log') -> where('user_id',$user) -> where('way',$type) -> where('create_time','>',strtotime(date('Y-m-d',time()))) ->count('capital');
+                return  Db::name('capital_log') -> where('user_id',$user) -> where('way','in',$way) -> where('create_time','>',strtotime(date('Y-m-d',time()))) ->sum('capital');
                 break;
             default:
                 return false;
