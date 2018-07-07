@@ -103,6 +103,7 @@ class Lock extends Model
      * */
     public function getLockGroupUser(){
         return $this -> field('id,user_id')
+                    ->where('state',0)
                     ->group('user_id')
                     ->select();
     }

@@ -95,9 +95,15 @@
                     </p>
                     <input type="password" placeholder="请输入交易密码" name="pwd_trade" id="pwd_trade">
                 </div>
+
                 <div class="sub">
-                    <button class="btn" type="button" id="extract_submit">确认提币</button>
+                    {if condition="$Control"}
+                        <button class="btn" type="button" id="extract_submit">确认提币</button>
+                    {else /}
+                        <div class="btn col" >提币通道关闭</div>
+                    {/if}
                 </div>
+
                 <div class="info">
                     <ul>
                         <li>

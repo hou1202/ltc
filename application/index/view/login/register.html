@@ -53,6 +53,15 @@
                     获取验证码
                 </a>
             </div>
+            <div class="agreeBox">
+                <div class="agree">
+                    <div class="imgBox">
+                        <img class="imgItem" src="/static/index/images/check.png" alt="">
+
+                    </div>
+                    <a href="/index/login/registerProtocol">LTC用户注册服务协议</a>
+                </div>
+            </div>
             <div class="register">
                 <input type="button" value="注册" id="register_submit">
             </div>
@@ -86,12 +95,17 @@
     var close = document.querySelector(".close");
     var pin = document.querySelector(".pin");
     var noQr = document.querySelector(".no-qr");
+    var iVal= 0;
     close.addEventListener("click", function() {
         pin.style.display = "none";
     });
     noQr.addEventListener("click", function() {
         pin.style.display = "flex";
     });
+    $(".imgBox").click(function() {
+        $(this).find("img").toggle();
+        iVal = iVal +1;
+    })
 </script>
 
 
@@ -135,6 +149,10 @@
 
     //用户注册数据验证
     $("#register_submit").on('click',function(){
+        if($.trim(iVal)%2 == 0){
+            showAlertAutoClose("请同意并勾选‘LTC用户注册服务协议’");
+            return false;
+        }
         var phone = $('#phone').val();
         var pwd_login = $("#pwd_login").val();
         var sure_pwd_login = $("#sure_pwd_login").val();

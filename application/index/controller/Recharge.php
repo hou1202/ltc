@@ -27,8 +27,10 @@ class Recharge extends CommController
         $id = Cookie::get('user');
         $user = new User();
         $userInfo = $user -> getUserAllByKey($id);
+        //提币控制开关
+        $control = true;
         $plat = Db::name('message') -> field('id,content') -> where('type',3) -> where('state',1) -> select();
-        return $this -> fetch('recharge/extract',['User'=>$userInfo,'Extract'=>$plat]);
+        return $this -> fetch('recharge/extract',['User'=>$userInfo,'Extract'=>$plat,'Control'=>$control]);
     }
 
     //提币申请验证

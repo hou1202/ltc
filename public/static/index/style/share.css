@@ -116,6 +116,8 @@ div.list-title a:nth-child(1) {
 }
 .info {
   padding: 0 0.4rem;
+  color: #5d5d5d;
+  font-size: 0.37333333rem;
 }
 .info p {
   font-size: 0.4rem;
@@ -126,3 +128,4 @@ div.list-title a:nth-child(1) {
   line-height: 0.53333333rem;
   font-size: 0.34666667rem;
 }
+

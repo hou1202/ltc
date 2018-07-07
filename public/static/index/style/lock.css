@@ -116,7 +116,4 @@ div.price .circle div:last-child p:last-child {
 .list-content .list-item li:last-child a {
   color: inherit;
 }
-i.ficon2 {
-  background: url("/static/index/images/lock.png") no-repeat;
-  background-size: 0.52rem;
-}
+

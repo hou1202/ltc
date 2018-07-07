@@ -78,4 +78,25 @@ class Lock extends Model
             ->group('l.id')
             ->select();
     }
+
+    /*
+     * @userLockSort      用户锁仓排名
+     * */
+    public function userLockSort(){
+        return $this -> alias('l')
+            ->field('u.number as name,l.number')
+            ->join('think_user u','u.id = l.user_id','inner')
+            ->order('l.number DESC')
+            ->group('l.id')
+            ->limit(10)
+            ->select();
+    }
+
+    public function checkSingleLock($user,$time){
+        return $this -> field('id')
+            ->where('user_id',$user)
+            ->where('lock_time',$time)
+            ->where('create_time','>',strtotime(date('Y-m-d',time())))
+            ->find();
+    }
 }

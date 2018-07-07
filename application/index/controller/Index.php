@@ -12,6 +12,7 @@ use app\common\controller\CommController;
 use app\common\controller\PublicFunction;
 use app\index\model\User;
 use app\index\model\News;
+use app\index\model\Lock;
 use think\Session;
 use think\Cookie;
 use think\Hook;
@@ -37,7 +38,9 @@ class Index extends CommController
         $price = Db::name('price')->field('price')->order('id DESC')->find();
         $news = new News();
         $newsList = $news -> getNewsForIndex($id);
-        return $this -> fetch('index/index',['User'=>$result,'News'=>$newsList,'Price'=>$price]);
+        $lock = new Lock();
+        $sort = $lock -> userLockSort();
+        return $this -> fetch('index/index',['User'=>$result,'News'=>$newsList,'Price'=>$price,'Sort'=>$sort]);
     }
 
     public function signCheck(){

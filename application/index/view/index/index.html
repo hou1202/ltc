@@ -104,64 +104,21 @@
         </h2>
         <div class="swiper-container huiyuan">
             <div class="swiper-wrapper">
-                <div class="swiper-slide list-new">
-                    <a href="javascript:;">
-                        <p class="pcolor1">
-                            1
-                        </p>
-                        <p>
-                            新注册会员【LTC54556546】成功锁币2000
-                        </p>
-                    </a>
-                </div>
-                <div class="swiper-slide list-new">
-                    <a href="javascript:;">
-                        <p class="pcolor1">
-                            2
-                        </p>
-                        <p>
-                            新注册会员【LTC54556546】成功锁币2000
-                        </p>
-                    </a>
-                </div>
-                <div class="swiper-slide list-new">
-                    <a href="javascript:;">
-                        <p class="pcolor1">
-                            3
-                        </p>
-                        <p>
-                            新注册会员【LTC54556546】成功锁币2000
-                        </p>
-                    </a>
-                </div>
+                {foreach name="Sort" item="s" key="k"}
+                    <div class="swiper-slide list-new">
+                        <a href="javascript:;">
+                            <p class="pcolor1">
+                                {$k+1}
+                            </p>
+                            <p>
+                                新注册会员【{$s.name}】成功锁币 {$s.number}
+                            </p>
+                        </a>
+                    </div>
+                {/foreach}
+
             </div>
         </div>
-        <!-- <div class="list-new">
-            <a href="javascript:;">
-                <p class="pcolor1">
-                    1
-                </p>
-                <p>
-                    新注册会员【LTC54556546】成功锁币2000
-                </p>
-            </a>
-            <a href="javascript:;">
-                <p class="pcolor2">
-                    2
-                </p>
-                <p>
-                    新注册会员【LTC54556546】成功锁币2000
-                </p>
-            </a>
-            <a href="javascript:;">
-                <p class="pcolor3">
-                    3
-                </p>
-                <p>
-                    新注册会员【LTC54556546】成功锁币2000
-                </p>
-            </a>
-        </div> -->
     </div>
     <div class="bottom-content">
 

@@ -16,6 +16,10 @@ use think\Loader;
 use think\Db;
 use think\Session;
 
+use app\index\common\controller\TimeTask;
+use app\index\common\controller\DoJob;
+
+
 
 
 use PHPExcel;
@@ -33,18 +37,54 @@ class Test extends CommController {
     public function index()
     {
 
+        $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        var_dump($url);die;
 
-        $str = "0123456789QWERTYUPASDFGHJKLZXCVBNM";
-        $share = '';
-        for ( $i = 0; $i < 8; $i++ )
-        {
-            $share .= $str[ mt_rand(0, strlen($str) - 1) ];
-        }
-        var_dump($share);
+        /* array(
+             '1438156396' => array(
+                 array(1,array('Class','Func'), array(), true),
+             )
+         );*/
+        /*
+         * 说明:
+         *  1438156396 时间戳
+         *  array(1,array('Class','Func'), array(), true)
+         *  参数依次表示:
+         *      执行时间间隔,
+         *      回调函数,
+         *      传递给回调函数的参数,
+         *      是否持久化(ture则一直保存在数据中,否则执行一次后删除)
+         * */
+
+
         //return $this -> fetch('index/test');
-
-
     }
+
+
+    public function runTime(){
+
+        TimeTask::dellAll();
+
+        //TimeTask::add( 1, array('DoJob','job'), array(),true);
+
+        TimeTask::add( 3, array('DoJob','job'),array('a'=>1), false);
+
+        echo "Time start: ".time()."\n";
+
+        TimeTask::run();
+
+         while(1)
+         {
+             sleep(1);
+             pcntl_signal_dispatch();
+         }
+    }
+
+
+
+
+
+
 
 
 

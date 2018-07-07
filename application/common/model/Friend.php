@@ -12,9 +12,10 @@ use think\Model;
 class Friend extends Model
 
 {
-    public static $tableName = 'think_lock';
+    public static $tableName = 'think_friend';
 
     protected $autoWriteTimestamp = true;
+
 
     //取值时间显示
     protected function getCreateTimeAttr($value){

@@ -21,6 +21,7 @@ use think\Db;
 
 class Lock extends CommController
 {
+
     //锁仓计划页面
     public function lock(){
         Hook::listen('CheckAuth',$params);
@@ -34,12 +35,7 @@ class Lock extends CommController
 
         //LTC价格
         $price = Db::name('price') -> field('price') -> select();
-        $strPrice = null;
-        foreach($price as $pr){
-            $strPrice .= $pr['price'].',';
-        }
-        $strPrice = substr($strPrice,0,strlen($strPrice)-1);
-        return $this -> fetch('lock/lock',['User'=>$userInfo,'Plan'=>$plan,'Surplus'=>$surplus,'Price'=>$strPrice]);
+        return $this -> fetch('lock/lock',['User'=>$userInfo,'Plan'=>$plan,'Surplus'=>$surplus,'Price'=>$price]);
     }
 
 
@@ -84,16 +80,19 @@ class Lock extends CommController
             //当前有效锁仓计划剩余数量
             $surplus = $this -> surplusLock();
             if($data['number'] > $userInfo->asset_avali || $data['number'] > $surplus){
-                return $this ->jsonFail('锁仓计划数量为小于50和可用资产的正整数...');
+                return $this ->jsonFail('锁仓计划数量为小于50和可用资产的正整数');
             }
             if(md5($data['pwd_trade']) != $userInfo -> pwd_trade){
-                return $this ->jsonFail('交易密码不正确...');
+                return $this ->jsonFail('交易密码不正确');
             }
             $plan = Db::name('plan') -> where('id',$data['plan']) -> find();
             if(!$plan){
-                return $this ->jsonFail('锁仓计划类型信息有误1...');
+                return $this ->jsonFail('锁仓计划类型信息有误');
             }
             $lock = new LockModel();
+            if($lock -> checkSingleLock($userInfo -> id,$plan['day'])){
+                return $this ->jsonFail('您已创建该类型锁仓计划');
+            }
             $data['user_id'] = $userInfo -> id;
             $data['lock_time'] = $plan['day'];
             $data['lock_ratio'] = $plan['ratio'];
@@ -103,7 +102,7 @@ class Lock extends CommController
             //增加用户固定资产
             $user ->  setUserAsset($userInfo->id,$data['number'],1,'asset_fixed');
             //写入锁仓数据，并返回结果
-             return $lock -> saveLock($data) ?  $this ->jsonSuccess('您的锁仓计划创建成功...','/index/lock/lockList') : $this ->jsonFail('锁仓计划出现问题，请重新操作...');
+             return $lock -> saveLock($data) ?  $this ->jsonSuccess('您的锁仓计划创建成功','/index/lock/lockList') : $this ->jsonFail('锁仓计划出现问题，请重新操作');
 
         }else{
             return $this ->jsonFail($validate->getError());
@@ -151,13 +150,10 @@ class Lock extends CommController
             }
             return $this -> fetch('lock/lock_detail',["getOne"=>$getOne,"Other"=>$other]);
         }else{
-            return ReturnJson::ReturnA("无效的修改操作...");
+            return ReturnJson::ReturnA("无效的修改操作");
         }
     }
 
-    /*//最新成交
-    public function newDeal(){
-        return $this -> fetch('lock/new_deal');
-    }*/
+
 
 }

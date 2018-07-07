@@ -161,6 +161,10 @@ class Login extends CommController
         //return $this -> fetch('login/register');
     }
 
+    public function registerProtocol(){
+        $about = Db::name('message') -> field('title,content') -> where('type',1) -> find();
+        return $this -> fetch('login/protocol',['About'=>$about]);
+    }
 
     /*
      * @forget      忘记密码

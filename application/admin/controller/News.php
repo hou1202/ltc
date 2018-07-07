@@ -23,7 +23,7 @@ class News extends CommController
         $news = new NewsModel();
         $newsCount = $news -> getCountNews();
         $newsList = $news -> getNewsForList();
-        return $newsList -> items() ? view('news_list',['List' => $newsList , 'Count' => $newsCount]) : ReturnJson::ReturnA('未查询到相关数据信息...');
+        return $newsList -> items() ? view('news_list',['List' => $newsList , 'Count' => $newsCount]) : ReturnJson::ReturnH('未查询到相关数据信息...','#/news/newsAdd');
     }
 
     //添加新闻

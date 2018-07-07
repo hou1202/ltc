@@ -214,6 +214,11 @@ div.sub .btn {
   color: #ffffff;
   border-radius: 0.13333333rem;
 }
+div.sub .col{
+  line-height: 1.28rem;
+  text-align:center;
+  background: #989898;
+}
 .info {
   color: #5d5d5d;
   font-size: 0.37333333rem;
