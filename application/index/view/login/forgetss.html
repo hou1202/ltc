@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>忘记密码</title>
+    <title>登录密码</title>
     <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
-    <link rel="stylesheet" href="/static/index/style/register.css">
     <link rel="stylesheet" href="/static/index/style/cssreset.css">
+    <link rel="stylesheet" href="/static/index/style/psw.css">
     <link rel="stylesheet" href="/static/index/style/public.css">
 
     <script type="text/javascript" src="/static/index/js/jquery-3.1.1.js"></script>
@@ -17,36 +17,42 @@
 </head>
 
 <body>
-    <header class="register_head">
+    <header class="public">
         <a href="javascript:history.back(-1);">
             <img src="/static/index/images/arrow.gif" alt="">
         </a>
-        <h1>忘记密码</h1>
+        <h1>登录密码</h1>
     </header>
-    <div class="content">
-        <form action="" id="forget_form">
-            <div class="input-box">
+    <!-- 锁仓列表开始 -->
+    <div class="list-content">
+        <form class="sub-box" id="forget_form">
+            <div>
+                <p>注册手机号码</p>
                 <input type="number" placeholder="请输入注册手机号码" name="phone" id="phone">
             </div>
-            <div class="input-box">
-                <input type="password" placeholder="设置新登录密码" name="pwd_login" id="pwd_login">
+            <div>
+                <p>设置新登录密码</p>
+                <input type="password" placeholder="请输入新登录密码" name="pwd_login" id="pwd_login">
             </div>
-            <div class="input-box">
+            <div>
+                <p>确认新登录密码</p>
                 <input type="password" placeholder="请确认新登录密码" name="sure_pwd_login" id="sure_pwd_login">
             </div>
-            <div class="input-box">
-                <input type="text" placeholder="请输入验证码" name="code" id="code">
-                <a href="javascript:;" class="get-qr" id="get_code">
-                    获取验证码
-                </a>
-            </div>
-
-            <div class="register">
-                <input type="button" value="修改登录密码" id="forget_submit">
+            <div>
+                <p>验证码</p>
+                <div>
+                    <input type="text" placeholder="输入验证码" name="code" id="code">
+                    <a href="javascript:;" class="huoqu" id="get_code">
+                                获取验证码
+                            </a>
+                </div>
             </div>
         </form>
+        <div class="sub">
+            <button class="btn"  type="button" id="forget_submit">修改登录密码</button>
+        </div>
     </div>
-
+    <!-- 锁仓列表结束 -->
     <div class="bottom-content"></div>
 
     <!--Alert-Start-->
@@ -54,7 +60,10 @@
         <p></p>
     </div>
     <!--Alert-End-->
+
 </body>
+
+
 <script type="text/javascript">
 
     //短信验证

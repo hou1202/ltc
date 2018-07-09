@@ -83,6 +83,7 @@
   position: absolute;
   content: "";
   top: 50%;
+  left: 0;
   transform: translateY(-50%);
   height: 0;
   border-top: 1px solid #f0f0f0;
@@ -109,42 +110,9 @@
 .title-list a.noline::after {
   display: none;
 }
-.title-list a i {
-  display: inline-block;
+.title-list a .ticon {
   width: 0.92rem;
   height: 0.78666667rem;
-}
-i.ticon1 {
-  background: url("/static/index/images/ticon.gif");
-  background-size: 0.92rem;
-}
-i.ticon2 {
-  background: url("/static/index/images/ticon.gif") 0 -0.78666667rem;
-  background-size: 0.92rem;
-}
-i.ticon3 {
-  background: url("/static/index/images/ticon.gif") 0 -1.57333333rem;
-  background-size: 0.92rem;
-}
-i.ticon4 {
-  background: url("/static/index/images/ticon.gif") 0 -2.36rem;
-  background-size: 0.92rem;
-}
-i.ticon5 {
-  background: url("/static/index/images/ticon.gif") 0 -3.14666667rem;
-  background-size: 0.92rem;
-}
-i.ticon6 {
-  background: url("/static/index/images/ticon.gif") 0 -3.93333333rem;
-  background-size: 0.92rem;
-}
-i.ticon7 {
-  background: url("/static/index/images/ticon.gif") 0 -4.72rem;
-  background-size: 0.92rem;
-}
-i.ticon8 {
-  background: url("/static/index/images/ticon.gif") 0 -5.50666667rem;
-  background-size: 0.92rem;
 }
 div.new {
   border-top: 0.13333333rem solid #f5f5f5;

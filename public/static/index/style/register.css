@@ -14,6 +14,30 @@ header div {
   line-height: 1.06666667rem;
   font-size: 0.42666667rem;
 }
+.register_head {
+  width: 100%;
+  height: 1.2rem;
+
+
+  display: flex !important;
+  display: -webkit-flex !important;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.4rem;
+  position: relative;
+}
+.register_head img {
+  width: 0.21333333rem;
+}
+.register_head h1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.42666667rem;
+  font-weight: 600;
+  color: #ffffff;
+}
 .content {
   padding: 0 0.4rem;
 }
@@ -48,7 +72,7 @@ input::-webkit-input-placeholder {
   font-size: 0.4rem;
 }
 .get-qr {
-  width: 2.4rem;
+  width: 2.6rem;
   height: 0.72rem;
   line-height: 0.72rem;
   border-radius: 0.36rem;
