@@ -21,6 +21,7 @@ use app\index\common\controller\DoJob;
 
 
 
+use app\common\controller\PublicFunction;
 
 use PHPExcel;
 use PHPExcel_IOFactory;
@@ -30,6 +31,16 @@ use PHPExcel_Cell;
 class Test extends CommController {
 
 
+    const GRADE_ONE = 15;            //一级返利率
+    const GRADE_TWO = 10;            //二级返利率
+    const GRADE_THREE = 5;           //三级返利率
+    const GRADE_FOUR = 2;            //四级返利率
+    const GRADE_FIVE = 2;            //五级返利率
+    const GRADE_SIX = 2;             //六级返利率
+    const GRADE_SEVEN = 2;           //七级返利率
+    const GRADE_EIGHT = 2;           //八级返利率
+    const GRADE_NINE = 2;            //九级返利率
+    const GRADE_TEN = 2;             //十级返利率
 
     /*
      * @ todayCouponGoodsList() 今日优惠券列表
@@ -40,44 +51,99 @@ class Test extends CommController {
         $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         var_dump($url);die;
 
-        /* array(
-             '1438156396' => array(
-                 array(1,array('Class','Func'), array(), true),
-             )
-         );*/
-        /*
-         * 说明:
-         *  1438156396 时间戳
-         *  array(1,array('Class','Func'), array(), true)
-         *  参数依次表示:
-         *      执行时间间隔,
-         *      回调函数,
-         *      传递给回调函数的参数,
-         *      是否持久化(ture则一直保存在数据中,否则执行一次后删除)
-         * */
-
 
         //return $this -> fetch('index/test');
     }
 
 
-    public function runTime(){
+    public function runTime()
+    {
+        /*** 这里写计划任务列表集 START ***/
+        /*
+         * 计算锁仓收益
+         * 计算分享收益
+         * */
 
-        TimeTask::dellAll();
+        //按用户分组获取进行中的锁仓
+        $lockBreak = Db::name('lock')->field('id,user_id')->where('state', 0)->group('user_id')->select();
+        for ($i = 0; $i < count($lockBreak); $i++) {
+            //循环获取单个用户的所有有效锁仓
+            $user_id = $lockBreak[$i]['user_id'];
+            $lockPlan = Db::name('lock')->field('id,user_id,number,lock_time,lock_ratio,create_time')
+                ->where('state', 0)
+                ->where('user_id', $user_id)
+                ->select();
 
-        //TimeTask::add( 1, array('DoJob','job'), array(),true);
+            foreach ($lockPlan as $plan) {
+                //计算锁仓用户收益
+                $profit = $plan['number'] * $plan['lock_ratio'] * 0.01;
+                //增加可用资产
+                Db::name('user')->where('id', $plan['user_id'])->setInc('asset_avali', $profit);
+                //生成资产记录
+                PublicFunction::SetCapitalLog($plan['user_id'], $profit, 3);
 
-        TimeTask::add( 3, array('DoJob','job'),array('a'=>1), false);
+                //计算分销收益
+                $relation = Db::name('friend')->field('id,user_id,p_id,grade')
+                    ->where('user_id', $plan['user_id'])
+                    ->select();
+                foreach ($relation as $rel) {
+                    //增加分享收益可用资产
+                    switch ($rel['grade']) {
+                        case 1:
+                            $this->setShareProfit($rel['p_id'], $profit, self::GRADE_ONE);
+                            break;
+                        case 2:
+                            $this->setShareProfit($rel['p_id'], $profit, self::GRADE_TWO);
+                            break;
+                        case 3:
+                            $this->setShareProfit($rel['p_id'], $profit, self::GRADE_THREE);
+                            break;
+                        case 4:
+                            $this->setShareProfit($rel['p_id'], $profit, self::GRADE_FOUR);
+                            break;
+                        case 5:
+                            $this->setShareProfit($rel['p_id'], $profit, self::GRADE_FIVE);
+                            break;
+                        case 6:
+                            $this->setShareProfit($rel['p_id'], $profit, self::GRADE_SIX);
+                            break;
+                        case 7:
+                            $this->setShareProfit($rel['p_id'], $profit, self::GRADE_SEVEN);
+                            break;
+                        case 8:
+                            $this->setShareProfit($rel['p_id'], $profit, self::GRADE_EIGHT);
+                            break;
+                        case 9:
+                            $this->setShareProfit($rel['p_id'], $profit, self::GRADE_NINE);
+                            break;
+                        case 10:
+                            $this->setShareProfit($rel['p_id'], $profit, self::GRADE_TEN);
+                            break;
+                    }
+                }
 
-        echo "Time start: ".time()."\n";
+                //进行到第几天了
+                $conductDay = intval((time() - strtotime($plan['create_time'])) / 86400) + 1;
+                //如果到期，改变锁仓状态
+                if ($conductDay == $plan['lock_time']) {
+                    Db::name('lock')->where('id', $plan['id'])->setField('state', 1);
+                }
+            }
+        }
+    }
 
-        TimeTask::run();
-
-         while(1)
-         {
-             sleep(1);
-             pcntl_signal_dispatch();
-         }
+    /*
+     * @setShareProfit           计算分享收益并生成记录
+     * $id                          用户ID
+     * $profit                      被邀请人锁仓收益
+     * $ratio                       收益利率
+     * */
+    private function setShareProfit($id,$profit,$ratio){
+        $shareProfit = $profit*$ratio*0.01;
+        //增加可用资产
+        Db::name('user')->where('id',$id) -> setInc('asset_avali', $shareProfit);
+        //生成资产记录
+        PublicFunction::SetCapitalLog($id,$shareProfit,4);
     }
 
 
