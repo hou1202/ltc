@@ -13,7 +13,6 @@ use think\console\Input;
 use think\console\Output;
 
 use think\Db;
-use app\common\controller\PublicFunction;
 
 class Test extends Command
 {
@@ -58,7 +57,7 @@ class Test extends Command
                 //增加可用资产
                 Db::name('user')->where('id',$plan['user_id']) -> setInc('asset_avali', $profit);
                 //生成资产记录
-                PublicFunction::SetCapitalLog($plan['user_id'],$profit,3);
+                $this -> capitalLog($plan['user_id'],$profit,3);
 
                 //计算分销收益
                 $relation = Db::name('friend')->field('id,user_id,p_id,grade')
@@ -103,7 +102,7 @@ class Test extends Command
                 //进行到第几天了
                 $conductDay=intval((time()-strtotime($plan['create_time']))/86400)+1;
                 //如果到期，改变锁仓状态
-                if($conductDay == $plan['lock_time']){
+                if($conductDay >= $plan['lock_time']){
                     Db::name('lock')->where('id',$plan['id']) -> setField('state',1);
                 }
             }
@@ -125,7 +124,23 @@ class Test extends Command
         //增加可用资产
         Db::name('user')->where('id',$id) -> setInc('asset_avali', $shareProfit);
         //生成资产记录
-        PublicFunction::SetCapitalLog($id,$shareProfit,4);
+        $this->capitalLog($id,$shareProfit,4);
+    }
+
+
+    /*
+     * @SetCapitalLog       生成资金变更记录
+     * $id                  用户ID
+     * $capital             变动资金
+     * $way                 变动方式
+     * */
+    private function capitalLog($id,$capital,$way=1){
+        $data['user_id'] = $id;
+        $data['capital'] = abs($capital);
+        $data['way'] = $way;
+        $data['create_time'] = time();
+        $data['update_time'] = time();
+        Db::name('capital_log') -> insertGetId($data);
     }
 
 }

@@ -125,7 +125,7 @@ class Test extends CommController {
                 //进行到第几天了
                 $conductDay = intval((time() - strtotime($plan['create_time'])) / 86400) + 1;
                 //如果到期，改变锁仓状态
-                if ($conductDay == $plan['lock_time']) {
+                if ($conductDay >= $plan['lock_time']) {
                     Db::name('lock')->where('id', $plan['id'])->setField('state', 1);
                 }
             }
