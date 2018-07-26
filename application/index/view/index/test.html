@@ -13,11 +13,16 @@
 <link rel="stylesheet" type="text/css" href="192.168.0.174/ltc/static/plugin/aoupload/css/feed_globle.css" />
 <script src="192.168.0.174/ltc/static/plugin/aoupload/js/webuploader.min.js"></script>
 <script src="192.168.0.174/ltc/static/plugin/aoupload/js/diyUpload.js"></script>-->
-<script src="/static/plugin/qrcodejs/jquery.min.js"></script>
-<script src="/static/plugin/qrcodejs/qrcode.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/plugin/aoupload/css/feed_globle.css" />
+<script src="/static/index/js/jquery-3.1.1.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/static/plugin/aoupload/css/globle.css" />
 <script src="/static/plugin/aoupload/js/webuploader.min.js"></script>
 <script src="/static/plugin/aoupload/js/diyUpload.js"></script>
+
+<script src="/static/plugin/qrcodejs/qrcode.js"></script>
+<script src="/static/plugin/qrcodejs/llqrcode.js"></script>
+
+
 
 <body>
 
@@ -28,10 +33,11 @@
         </li>
     </ul>
 </div>
-<!--图片上传JS脚本-->
+
 <script>
     //上传图片
     var $tgaUpload = $('#imgUpload').diyUpload({
+        url:'{:url("index/account/uploader")}',
         buttonText : '',
         //类型限制;
         accept: {
@@ -40,8 +46,8 @@
         },
         //配置生成缩略图的选项
         thumb:{
-            width:50,
-            height:50,
+            width:64,
+            height:64,
             quality:100,
             allowMagnify:true,
             crop:true,
@@ -55,46 +61,38 @@
         //文件上传方式,POST或者GET
         method:"POST",
         //服务器地址;
-        server:'index/feed/uploader',
+        server:'{:url("index/account/uploader")}',
         //最大上传的文件数量
-        fileNumLimit:3,
+        fileNumLimit:10,
         //总文件大小(单位字节);
         fileSizeLimit:500000 * 1024,
         //单个文件大小(单位字节);
         fileSingleSizeLimit:50000 * 1024,
         //自定义内容信息
         custom:{
-            inputName:'img[]',
+            inputName:'portrait',
             //input加入ID，只适用于单个上传图片
-            //inputId:'img_id'
+            inputId:'portrait_id'
         },
         success:function( data ) {
+            console.log('web.ltc.com'+data.name);
+            //获取预览图片路径
+            var getObjectURL = data.name;
+
+            //console.log(getObjectURL(newfile[0]));// newfile[0]是通过input file上传的二维码图片文件
+            qrcode.decode(getObjectURL);
+            qrcode.callback = function(imgMsg){
+                console.log("imgMsg",imgMsg);
+                window.location.href = imgMsg;
+            }
         },
         error:function( err ) { }
     });
 
 </script>
 
-<script>
-    //获取预览图片路径
-    var getObjectURL = function(file){
-        var url = null ;
-        if (window.createObjectURL!=undefined) { // basic
-            url = window.createObjectURL(file) ;
-        } else if (window.URL!=undefined) { // mozilla(firefox)
-            url = window.URL.createObjectURL(file) ;
-        } else if (window.webkitURL!=undefined) { // webkit or chrome
-            url = window.webkitURL.createObjectURL(file) ;
-        }
-        return url ;
-    }
 
-    console.log(getObjectURL(newfile[0]));// newfile[0]是通过input file上传的二维码图片文件
-    qrcode.decode(getObjectURL(newfile[0]));
-    qrcode.callback = function(imgMsg){
-        console.log("imgMsg",imgMsg);
-    }
-</script>
+
 
 
 </body></html>
