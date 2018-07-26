@@ -35,10 +35,14 @@ class Account extends CommController
         }
         $data = $this -> request -> post();
         $validate = new AccountValidate();
+        //var_dump($data);die;
         if($validate -> check($data)){
             if($data['code'] != Session::get('account_'.$data['phone'])){
                 return $this ->jsonFail('您的验证码信息有误，请重新确认...');
             }
+            /*if(!$this -> checkBankNum($data['bank_num'])){
+                return $this ->jsonFail('银行卡号不正确');
+            }*/
             $user = new User();
             //更改状态，并返回结果
             if($user -> saveUserAccount($data['id'],$data)){

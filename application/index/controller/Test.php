@@ -48,11 +48,10 @@ class Test extends CommController {
     public function index()
     {
 
-        $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-        var_dump($url);die;
 
 
-        //return $this -> fetch('index/test');
+
+        return $this -> fetch('index/test');
     }
 
 

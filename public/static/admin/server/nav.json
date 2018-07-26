@@ -20,6 +20,10 @@
       {
         "t": "锁仓列表",
         "url": "/lock/lockList"
+      },
+      {
+        "t": "锁仓计划",
+        "url": "/setup/setPlanList"
       }
     ]
   },
@@ -30,6 +34,14 @@
       {
         "t": "提币列表",
         "url": "/extract/extractList"
+      },
+      {
+        "t": "提币平台",
+        "url": "/setup/setExtractList"
+      },
+      {
+        "t": "提币控制",
+        "url": "/extract/extractControl"
       }
     ]
   },
@@ -40,6 +52,10 @@
       {
         "t": "充币列表",
         "url": "/recharge/rechargeList"
+      },
+      {
+        "t": "充币地址",
+        "url": "/setup/setRechargeList"
       }
     ]
   },
@@ -78,20 +94,8 @@
     "url": "",
     "child": [
       {
-        "t": "锁仓计划",
-        "url": "/setup/setPlanList"
-      },
-      {
         "t": "LTC价格",
         "url": "/setup/setLtcPriceList"
-      },
-      {
-        "t": "充币地址",
-        "url": "/setup/setRechargeList"
-      },
-      {
-        "t": "提币平台",
-        "url": "/setup/setExtractList"
       },
       {
         "t": "信息列表",

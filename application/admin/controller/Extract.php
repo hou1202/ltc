@@ -13,6 +13,7 @@ use app\common\controller\PublicFunction;
 use app\common\controller\ReturnJson;
 use app\admin\model\Extract as ExtractModel;
 use app\admin\model\User;
+use think\Db;
 
 class Extract extends CommController
 {
@@ -108,6 +109,34 @@ class Extract extends CommController
         }else{
             ReturnJson::ReturnA("无效的操作...");
         }
+
+    }
+
+    /*
+    * @ extractControl    提币申请控制
+    * */
+    public function extractControl(){
+        if($this -> request -> isPost()){
+            $data = $this -> request ->post();
+            //var_dump($data);die;
+            $result = Db::name('message') -> where('id',$data['id']) -> setField('state',$data['state']);
+            if($result){
+                echo json_encode([
+                    'code'=>1,
+                ]);
+
+            }else{
+                echo json_encode([
+                    'code'=>0,
+                ]);
+            }
+
+        }else{
+            $data = Db::name('message')->field('id,title,state,create_time')->where('type',7)->find();
+            return $data ? view('extract_control',['Data' => $data]) : ReturnJson::ReturnA('未查询到相关数据信息...');
+
+        }
+
 
     }
 

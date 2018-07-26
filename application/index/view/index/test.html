@@ -1,13 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html><head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>首页</title>
-
+    <title>HTML5 code Reader</title>
 </head>
+<style type="text/css">
+    html, body { height: 100%; width: 100%; text-align:center; }
+</style>
+<!--<script src="192.168.0.174/ltc/static/plugin/qrcodejs/jquery.min.js"></script>
+<script src="192.168.0.174/ltc/static/plugin/qrcodejs/qrcode.js"></script>
+<link rel="stylesheet" type="text/css" href="192.168.0.174/ltc/static/plugin/aoupload/css/feed_globle.css" />
+<script src="192.168.0.174/ltc/static/plugin/aoupload/js/webuploader.min.js"></script>
+<script src="192.168.0.174/ltc/static/plugin/aoupload/js/diyUpload.js"></script>-->
+<script src="/static/plugin/qrcodejs/jquery.min.js"></script>
+<script src="/static/plugin/qrcodejs/qrcode.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/plugin/aoupload/css/feed_globle.css" />
+<script src="/static/plugin/aoupload/js/webuploader.min.js"></script>
+<script src="/static/plugin/aoupload/js/diyUpload.js"></script>
+
 <body>
 
-</body>
-</html>
+<div>
+    <ul class="upload-ul clearfix">
+        <li class="upload-pick">
+            <div class="webuploader-container clearfix" id="imgUpload"></div>
+        </li>
+    </ul>
+</div>
+<!--图片上传JS脚本-->
+<script>
+    //上传图片
+    var $tgaUpload = $('#imgUpload').diyUpload({
+        buttonText : '',
+        //类型限制;
+        accept: {
+            title: "Images",
+            extensions: 'jpg,jpeg,png'
+        },
+        //配置生成缩略图的选项
+        thumb:{
+            width:50,
+            height:50,
+            quality:100,
+            allowMagnify:true,
+            crop:true,
+            type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+        },
+        swf:"/static/plugin/aoupload/Uploader.swf",
+        //是否支持多文件上传
+        multiple:false,
+        //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+        auto:true,
+        //文件上传方式,POST或者GET
+        method:"POST",
+        //服务器地址;
+        server:'index/feed/uploader',
+        //最大上传的文件数量
+        fileNumLimit:3,
+        //总文件大小(单位字节);
+        fileSizeLimit:500000 * 1024,
+        //单个文件大小(单位字节);
+        fileSingleSizeLimit:50000 * 1024,
+        //自定义内容信息
+        custom:{
+            inputName:'img[]',
+            //input加入ID，只适用于单个上传图片
+            //inputId:'img_id'
+        },
+        success:function( data ) {
+        },
+        error:function( err ) { }
+    });
+
+</script>
+
+<script>
+    //获取预览图片路径
+    var getObjectURL = function(file){
+        var url = null ;
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+
+    console.log(getObjectURL(newfile[0]));// newfile[0]是通过input file上传的二维码图片文件
+    qrcode.decode(getObjectURL(newfile[0]));
+    qrcode.callback = function(imgMsg){
+        console.log("imgMsg",imgMsg);
+    }
+</script>
+
+
+</body></html>

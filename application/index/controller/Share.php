@@ -24,9 +24,9 @@ class Share extends CommController
         $id = Cookie::get('user');
         $user = new User();
         $userInfo = $user -> getUserAllByKey($id);
-        return $this -> fetch('share/share',['User'=>$userInfo]);
+        $android = Db::name('message')->field('id,content')->where('type',5)->find();
+        return $this -> fetch('share/share',['User'=>$userInfo,'Down'=>$android]);
     }
-
     //下载详情页面
     public function downApp(){
         if(isset($_GET['type']) && !empty($_GET['type'])){
