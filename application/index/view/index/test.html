@@ -17,7 +17,8 @@
 
 <link rel="stylesheet" type="text/css" href="/static/plugin/aoupload/css/globle.css" />
 <script src="/static/plugin/aoupload/js/webuploader.min.js"></script>
-<script src="/static/plugin/aoupload/js/diyUpload.js"></script>
+
+<script src="/static/plugin/qrcodejs/diyUpload.js"></script>
 
 <script src="/static/plugin/qrcodejs/qrcode.js"></script>
 <script src="/static/plugin/qrcodejs/llqrcode.js"></script>
@@ -91,8 +92,17 @@
 
 </script>
 
+<script>
+    $(function(){
+        $(".webuploader-element-invisible").attr("capture","camera");
+        $(".webuploader-element-invisible").attr("accept","image/*");
+    });
+
+</script>
 
 
 
 
-</body></html>
+
+</body>
+</html>
