@@ -47,12 +47,30 @@ class Test extends CommController {
      * * */
     public function index()
     {
-
-
-
-
-        return $this -> fetch('index/test');
+        return $this -> fetch('index/test-two');
     }
+
+    public function four()
+    {
+        return $this -> fetch('index/test-four');
+    }
+
+    public function code()
+    {
+        return $this -> fetch('code/index');
+    }
+
+    public function barcode()
+    {
+        return $this -> fetch('code/barcode');
+    }
+
+
+
+
+
+
+
 
 
     public function runTime()
@@ -145,15 +163,6 @@ class Test extends CommController {
         PublicFunction::SetCapitalLog($id,$shareProfit,4);
     }
 
-
-
-
-
-
-
-
-
-
     public function img(){
         Loader::import('phpqrcode.phpqrcode');
         $value = $_GET['url'];//二维码内容
@@ -183,10 +192,6 @@ class Test extends CommController {
         Header("Content-type: image/png");
         ImagePng($QR);
     }
-
-
-
-
 
     public function wxShare(){
         $appId='wx4f12e20059703cc2';
